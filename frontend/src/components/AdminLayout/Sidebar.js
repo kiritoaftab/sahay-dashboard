@@ -35,7 +35,7 @@ const Sidebar = ({ collapsed,
       className={cn({
         "bg-indigo-700 text-zinc-50 z-20 h-screen ": true,
         "transition-all duration-300 ease-in-out": true,
-        "fixed md:static md:translate-x-0": true,
+        "fixed md:sticky top-0 md:translate-x-0": true,
         "w-[300px]": !collapsed,
         "w-16": collapsed,
         "-translate-x-full": !shown,
