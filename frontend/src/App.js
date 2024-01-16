@@ -4,6 +4,7 @@ import PersistLogin from "./components/Auth/PersistLogin";
 import { AdminLayout } from "./components";
 import { AdminAddRanger, AdminCustomer, AdminHome, AdminPayments, AdminRanger, AdminService } from "./pages";
 import Login from "./pages/Login";
+import AdminRangerDetails from "./pages/Admin/AdminRangerDetails";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="addRanger" element={<AdminAddRanger/>} />
           <Route path="payments" element={<AdminPayments/>} />
           <Route path="services" element={<AdminService/>} />
+          <Route path="rangers/:id" element={<AdminRangerDetails/>}/> 
         </Route>
 
       </Route>

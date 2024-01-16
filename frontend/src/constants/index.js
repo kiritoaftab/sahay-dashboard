@@ -1,4 +1,4 @@
-const BASE_URL = "http://some.domain.name:8080/api";
+
 
 import sales from "./images/sales.png";
 import orders from "./images/cargo.png";
@@ -36,7 +36,29 @@ import vroVector from "./images/vroVector.jpeg";
 // import prodImg from "./images/iphone.png";
 // import confirmationbutton from "./images/confirmation button.png";
 // import deletebtn from "./images/deletebtn.png";
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
 
+  return `${day}-${month}-${year} ${hours}:${minutes}`
+ 
+
+}
+
+const categoryMap = {
+  All: ["All"],
+  Clothing: ["All", "Men", "Women", "Kids"],
+  Electronics: ["All", "Home Appliances", "Gadgets", "Mobile Phones"],
+  Beauty: ["All", "Skincare", "Cosmetics", "Fragrance"],
+  Furniture: ["All", "Home", "Office"],
+  Sports: ["All", "Volleyball", "Football", "Cricket", "Gym", "Basketball"],
+};
+const BASE_URL = "http://some.domain.name:8080/api";
 function formatIndianRupee(number) {
   // Check if the input is a valid number
   if (isNaN(number)) {
@@ -64,4 +86,6 @@ export {
   bannerMan,
   vroVector,
   formatIndianRupee,
+  formatDate,
+  categoryMap
 };

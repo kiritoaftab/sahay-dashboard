@@ -9,7 +9,7 @@ const StatCard = ({heading,number,icon}) => {
         <section className="flex flex-col p-8 w-44 max-w-xs p-2 bg-white border border-indigo-300 rounded-lg shadow font-Montserrat ">
             
         <img src={icon} className='h-12 w-12' />
-        <h5 className="p-0.5 mt-2 ml  text-lg  font-semibold tracking-tight text-gray-900 dark:text-white font-Montserrat">{heading}</h5>
+        <h5 className="p-0.5 mt-2 ml  text-lg  font-semibold tracking-tight text-gray-900  font-Montserrat">{heading}</h5>
    
           <p className="text-lg text-justify  text-violet-800  font-bold font-Montserrat">{number}</p>
         </section>
@@ -119,11 +119,11 @@ const AdminHome = () => {
              <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Your most desired Product</h5>
                     <p className='text-lg font-semibold text-black-800 '>{topProd?.name}</p>
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-balance ">
+                    <p className="mb-3 font-normal text-gray-700  text-balance ">
                         Celebrate the success! With <span className='text-green-500 font-semibold text-lg'>{topProd?.orderCount}</span> units sold, this product has generated a revenue
                          of <span className='text-green-600 font-semibold text-lg'>{formatIndianRupee(topProd?.price * topProd?.orderCount)}</span> .
                     </p>
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-balance ">
+                    <p className="mb-3 font-normal text-gray-700  text-balance ">
                         You currently have <span className='text-green-500 font-semibold text-lg'>{topProd?.currentUnit}</span> units of this in your inventory.
                     </p>
                 </div>
@@ -148,8 +148,8 @@ const AdminHome = () => {
         >
             <img className="h-40" src={vroVector} alt=""/>
             <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Vendor Relationship Officer</h5>
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-balance ">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Vendor Relationship Officer</h5>
+                    <p className="mb-3 font-normal text-gray-700  text-balance ">
                         You're in good hands! <span className='text-black-500 font-semibold'>{vroDoc?.username}</span>  is your dedicated VRO available to assist you. 
                         Reach out effortlessly by sending an email 
                         to  <span className='text-black-500 font-semibold'>
