@@ -1,3 +1,67 @@
-const BASE_URL ="http://some.domain.name:8080/api"
+const BASE_URL = "http://some.domain.name:8080/api";
 
-export {BASE_URL}
+import sales from "./images/sales.png";
+import orders from "./images/cargo.png";
+import box from "./images/box.png";
+import productsLive from "./images/live-stream.png";
+import ordersPending from "./images/ordersPending.png";
+import inventory from "./images/inventory-management.png";
+import taxes from "./images/taxes.png";
+import bannerMan from "./images/banner-man.png";
+import vroVector from "./images/vroVector.jpeg";
+
+// import productImg from "./images/productImg";
+// import vendorImg from "./images/vendorImg";
+// import vroImg from "./images/vroImg.avif";
+// import shopLogo from "./images/shopLogo.jpeg";
+// import loginBanner from "./images/Rectangle 33.png";
+// import sayhi from "./images/says hi.jpg";
+// import admin from "./images/admin.png";
+// import shopimg from "./images/shopLogo.jpeg";
+// import vroimages from "./images/vroimages.png";
+// import roundbutton from "./images/roundbutton.jpg";
+// import vendorsimages from "./images/vendorsimages.png";
+// import productimages from "./images/productimages.png";
+// import card1 from "./images/card1.png";
+// import card2 from "./images/card2.png";
+// import card3 from "./images/card3.png";
+// import card4 from "./images/card4.png";
+// import card5 from "./images/card5.png";
+// import card6 from "./images/card6.png";
+// import handimage from "./images/handimage.png";
+// import notification from "./images/notification.png";
+// import setting from "./images/setting.png";
+// import image2 from "./images/image 2.jpg";
+// import zealshop from "./images/zealshop.png";
+// import prodImg from "./images/iphone.png";
+// import confirmationbutton from "./images/confirmation button.png";
+// import deletebtn from "./images/deletebtn.png";
+
+function formatIndianRupee(number) {
+  // Check if the input is a valid number
+  if (isNaN(number)) {
+    return "Invalid Number";
+  }
+
+  const formattedAmount = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 2,
+  }).format(number);
+
+  return formattedAmount;
+}
+
+export {
+  BASE_URL,
+  sales,
+  orders,
+  box,
+  productsLive,
+  ordersPending,
+  inventory,
+  taxes,
+  bannerMan,
+  vroVector,
+  formatIndianRupee,
+};
