@@ -5,8 +5,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+
+      colors: {
+        'primary': '#6d28d9',
+        'background': '#ededff',
+      },
       fontFamily: {
-        Montserrat: ['Montserrat']
+        Montserrat: ['Montserrat'],
+        Inter: ['Inter']
       },
       gridTemplateColumns: {
         sidebar: "300px auto", //for sidebar layout

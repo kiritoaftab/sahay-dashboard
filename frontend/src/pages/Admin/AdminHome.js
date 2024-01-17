@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { sales , orders, box, productsLive, ordersPending, inventory,taxes, bannerMan, vroVector, formatIndianRupee} from '../../constants' 
 import useAuth from '../../hooks/useAuth';
 import axios from '../../axiosInstance/axiosApi';
+import {ArrowTrendingUpIcon} from '@heroicons/react/24/outline'
 
 const StatCard = ({heading,number,icon}) => {
     return(
@@ -86,15 +87,27 @@ const AdminHome = () => {
     //NEED TO ADD style : w-screen md:w-full, for all components in home to render properly
   return (
     <section
-        className='grid grid-cols-3 p-3 w-screen md:w-full bg-gray-300 gap-6 max-md:grid-cols-2 place-items-center'
+        className='grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-6 max-md:grid-cols-2 place-items-center p-10'
     >
-            <div  className="flex flex-row col-span-2 p-3  max-md:col-span-2 items-center w-full bg-white border border-gray-200 rounded-lg shadow">
-                <img className="h-40" src={bannerMan} alt=""/>
+            <div  className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl shadow">
+                
                 <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Welcome, {vendorDoc?.shopName}</h5>
-                    <p className="mb-3 font-normal text-gray-700  text-balance ">
-                        Bravo! Your commitment and skill have driven a significant <br></br> <span className='text-green-800 font-semibold text-lg'>{salePercent}</span> surge in sales today.
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Welcome back, Aesha Upadhyay ! {vendorDoc?.shopName}</h5>
+                    <p className="mb-3 font-semibold text-gray-500  text-balance ">
+                    Your smart work and skills have led to the following stats 
                     </p>
+                </div>
+                <div className='w-100 flex flex-row justify-around gap-5 '>
+                        <div className='flex flex-row border-2 flex flex-col border-background w-3/6 p-5 rounded-3xl gap-5'>
+                            <h5 className='font-bold'>Today's Revenue</h5>
+                            <h5 className='text-2xl text-primary font-extrabold'>Rs 20,000</h5>
+                            <p className='flex flex-row gap-2'><ArrowTrendingUpIcon className='h-5 w-5 text-green-400'/> <span className='text-green-500'> 5%  </span> since yesterday</p>
+                        </div>
+                        <div className='flex flex-row border-2 flex flex-col border-background w-3/6 p-5 rounded-3xl gap-5'>
+                            <h5 className='font-bold'>Today's Orders</h5>
+                            <h5 className='text-2xl text-primary font-extrabold'>30</h5>
+                            <p className='flex flex-row gap-2'><ArrowTrendingUpIcon className='h-5 w-5 text-green-400'/> <span className='text-green-500'> 2%  </span> since yesterday</p>
+                        </div>
                 </div>
             </div>
         
@@ -113,19 +126,15 @@ const AdminHome = () => {
         </div>
         
         <div 
-            className='flex flex-row  col-span-2 p-4  max-md:col-span-2 items-center w-full bg-white border border-gray-200 rounded-lg shadow'
+            className='flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl shadow'
         >
-             <img className="h-40" src={topProd?.bannerImage} alt=""/>
              <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Your most desired Product</h5>
-                    <p className='text-lg font-semibold text-black-800 '>{topProd?.name}</p>
-                    <p className="mb-3 font-normal text-gray-700  text-balance ">
-                        Celebrate the success! With <span className='text-green-500 font-semibold text-lg'>{topProd?.orderCount}</span> units sold, this product has generated a revenue
-                         of <span className='text-green-600 font-semibold text-lg'>{formatIndianRupee(topProd?.price * topProd?.orderCount)}</span> .
+             <div className="flex flex-col justify-between p-4 leading-normal">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Most Booked Rangers{vendorDoc?.shopName}</h5>
+                    <p className="mb-3 font-semibold text-gray-500  text-balance ">
+                    Your smart work and skills have led to the following stats 
                     </p>
-                    <p className="mb-3 font-normal text-gray-700  text-balance ">
-                        You currently have <span className='text-green-500 font-semibold text-lg'>{topProd?.currentUnit}</span> units of this in your inventory.
-                    </p>
+                </div>
                 </div>
 
         </div>

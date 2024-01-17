@@ -4,7 +4,7 @@ import cn from "classnames";
 import { useNavigate } from "react-router-dom";
 import { defaultNavItems } from "./DefaultNavItems";
 import useAuth from "../../hooks/useAuth";
-
+import {logo} from "../../constants"
 
 import {
   ChevronDoubleLeftIcon,
@@ -33,7 +33,7 @@ const Sidebar = ({ collapsed,
   return (
     <div
       className={cn({
-        "bg-indigo-700 text-zinc-50 z-20 h-screen ": true,
+        "bg-primary text-zinc-50 z-20 h-screen ": true,
         "transition-all duration-300 ease-in-out": true,
         "fixed md:sticky top-0 md:translate-x-0": true,
         "w-[300px]": !collapsed,
@@ -50,16 +50,16 @@ const Sidebar = ({ collapsed,
         {/* logo and collapse button */}
         <div
           className={cn({
-            "flex items-center border-b border-b-indigo-800": true,
+            "flex items-center border-b border-primary": true,
             "p-4 justify-between": !collapsed,
             "py-4 justify-center": collapsed,
           })}
         >
-          {!collapsed && <span className="whitespace-nowrap">Sahay 24 x 7 </span>}
+          {!collapsed && <img className="whitespace-nowrap w-24" src={logo} alt=""/>}
           <button
             className={cn({
               "grid place-content-center": true, // position
-              "hover:bg-indigo-800 ": true, // colors
+              "hover:bg-white/[.30] ": true, // colors
               "w-10 h-10 rounded-full": true, // shape
             })}
             // 👇 set the collapsed state on click
@@ -82,7 +82,7 @@ const Sidebar = ({ collapsed,
                         <li
                             key={index}
                             className={cn({
-                                "text-indigo-100 hover:bg-indigo-900 flex":true,
+                                "text-indigo-100 hover:bg-white/[.20] flex":true,
                                 "transition-colors duration-300":true,
                                 "rounded-md p-2 mx-3 gap-4":!collapsed,
                                 "rounded-full p-2 mx-3 w-10 h-10":collapsed

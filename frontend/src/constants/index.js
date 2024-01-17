@@ -9,7 +9,7 @@ import inventory from "./images/inventory-management.png";
 import taxes from "./images/taxes.png";
 import bannerMan from "./images/banner-man.png";
 import vroVector from "./images/vroVector.jpeg";
-
+import logo from "./images/logo.png"
 // import productImg from "./images/productImg";
 // import vendorImg from "./images/vendorImg";
 // import vroImg from "./images/vroImg.avif";
@@ -76,6 +76,7 @@ function formatIndianRupee(number) {
 
 export {
   BASE_URL,
+  logo,
   sales,
   orders,
   box,
@@ -87,5 +88,6 @@ export {
   vroVector,
   formatIndianRupee,
   formatDate,
-  categoryMap
+  categoryMap,
+  
 };
