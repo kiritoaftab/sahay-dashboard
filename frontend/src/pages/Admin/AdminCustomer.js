@@ -14,23 +14,23 @@ const AdminCustomer = () => {
       id: "1",
       bannerImage:
         "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      category: "Cleaning",
-      subCategory: "Home cleaning",
-      currentUnit: "1",
+      registeredDate: "15th January 2024",
+      LastLogin: "18th January 2024",
+      email: "gojo@gmail.com",
       name: "Satoru Gojo",
-      orderCount: "1",
-      price: "1000",
+      phoneNumber: "937848373828",
+      serviceNumber: "5",
     },
     {
       id: "2",
       bannerImage:
         "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      category: "Cleaning",
-      subCategory: "Home cleaning",
-      currentUnit: "1",
+      registeredDate: "15th January 2024",
+      LastLogin: "18th January 2024",
+      email: "tanjiro@gmail.com",
       name: "Tanjiro",
-      orderCount: "1",
-      price: "1000",
+      phoneNumber: "937848373828",
+      serviceNumber: "10",
     },
   ];
   const fetchTopProducts = async (vendorId, K) => {
@@ -72,41 +72,38 @@ const AdminCustomer = () => {
   const ProductCard = ({
     id,
     bannerImage,
-    category,
-    subCategory,
-    currentUnit,
+    registeredDate,
+    LastLogin,
+    email,
     name,
-    orderCount,
-    price,
+    phoneNumber,
+    serviceNumber,
   }) => {
     return (
-      <div className="items-center w-full bg-white hover:bg-slate-100 border border-gray-200 rounded-lg shadow p-5 mb-3">
-        <p className="font-semibold text-black-500 text-md">
-          Product id : <span className="text-gray-400">{id}</span>
-        </p>
+      <div className="items-center w-full bg-white-100 hover:bg-indigo-100 border border-gray-200 rounded-lg shadow p-5 mb-3">
         <div className="grid grid-cols-2 place-items-start gap-4 w-full">
           <img className="h-40 mix-blend-multiply" src={bannerImage} />
           <div className="flex flex-col justify-between h-full">
             <p className="font-bold text-black-800 text-lg">{name}</p>
             <p>
               <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                {category}
+                Regsitered Date: {registeredDate}
               </span>
               <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                {subCategory}
+                Last login Date: {LastLogin}
               </span>
             </p>
-            <p className="font-semibold">Services recieved : {currentUnit} </p>
+            <p className="font-semibold">email : {email} </p>
             <p className="font-semibold">
-              Service Count :
+              Phone Number :
               <span className="font-bold text-md text-green-600">
-                {orderCount}
+                {phoneNumber}
               </span>
             </p>
             <p className="font-semibold">
-              Revenue Generated:
+              Services Taken: 
               <span className="font-bold text-md text-green-600">
-                {formatIndianRupee(orderCount * price)}
+                { serviceNumber}
               </span>
             </p>
           </div>
@@ -119,18 +116,8 @@ const AdminCustomer = () => {
     <section className="p-3 w-screen md:w-full bg-gray-300">
       <div className="bg-white p-5 rounded-lg my-2">
         <p className="text-4xl pb-10 font-bold">Customers</p>
-        <p className="text-2xl pb-5 font-bold">
-          Total Sales:
-          <span className="text-green-800">
-            {formatIndianRupee(vendorDoc?.sales)}
-          </span>
-        </p>
 
         <div className="grid grid-cols-2 place-items-start my-2">
-          <p className="text-xl pb-5 font-semibold">
-            Your top {K} services are :
-          </p>
-
           <form
             className="w-full flex flex-row justify-start items-center"
             onSubmit={handleSearch}
@@ -153,12 +140,12 @@ const AdminCustomer = () => {
               key={index}
               id={item.id}
               bannerImage={item.bannerImage}
-              category={item.category}
-              subCategory={item.subCategory}
-              currentUnit={item.currentUnit}
+              registeredDate={item.registeredDate}
+              LastLogin={item.LastLogin}
+              email={item.email}
               name={item.name}
-              orderCount={item.orderCount}
-              price={item.price}
+              phoneNumber={item.phoneNumber}
+              serviceNumber={item.serviceNumber}
             />
           );
         })}
