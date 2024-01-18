@@ -24,7 +24,7 @@ const AdminRangerDetails = () => {
   );
   const [prodImages, setProdImages] = useState([]);
   const [feature, setFeature] = useState("");
-
+    const [verified,setVerified] = useState("")
   //File related
   const [files, setFiles] = useState([]);
   const [fileUrls, setFileUrls] = useState([]);
@@ -258,9 +258,9 @@ const AdminRangerDetails = () => {
   };
 
   return (
-    <section className="w-screen md:w-full bg-gray-300">
+    <section className="w-full md:w-full bg-gray-300 ">
       <div className="bg-white p-5 rounded-lg m-5">
-        <p className="font-bold text-3xl ">Ranger Details</p>
+        <p className="font-bold text-3xl mb-4 ">Ranger Details</p>
         <div className="flex flex-row">
           <div className="basis-1/4 flex flex-col justify-start">
             <img
@@ -278,7 +278,7 @@ const AdminRangerDetails = () => {
           </div>
 
           <form
-            className="basis-3/4 flex flex-col justify-center"
+            className="basis-3/4 flex flex-col justify-center gap-2"
             onSubmit={(e) => handleSubmit(e)}
           >
             <label className="text-lg font-medium mb-2">Name</label>
@@ -289,24 +289,13 @@ const AdminRangerDetails = () => {
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
             />
-            <label className="text-lg font-medium mb-2">Units</label>
-            <input
-              type="number"
-              placeholder="Units"
-              className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-              value={productCurrentUnit}
-              onChange={(e) => {
-                setProductCurrentUnit(e.target.value);
-              }}
-            />
+
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-lg font-medium mb-2">
-                  Height (in cms)
-                </label>
+                <label className="text-lg font-medium mb-2">Phone Number</label>
                 <input
-                  type="number"
-                  placeholder="Height"
+                  type="tel"
+                  placeholder="Phone Number"
                   className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
                   value={productHeight}
                   onChange={(e) => {
@@ -316,11 +305,11 @@ const AdminRangerDetails = () => {
               </div>
               <div>
                 <label className="text-lg font-medium mb-2">
-                  Width (in cms)
+                  Adhaar Number
                 </label>
                 <input
                   type="number"
-                  placeholder="Width"
+                  placeholder="Adhaar Number"
                   className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
                   value={productWidth}
                   onChange={(e) => {
@@ -329,12 +318,10 @@ const AdminRangerDetails = () => {
                 />
               </div>
               <div>
-                <label className="text-lg font-medium mb-2">
-                  Weight (in gms)
-                </label>
+                <label className="text-lg font-medium mb-2">Pincode</label>
                 <input
                   type="number"
-                  placeholder="Weight"
+                  placeholder="Pincode"
                   className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
                   value={productWeight}
                   onChange={(e) => {
@@ -343,37 +330,92 @@ const AdminRangerDetails = () => {
                 />
               </div>
             </div>
-            <label className="text-lg font-medium mb-2">Price</label>
-            <input
-              type="number"
-              placeholder="Price"
-              className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-              value={productPrice}
-              onChange={(e) => {
-                setProductPrice(e.target.value);
-              }}
-            />
-            <label className="text-lg font-medium mb-2">Description</label>
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label className="text-lg font-medium mb-2">Price</label>
+                <input
+                  type="number"
+                  placeholder="Price"
+                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                  value={productHeight}
+                  onChange={(e) => {
+                    setProductHeight(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <label className="text-lg font-medium mb-2">
+                  Starting Time
+                </label>
+                <input
+                  type="time"
+                  placeholder="Starting Hour"
+                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                  value={productWidth}
+                  onChange={(e) => {
+                    setProductWidth(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <label className="text-lg font-medium mb-2">Ending Time</label>
+                <input
+                  type="time"
+                  placeholder="Ending Hour"
+                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                  value={productWeight}
+                  onChange={(e) => {
+                    setProductWeight(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <label className="text-lg font-medium mb-2">Location</label>
             <input
               type="text"
-              placeholder="Description"
+              placeholder="Location"
               className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
               value={productDescription}
               onChange={(e) => {
                 setProdDesc(e.target.value);
               }}
             />
-            <label className="text-lg font-medium mb-2 my-2">Features</label>
+            <label className="text-lg font-medium mb-2 my-2">Services</label>
             <div className="flex flex-row justify-between mb-5">
               <input
                 className="bg-slate-100 rounded-lg p-3 w-4/5 border border-black-500"
                 type="text"
-                placeholder="Enter a feature"
+                placeholder="Enter a service"
                 value={feature}
                 onChange={(e) => setFeature(e.target.value)}
               />
               <button
-                className="bg-green-800 hover:bg-green-700 text-white rounded-lg  font-semibold px-4 py-2"
+                className="bg-green-800 hover:bg-green-700 text-white rounded-lg ml-2 w-1/5  font-semibold px-4 py-2"
+                type="button"
+                onClick={() => addFeature(feature)}
+              >
+                Add
+              </button>
+            </div>
+
+            <label className="text-lg font-medium mb-2 my-2" >
+              Police verification
+            </label>
+            <div className="flex flex-row justify-between mb-5" >
+              <select
+                className="bg-slate-100 rounded-lg p-3 w-4/5 border border-black-500"
+                placeholder="Enter a service"
+                value={verified}
+                onChange={(e) => setVerified(e.target.value)}
+              >
+                <option selected>Choose an option</option>
+                <option value="IN_PROCESS">In Process</option>
+                <option value="VERIFIED">Verified</option>
+                <option value="REJECTED">Rejected</option>
+              </select>
+
+              <button
+                className="bg-green-800 hover:bg-green-700 text-white rounded-lg ml-2 w-1/5  font-semibold px-4 py-2"
                 type="button"
                 onClick={() => addFeature(feature)}
               >

@@ -1,5 +1,5 @@
 
-
+import admin from './images/admin.png'
 import sales from "./images/sales.png";
 import orders from "./images/cargo.png";
 import box from "./images/box.png";
@@ -89,5 +89,5 @@ export {
   formatIndianRupee,
   formatDate,
   categoryMap,
-  
+  admin,
 };

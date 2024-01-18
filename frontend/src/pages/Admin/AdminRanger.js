@@ -14,7 +14,7 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Electrician",
       price: "90000",
-      prodStatus: "REJECTED",
+      prodStatus: "VERIFIED",
       orderCount: "0",
       currentUnit: "20",
       isVerified: true,
@@ -40,7 +40,7 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Plumber",
       price: "90000",
-      prodStatus: "REJECTED",
+      prodStatus: "VERIFIED",
       orderCount: "0",
       currentUnit: "20",
       isVerified: true,
@@ -53,7 +53,7 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Carpenter",
       price: "90000",
-      prodStatus: "REJECTED",
+      prodStatus: "IN_PROGRESS",
       orderCount: "0",
       currentUnit: "20",
       isVerified: false,
@@ -155,18 +155,16 @@ const AdminRanger = () => {
             {formatIndianRupee(price)} /-
           </p>
           {prodStatus === "IN_PROGRESS" ? (
-            <p className="font-normal text-lg text-teal-500">
-              In the middle of ensuring quality, verification is underway. Stay
-              tuned!
+            <p className="font-normal text-lg text-teal-500 bg-teal-400/[.30] px-2 rounded-lg">
+              Police verification in progress!
             </p>
           ) : prodStatus === "VERIFIED" ? (
-            <p className="font-normal text-lg text-green-500">
-              Congratulations! Your product has successfully completed the
-              verification process and is now live for the world to see
+            <p className="font-normal text-lg text-green-500 bg-green-400/[.30] px-2 rounded-lg">
+              Police verification Done!
             </p>
           ) : prodStatus === "REJECTED" ? (
-            <p className="font-normal text-lg text-red-500">
-              Product has been rejected
+            <p className="font-normal text-lg text-red-500  bg-red-400/[.30] px-2 rounded-lg">
+              Police verification Rejected!
             </p>
           ) : (
             ``
@@ -180,9 +178,9 @@ const AdminRanger = () => {
           </p>
           <button
             onClick={() => navigate(`/admin/rangers/${id}`)}
-            className="text-end font-light rounded-lg bg-blue-700 text-white text-lg p-1 flex flex-row justify-center items-center hover:underline "
+            className="text-end font-light rounded-lg bg-primary text-white text-lg p-1 flex flex-row justify-center items-center hover:underline "
           >
-            <p className="mr-3 ">View More </p>
+            <p className="mr-3 font-medium">View More </p>
             <ArrowLongRightIcon height={20} width={20} />
           </button>
         </div>

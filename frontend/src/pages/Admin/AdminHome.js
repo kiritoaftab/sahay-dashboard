@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import {
+  admin,
   sales,
   orders,
   box,
@@ -110,7 +111,7 @@ const AdminHome = () => {
     <section className="grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-6 max-md:grid-cols-2 place-items-center p-10">
 
         {/* welcome card */}
-      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl shadow mt-[-370px]">
+      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl  mt-[-370px]">
         <div className="flex flex-col justify-between p-4 leading-normal">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
             Welcome back, Aesha Upadhyay ! {vendorDoc?.shopName}
@@ -202,7 +203,7 @@ const AdminHome = () => {
 
 
       {/* booked ranger */}
-      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl shadow mt-[-370px]">
+      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl  mt-[-370px]">
         <div className="flex flex-col justify-between p-4 leading-normal">
           <div className="flex flex-col justify-between p-4 leading-normal">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
@@ -236,7 +237,9 @@ const AdminHome = () => {
               {data.map((item, index) => (
                 <div className=" flex flex-row">
                   <div class="mb-2 px-8 pr-[100px]">
-                    <div className=" top-[496px] left-[300px] leading-[16px] font-semibold text-dimgray-100">
+                    
+                    <div className=" top-[496px] left-[300px] leading-[16px] flex flex-row gap-2 font-semibold text-dimgray-100">
+                    <img src={admin} className="w-6 h-6"/>
                       {item.name}
                     </div>
                   </div>
