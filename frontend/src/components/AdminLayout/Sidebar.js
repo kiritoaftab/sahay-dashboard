@@ -82,7 +82,7 @@ const Sidebar = ({ collapsed,
                         <li
                             key={index}
                             className={cn({
-                                "text-indigo-100 hover:bg-white/[.20] flex":true,
+                                "text-white font-semibold hover:bg-white/[.20] flex":true,
                                 "transition-colors duration-300":true,
                                 "rounded-md p-2 mx-3 gap-4":!collapsed,
                                 "rounded-full p-2 mx-3 w-10 h-10":collapsed

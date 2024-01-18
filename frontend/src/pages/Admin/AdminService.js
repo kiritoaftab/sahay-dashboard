@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../axiosInstance/axiosApi";
-import { formatDate, formatIndianRupee } from "../../constants";
+import {
+  accessorries,
+  formatDate,
+  formatIndianRupee,
+  admin,
+} from "../../constants";
 import cn from "classnames";
 
 const AdminService = () => {
@@ -25,6 +30,32 @@ const AdminService = () => {
     {},
   ];
 
+  const pendingOrders = [
+    {
+      orderId: "87M89",
+      orderTime: new Date("Wed, 27 July 2016 13:30:00"),
+      rangerName: "Aesha upadhay",
+      rangerService: "AC Cleaning",
+      rangerPrice: 299,
+      accessorries: [
+        {
+          type: "Cleaning Solution",
+          name: "colin X1",
+          price: 300,
+          units: 3,
+        },
+        {
+          type: "Cleaning Solution",
+          name: "colin X1",
+          price: 300,
+          units: 3,
+        },
+      ],
+      discountPercent: 4,
+      serviceTaxPercent: 18,
+    },
+  ];
+  const completedOrders = [{}, {}];
   const rangers = [
     {
       id: "1",
@@ -69,90 +100,104 @@ const AdminService = () => {
   }, []);
 
   const ItemCard = ({ id, bannerImage, name, quantity, price }) => {
-    return (
-      <div className="border border-gray-500 rounded-md p-2">
-        <p>Product Id : {id}</p>
-        <div className="flex flex-row p-1 items-center justify-evenly">
-          <img className="h-40" src={bannerImage} />
-          <div>
-            <p>{name}</p>
-            <p>Quantity : {quantity}</p>
-            <p>Price: {formatIndianRupee(price)}</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <div className="border border-gray-500 rounded-md p-2"></div>;
   };
 
   const OrderCard = ({
-    id,
-    orderDate,
-    orderStatus,
-    shippingAddress,
-    customer,
-    items,
+    orderId,
+    orderTime,
+    accessorries,
+    rangerPrice,
+    rangerName,
+    rangerService,
+    discountPercent,
+    serviceTaxPercent,
   }) => {
     let totalOrderValue = 0;
     return (
-      <div className="w-full bg-white p-4 border border-gray-200 rounded-lg shadow font-bold">
-        <p className="my-2">
-          Order id :
-          <span className="px-3 border border-gray-300 rounded-full bg-gray-200 text-base text-gray-700 font-medium">
-            {id}
-          </span>
-        </p>
-        <div className="flex flex-row justify-start my-2">
-          <p>
-            Order Status :
-            <span className="px-3 border border-green-300 rounded-full bg-green-200 text-base text-black-700 font-medium">
-              {orderStatus}
-            </span>
-          </p>
-          <p className="mx-auto">
-            Order Date :
-            <span className="px-3 border border-gray-300 rounded-full bg-gray-200 text-base text-gray-700 font-medium">
-              {formatDate(orderDate)}
-            </span>
-          </p>
+      <div className="w-full flex flex-row bg-white p-4 border border-background rounded-lg  font-bold">
+        <div className="flex flex-col gap-2  p-2">
+          <div>
+            <h2>Order ID: #{orderId}</h2>
+            <p className="text-gray-500 text-[15px]"> 27 July 2016 13:30</p>
+          </div>
+          <div>
+            <table className="w-full text-sm text-left rtl:text-right">
+              <thead className=" text-gray-600 font-normal uppercase  ">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Service and accessorries
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Price
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    QTY
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-white text-gray-500">
+                  <td className="px-6 py-4 flex flex-row gap-2  items-center">
+                    <img src={admin} className="w-8 h-8" />
+
+                    <div className="flex flex-col">
+                      <p className="underline text-black font-normal">
+                        {" "}
+                        {rangerName}
+                      </p>
+                      <p className="text-xs font-normal"> {rangerService}</p>
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4">Rs {rangerPrice}/hr</td>
+                  <td className="px-6 py-4">-</td>
+                  <td className="px-6 py-4">Rs {rangerPrice}</td>
+                </tr>
+                {accessorries.map((item, idx) => {
+                  return (
+                    <tr className="bg-white text-gray-500">
+                      <td className="px-6 py-4 flex flex-row gap-2  items-center">
+                        <img src={admin} className="w-8 h-8" />
+
+                        <div className="flex flex-col">
+                          <p className="underline text-black font-normal">
+                            {" "}
+                            {item.type}
+                          </p>
+                          <p className="text-xs font-normal"> {item.name}</p>
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-4">Rs {item.price}</td>
+                      <td className="px-6 py-4">{item.units}</td>
+                      <td className="px-6 py-4">
+                        Rs {item.price * item.units}
+                      </td>
+                    </tr>
+                  );
+                })}
+                
+              </tbody>
+            </table>
+          </div>
         </div>
-
-        <p className="my-2">
-          Shipping Address :
-
-          <span className="text-base text-black-700 font-medium">
-            {shippingAddress}
-          </span>
-        </p>
-        <p>Items </p>
-        {rangers?.map((item, index) => {
-          const itemValue = item?.quantity * item?.product?.price;
-          totalOrderValue += itemValue;
-          return (
-            <ItemCard
-              key={index}
-              id={rangers.id}
-              name={rangers.name}
-              bannerImage={rangers.bannerImage}
-              quantity={rangers.quantity}
-              price={rangers.price}
-            />
-          );
-        })}
-        <p className="mt-3">
-          Total Order Value : {formatIndianRupee(totalOrderValue)}
-        </p>
+        <div></div>
       </div>
     );
   };
 
   return (
-    <section className="p-3 w-screen md:w-full bg-gray-300 grid grid-cols-1">
-      <div className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200">
+    <section className="p-10  w-screen md:w-full bg-background grid grid-cols-1">
+      <div className="flex flex-wrap text-sm font-medium text-center text-gray-500 ">
         <div
           className={cn({
-            "inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50":
+            "inline-block p-4 gap-3 flex flex-row rounded-t-lg hover:text-gray-600 hover:bg-gray-50 cursor-pointer font-semibold":
               !showPending,
-            "inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active":
+            "inline-block p-4 gap-3  flex flex-row text-black font-semibold bg-white rounded-t-lg active cursor-pointer":
               showPending,
           })}
           onClick={() => {
@@ -160,13 +205,21 @@ const AdminService = () => {
             setShowCompleted(false);
           }}
         >
-          Orders Pending
+          Pending Orders
+          <div
+            className={cn({
+              "bg-background px-2 rounded-lg": showPending,
+              "bg-gray-500 text-white px-2 rounded-lg": !showPending,
+            })}
+          >
+            {pendingOrders.length}
+          </div>
         </div>
         <div
           className={cn({
-            "inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50":
+            "inline-block p-4 gap-3 flex flex-row rounded-t-lg hover:text-gray-600 hover:bg-gray-50 cursor-pointer font-semibold":
               !showCompleted,
-            "inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active":
+            "inline-block p-4 gap-3  flex flex-row text-black font-semibold bg-white rounded-t-lg active cursor-pointer":
               showCompleted,
           })}
           onClick={() => {
@@ -174,22 +227,32 @@ const AdminService = () => {
             setShowCompleted(true);
           }}
         >
-          Orders Completed
+          Completed Orders
+          <div
+            className={cn({
+              "bg-background px-2 rounded-lg": showCompleted,
+              "bg-gray-500 text-white px-2 rounded-lg": !showCompleted,
+            })}
+          >
+            {pendingOrders.length}
+          </div>
         </div>
       </div>
-      <div>
+      <div className="bg-white p-5 ">
         {showPending ? (
           //  Array.isArray(ordersPendingDoc) ? ordersPendingDoc.map((order,index)=> {
-          orderData.map((item, index) => {
+          pendingOrders.map((item, index) => {
             return (
               <OrderCard
                 key={index}
-                id={item.id}
-                orderDate={item.orderDate}
-                orderStatus={item.orderStatus}
-                shippingAddress={item.shippingAddress}
-                customer={item.customer}
-                items={item.items}
+                rangerPrice={item.rangerPrice}
+                orderId={item.orderId}
+                orderTime={item.orderTime}
+                accessorries={item.accessorries}
+                rangerName={item.rangerName}
+                rangerService={item.rangerService}
+                discountPercent={item.discountPercent}
+                serviceTaxPercent={item.serviceTaxPercent}
               />
             );
           })

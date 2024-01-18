@@ -40,7 +40,7 @@ export const defaultNavItems = [
     icon: <PresentationChartLineIcon className="w-6 h-6" />,
   },
   {
-    label: "Service Orders",
+    label: "Bookings",
     href: "/admin/services",
     icon: <BuildingStorefrontIcon className="w-6 h-6" />,
   },

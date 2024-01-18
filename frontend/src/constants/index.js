@@ -1,4 +1,4 @@
-
+import accessorries from './images/accessorries.png';
 import admin from './images/admin.png'
 import sales from "./images/sales.png";
 import orders from "./images/cargo.png";
@@ -90,4 +90,5 @@ export {
   formatDate,
   categoryMap,
   admin,
+  accessorries,
 };

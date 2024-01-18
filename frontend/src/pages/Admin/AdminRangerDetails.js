@@ -11,7 +11,7 @@ const AdminRangerDetails = () => {
 
   const [productDoc, setProductDoc] = useState(null);
 
-  const [productName, setProductName] = useState("");
+  
   const [productCurrentUnit, setProductCurrentUnit] = useState(0);
   const [productHeight, setProductHeight] = useState(0);
   const [productWidth, setProductWidth] = useState(0);
@@ -24,7 +24,14 @@ const AdminRangerDetails = () => {
   );
   const [prodImages, setProdImages] = useState([]);
   const [feature, setFeature] = useState("");
-    const [verified,setVerified] = useState("")
+
+  //ranger
+  const [verified,setVerified] = useState("");
+  const [rangerName, setrangerName] = useState("");
+  const [rangerNumber,setRangerNumber] = useState(0);
+  const [price,setPrice] = useState(0);
+  
+
   //File related
   const [files, setFiles] = useState([]);
   const [fileUrls, setFileUrls] = useState([]);
@@ -212,7 +219,7 @@ const AdminRangerDetails = () => {
 
   useEffect(() => {
     if (productDoc) {
-      setProductName(productDoc?.name);
+      setrangerName(productDoc?.name);
       setProductCurrentUnit(productDoc?.currentUnit);
       setProductHeight(productDoc?.height);
       setProductWidth(productDoc?.width);
@@ -234,7 +241,7 @@ const AdminRangerDetails = () => {
     e.preventDefault();
     const reqBody = {
       prodId: productDoc?._id,
-      name: productName,
+      name: rangerName,
       units: productCurrentUnit,
       height: productHeight,
       width: productWidth,
@@ -258,7 +265,7 @@ const AdminRangerDetails = () => {
   };
 
   return (
-    <section className="w-full md:w-full bg-gray-300 ">
+    <section className="w-full md:w-full bg-background ">
       <div className="bg-white p-5 rounded-lg m-5">
         <p className="font-bold text-3xl mb-4 ">Ranger Details</p>
         <div className="flex flex-row">
@@ -286,8 +293,8 @@ const AdminRangerDetails = () => {
               type="name"
               placeholder="Product name"
               className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
+              value={rangerName}
+              onChange={(e) => setrangerName(e.target.value)}
             />
 
             <div className="grid grid-cols-3 gap-3">
@@ -297,9 +304,9 @@ const AdminRangerDetails = () => {
                   type="tel"
                   placeholder="Phone Number"
                   className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={productHeight}
+                  value={rangerNumber}
                   onChange={(e) => {
-                    setProductHeight(e.target.value);
+                    setRangerNumber(e.target.value);
                   }}
                 />
               </div>
@@ -337,9 +344,9 @@ const AdminRangerDetails = () => {
                   type="number"
                   placeholder="Price"
                   className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={productHeight}
+                  value={price}
                   onChange={(e) => {
-                    setProductHeight(e.target.value);
+                    setPrice(e.target.value);
                   }}
                 />
               </div>
@@ -409,7 +416,7 @@ const AdminRangerDetails = () => {
                 onChange={(e) => setVerified(e.target.value)}
               >
                 <option selected>Choose an option</option>
-                <option value="IN_PROCESS">In Process</option>
+                <option value="IN_PROGRESS">In Progress</option>
                 <option value="VERIFIED">Verified</option>
                 <option value="REJECTED">Rejected</option>
               </select>

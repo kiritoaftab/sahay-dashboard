@@ -21,18 +21,26 @@ const AdminAddRanger = () => {
 
   const [allowedCategoryList, setAllowedCategoryList] = useState([
     "Select Category",
+    "Electrician",
+    "Ac Repair",
+    "Plumber",
+    "Carpenter",
+    "Pest Control",
   ]);
   const [allowedSubCatList, setAllowedSubCatList] = useState([
     "Select SubCategory",
+    
   ]);
 
+
+
   const styles = {
-    container: `px-36 grid grid-cols-1 place-content-center rounded-2xl shadow-2xl font-Montserrat`,
+    container: `px-36 grid grid-cols-1 place-content-center rounded-2xl shadow-2xl `,
     heading: `font-bold text-2xl mt-5 mb-14`,
-    heading1: `font-bold text-3xl mt-5  font-Montserrat`,
+    heading1: `font-bold text-3xl mt-5 `,
     dropDownWrapper: `grid grid-cols-3 gap-4`,
-    label: `peer-focus:font-medium  text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-black peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 font-Montserrat`,
-    select: `bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`,
+    label: `peer-focus:font-medium  text-md duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-black peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 `,
+    select: `bg-gray-50/[.50] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   dark:focus:ring-blue-500 dark:focus:border-blue-500`,
   };
 
   // const handleFileChange = (event) => {
@@ -294,42 +302,54 @@ const AdminAddRanger = () => {
   }, [vendorDoc]);
 
   return (
-    <div className="bg-white">
-      <h1 className={styles.heading1}>Add product</h1>
-      <form className={styles.container} onSubmit={handleSubmit}>
+    <div className="bg-background">
+      <h1 className="font-bold text-3xl p-10">Add Ranger</h1>
+      <form className="px-36 grid grid-cols-1 place-content-center rounded-2xl " onSubmit={handleSubmit}>
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-6 group">
-            <label>Product Name</label>
+            <label>Ranger Name</label>
             <input
               type="text"
               id="floating_product_name"
               name="floating_product_name"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md    "
               placeholder="Product Name"
               onChange={(e) => setProductName(e.target.value)}
               required
             />
           </div>
           <div className="relative z-0 w-full mb-6 group">
-            <label>GST %</label>
+            <label>Phone Number</label>
             <input
               type="number"
               id="number"
               name="number"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              placeholder="GST %"
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md   "
+              placeholder="Phone Number"
               onChange={(e) => setGst(e.target.value)}
               required
             />
           </div>
           <div className="relative z-0 w-full mb-6 group">
-            <label>Distribution Price (without GST)</label>
+            <label>Price</label>
             <input
               type="price"
               id="price"
               name="price"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              placeholder="Distribution price"
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md   "
+              placeholder="Price"
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <label>Adhaar Number</label>
+            <input
+              type="number"
+              id="adhaar"
+              name="adhaar"
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md   "
+              placeholder="Adhaar Number"
               onChange={(e) => setPrice(e.target.value)}
               required
             />
@@ -338,111 +358,65 @@ const AdminAddRanger = () => {
         <div className="relative z-0 w-full mb-6 group">
           <label
             htmlFor="message"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mb-2 font-medium text-gray-900 "
           >
-            Product Description
+            Address
           </label>
           <textarea
             id="message"
             rows="4"
-            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-2xl border border-orange-300 "
-            placeholder="Product Description. Kindly provide detailed information, as it will be showcased on the main website."
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50/[.50] rounded-2xl border border-gray-300 "
+            placeholder="Enter Address / house no / floor / street / locality / city"
             onChange={(e) => setDesc(e.target.value)}
             required
           ></textarea>
         </div>
-        <div className="grid md:grid-cols-4">
+        <div className="grid md:grid-cols-3 ">
           <div className="relative z-0 w-4/5 mb-6 group">
-            <label>Units</label>
+            <label>Pincode</label>
             <input
-              type="text"
+              type="number"
               id="floating_product_name"
               name="floating_product_name"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
-              placeholder="Units"
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md    "
+              placeholder="Pincode"
               onChange={(e) => setUnits(e.target.value)}
               required
             />
           </div>
           <div className="relative z-0 w-4/5 mb-6 group">
-            <label>Height (in cms) </label>
+            <label>Start Time </label>
             <input
-              type="number"
-              id="number"
-              name="number"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              type="time"
+              id="startTime"
+              name="startTime"
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md   "
               placeholder="Height (in cms)"
               onChange={(e) => setHeight(e.target.value)}
               required
             />
           </div>
           <div className="relative z-0 w-4/5 mb-6 group">
-            <label>Width (in cms)</label>
+            <label>End Time</label>
             <input
-              type="number"
-              id="floating_product_name"
-              name="floating_product_name"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+              type="time"
+              id="endTime"
+              name="endTime"
+              className="block w-full py-2.5 px-2  text-gray-900 border border-gray-300 rounded-2xl bg-gray-50/[.50] sm:text-md    "
               placeholder="Width (in gms)"
               onChange={(e) => setWidth(e.target.value)}
               required
             />
           </div>
-          <div className="relative z-0 w-4/5 mb-6 group">
-            <label>Weight (in gms)</label>
-            <input
-              type="number"
-              id="number"
-              name="number"
-              className="block w-full py-2.5 px-2  text-gray-900 border border-orange-300 rounded-2xl bg-gray-50 sm:text-md  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              placeholder="Weight (in gms)"
-              onChange={(e) => setWeight(e.target.value)}
-              required
-            />
-          </div>
+          
         </div>
 
-        <div>
-          <p>Features</p>
-          <div className="flex flex-row justify-between mb-5">
-            <input
-              className="block p-2.5 w-4/5 text-sm text-gray-900 bg-gray-50 rounded-2xl border border-orange-300"
-              type="text"
-              placeholder="Enter a feature"
-              value={feature}
-              onChange={(e) => setFeature(e.target.value)}
-            />
-            <button
-              className="bg-green-800 hover:bg-green-700 text-white rounded-lg  font-semibold px-4 py-2"
-              onClick={addFeature}
-            >
-              Add
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-col justify-evenly">
-          {featureList.map((feature, index) => {
-            return (
-              <div
-                key={index}
-                className="flex flex-row justify-between bg-slate-100 text-gray-800 font-medium text-md rounded-lg p-2 mb-4"
-              >
-                <div>{feature}</div>
-                <div
-                  className="hover:bg-white hover:font-bold"
-                  onClick={() => removeFeature(index)}
-                >
-                  <TrashIcon height={20} width={20} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        
 
         <div className={styles.dropDownWrapper}>
           <div>
             <label htmlFor="category" className={styles.label}>
-              Select Category
+              Select Service
             </label>
             <select
               id="category"
@@ -458,48 +432,45 @@ const AdminAddRanger = () => {
               })}
             </select>
           </div>
-
-          {showSub ? (
-            <div>
-              <label htmlFor="subCategory" className={styles.label}>
-                Select Sub Category
-              </label>
-              <select
-                id="subCategory"
-                className={styles.select}
-                onChange={handleSubSelect}
-              >
-                return(
-                <option>Select Sub Category</option>)
-                {allowedSubCatList?.map((category, index) => {
-                  if (categoryMap[categorySelected]?.includes(category)) {
-                    return (
-                      <option key={index} value={category}>
-                        {category}
-                      </option>
-                    );
-                  }
-                })}
-              </select>
-            </div>
-          ) : (
-            ``
-          )}
+          <div>
+            <label htmlFor="category" className={styles.label}>
+              Police verification
+            </label>
+            <select
+              id="category"
+              className={styles.select}
+              onChange={handleSelect}
+            >
+                  <option  value="" selected>
+                    Select
+                  </option>
+                  <option  value="VERIFIED">
+                    Verified
+                  </option>
+                  <option  value="IN_PROGRESS">
+                    In Progress
+                  </option>
+                  <option  value="REJECTED">
+                    Rejected
+                  </option>
+                
+            </select>
+          </div>
         </div>
 
         <div>
           <label
             htmlFor="message"
-            className="block mt-5 text-sm font-medium text-gray-900 dark:text-white"
+            className="block mt-5 font-medium text-gray-900 orange"
           >
-            Upload Product Banner Image
+            Upload Ranger Image
           </label>
         </div>
 
         <div>
           <input type="file" onChange={handleFileChangeV2} required />
           <button
-            className="h-10 w-24  py-2.5 px-3  mt-7 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="h-10 w-24  py-2.5 px-3  mt-7 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 "
             // onClick={uploadFile}
           >
             Upload
@@ -516,41 +487,14 @@ const AdminAddRanger = () => {
           ``
         )}
 
-        <label
-          htmlFor="message"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Upload Product Images
-        </label>
-        <div className="block w-full text-lg text-gray-900 border border-orange-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:placeholder-gray-400">
-          <div className="flex justify-between items-center">
-            <input type="file" onChange={handleFileChange} multiple required />
-            <button
-              className="text-white bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-7  py-3  dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-              // onClick={uploadFiles}
-            >
-              Upload
-            </button>
-          </div>
-          {/* {uploadPercent ? <p>{uploadPercent}</p> : ""} */}
-          <div className="flex">
-            {fileUrls.map((url, index) => (
-              <img
-                className="w-50 h-28"
-                key={index}
-                src={url}
-                alt={`Uploaded file ${index}`}
-              />
-            ))}
-          </div>
-        </div>
+        
 
         {/* <button type="button" className="text-white mt-8 w-50 bg-yellow-300 hover:bg-yellow-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Product</button> */}
         <button
           type="submit"
           className="text-white mt-8 mx-auto w-1/6 bg-green-800 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2  focus:outline-none "
         >
-          Add Product
+          Add Ranger
         </button>
       </form>
     </div>
