@@ -73,6 +73,19 @@ const AdminRanger = () => {
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
+    {
+      id: "6",
+      name: "Ranger 1",
+      desc: "Excellent performance",
+      category: "Electrician",
+      price: "90000",
+      prodStatus: "VERIFIED",
+      orderCount: "0",
+      currentUnit: "20",
+      isVerified: true,
+      bannerImage:
+        "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
+    },
   ];
 
   const categoryList = [
@@ -144,9 +157,7 @@ const AdminRanger = () => {
   }) => {
     return (
       <div className="flex  lg:flex-row  p-2 w-full bg-white relative border border-black-300 rounded-2xl shadow font-Montserrat px-2 md:flex-col smx:flex-col sm:flex-col">
-        {isVerified && (
-          <CheckBadgeIcon className="w-7 h-7 absolute right-2 top-2 text-white bg-green-400 rounded-xl" />
-        )}
+        
         <img src={img} className="object-contain h-64 w-64 bg-gray-200 rounded-2xl" />
         <div className="p-2 pl-4 flex flex-col justify-around ">
           <p className="font-bold text-xl text-black-800">{name}</p>
@@ -189,7 +200,7 @@ const AdminRanger = () => {
   };
   const [dropdown,setDropdown]= useState(false)
   return (
-    <section className="w-screen md:w-full bg-gray-300 gap-4 flex flex-col">
+    <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
       <div className="w-screen md:w-full bg-white p-4 flex justify-between px-10 ">
         <p className="text-2xl font-bold">{category}</p>
         <div className="relative inline-block text-left">
@@ -242,7 +253,7 @@ const AdminRanger = () => {
           </div>
         </div>
       </div>
-      <section className="grid grid-cols-2 p-3 w-screen md:w-full bg-gray-300 gap-4 max-md:grid-cols-1 place-items-center">
+      <section className="grid grid-cols-2 p-3 w-screen md:w-full bg-background gap-4 max-md:grid-cols-1 place-items-center">
         {ranger?.map((prod, index) => {
           return (
             <ProductCard

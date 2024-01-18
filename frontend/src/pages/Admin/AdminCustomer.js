@@ -32,6 +32,28 @@ const AdminCustomer = () => {
       phoneNumber: "937848373828",
       serviceNumber: "10",
     },
+    {
+      id: "3",
+      bannerImage:
+        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
+      registeredDate: "15th January 2024",
+      LastLogin: "18th January 2024",
+      email: "tanjiro@gmail.com",
+      name: "Tanjiro",
+      phoneNumber: "937848373828",
+      serviceNumber: "10",
+    },
+    {
+      id: "4",
+      bannerImage:
+        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
+      registeredDate: "15th January 2024",
+      LastLogin: "18th January 2024",
+      email: "tanjiro@gmail.com",
+      name: "Tanjiro",
+      phoneNumber: "937848373828",
+      serviceNumber: "10",
+    },
   ];
   const fetchTopProducts = async (vendorId, K) => {
     if (vendorId) {
@@ -113,7 +135,7 @@ const AdminCustomer = () => {
   };
 
   return (
-    <section className="p-3 w-screen md:w-full bg-gray-300">
+    <section className="p-3 w-screen md:w-full h-full bg-background">
       <div className="bg-white p-5 rounded-lg my-2">
         <p className="text-4xl pb-10 font-bold">Customers</p>
 

@@ -488,7 +488,7 @@ const AdminRangerDetails = () => {
       </div>
 
       <div className="bg-white p-5 rounded-lg m-5">
-        <p className="font-bold text-3xl ">Product Metrics</p>
+        <p className="font-bold text-3xl ">Ranger Metrics</p>
         <div className="grid grid-cols-2 gap-3 place-items-start">
           <img
             className="h-40 mix-blend-multiply"
