@@ -253,7 +253,7 @@ const AdminRanger = () => {
           </div>
         </div>
       </div>
-      <section className="grid grid-cols-2 p-3 w-screen md:w-full bg-background gap-4 max-md:grid-cols-1 place-items-center">
+      <section className="grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-4 max-md:grid-cols-1 place-items-center">
         {ranger?.map((prod, index) => {
           return (
             <ProductCard

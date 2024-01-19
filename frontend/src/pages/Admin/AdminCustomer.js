@@ -54,6 +54,28 @@ const AdminCustomer = () => {
       phoneNumber: "937848373828",
       serviceNumber: "10",
     },
+    {
+      id: "5",
+      bannerImage:
+        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
+      registeredDate: "15th January 2024",
+      LastLogin: "18th January 2024",
+      email: "tanjiro@gmail.com",
+      name: "Tanjiro",
+      phoneNumber: "937848373828",
+      serviceNumber: "10",
+    },
+    {
+      id: "6",
+      bannerImage:
+        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
+      registeredDate: "15th January 2024",
+      LastLogin: "18th January 2024",
+      email: "tanjiro@gmail.com",
+      name: "Tanjiro",
+      phoneNumber: "937848373828",
+      serviceNumber: "10",
+    },
   ];
   const fetchTopProducts = async (vendorId, K) => {
     if (vendorId) {
@@ -102,30 +124,30 @@ const AdminCustomer = () => {
     serviceNumber,
   }) => {
     return (
-      <div className="items-center w-full bg-white-100 hover:bg-indigo-100 border border-gray-200 rounded-lg shadow p-5 mb-3">
-        <div className="grid grid-cols-2 place-items-start gap-4 w-full">
-          <img className="h-40 mix-blend-multiply" src={bannerImage} />
-          <div className="flex flex-col justify-between h-full">
-            <p className="font-bold text-black-800 text-lg">{name}</p>
+      <div className="transition duration-300 max-w-2lg bg-white hover:bg-indigo-100 border border-gray-200 rounded-lg lg:flex-row shadow p-5 ">
+        <div className="grid grid-cols-2  w-full">
+          <img className="h-40 mix-blend-multiply mr-1" src={bannerImage} />
+          <div className="flex flex-col  h-full">
+            <p className="font-bold text-black text-lg">{name}</p>
             <p>
-              <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                Regsitered Date: {registeredDate}
+              <span className="inline-flex items-center px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
+                Registered Date: {registeredDate}
               </span>
-              <span className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
+              <span className="inline-flex items-center mt-2 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
                 Last login Date: {LastLogin}
               </span>
             </p>
-            <p className="font-semibold">email : {email} </p>
+            <p className="font-semibold">email: {email}</p>
             <p className="font-semibold">
-              Phone Number :
+              Phone Number:{" "}
               <span className="font-bold text-md text-green-600">
                 {phoneNumber}
               </span>
             </p>
             <p className="font-semibold">
-              Services Taken: 
+              Services Taken:{" "}
               <span className="font-bold text-md text-green-600">
-                { serviceNumber}
+                {serviceNumber}
               </span>
             </p>
           </div>
@@ -147,7 +169,7 @@ const AdminCustomer = () => {
             <input
               type="number"
               className="bg-gray-100 p-2 rounded-lg w-4/5 focus:ring-black-600"
-              placeholder="Enter number to search for your top products"
+              placeholder="Enter number to search customers with highest number of Services"
               onChange={(e) => setK(e.target.value)}
             />
             <button className="ml-2">
@@ -155,22 +177,23 @@ const AdminCustomer = () => {
             </button>
           </form>
         </div>
-
-        {customerData?.map((item, index) => {
-          return (
-            <ProductCard
-              key={index}
-              id={item.id}
-              bannerImage={item.bannerImage}
-              registeredDate={item.registeredDate}
-              LastLogin={item.LastLogin}
-              email={item.email}
-              name={item.name}
-              phoneNumber={item.phoneNumber}
-              serviceNumber={item.serviceNumber}
-            />
-          );
-        })}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {customerData?.map((item, index) => {
+            return (
+              <ProductCard
+                key={index}
+                id={item.id}
+                bannerImage={item.bannerImage}
+                registeredDate={item.registeredDate}
+                LastLogin={item.LastLogin}
+                email={item.email}
+                name={item.name}
+                phoneNumber={item.phoneNumber}
+                serviceNumber={item.serviceNumber}
+              />
+            );
+          })}
+        </div>
       </div>
     </section>
   );

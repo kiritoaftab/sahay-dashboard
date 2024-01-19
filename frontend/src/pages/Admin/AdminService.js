@@ -16,20 +16,7 @@ const AdminService = () => {
   const [vendorDoc, setVendorDoc] = useState(null);
   const [showPending, setShowPending] = useState(true);
   const [showCompleted, setShowCompleted] = useState(false);
-  const orderData = [
-    {
-      _id: "1",
-
-      orderDate: "12th decemeber",
-      orderStatus: "Pending",
-      shippingAddress: "bangalore, India",
-      customer: "xyz",
-      items: "Maid service, refrigerator repair",
-    },
-    {},
-    {},
-    {},
-  ];
+  
   
 
 
@@ -196,11 +183,11 @@ const AdminService = () => {
 
                     <div className="flex flex-col">
                       <p className="underline text-black font-medium">
-                        {" "}
+                        
                         {rangerName}
                       </p>
                       <p className="text-xs font-normal text-left">
-                        {" "}
+                        
                         {rangerService}
                       </p>
                     </div>
@@ -220,11 +207,11 @@ const AdminService = () => {
 
                         <div className="flex flex-col">
                           <p className=" text-black font-medium">
-                            {" "}
+                            
                             {item.type}
                           </p>
                           <p className="text-xs font-normal text-left">
-                            {" "}
+                          
                             {item.name}
                           </p>
                         </div>
