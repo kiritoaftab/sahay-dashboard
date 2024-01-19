@@ -125,31 +125,35 @@ const AdminCustomer = () => {
   }) => {
     return (
       <div className="transition duration-300 max-w-2lg bg-white hover:bg-indigo-100 border border-gray-200 rounded-lg lg:flex-row shadow p-5 ">
-        <div className="grid grid-cols-2  w-full">
-          <img className="h-40 mix-blend-multiply mr-1" src={bannerImage} />
-          <div className="flex flex-col  h-full">
-            <p className="font-bold text-black text-lg">{name}</p>
-            <p>
-              <span className="inline-flex items-center px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                Registered Date: {registeredDate}
-              </span>
-              <span className="inline-flex items-center mt-2 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                Last login Date: {LastLogin}
-              </span>
-            </p>
-            <p className="font-semibold">email: {email}</p>
-            <p className="font-semibold">
-              Phone Number:{" "}
-              <span className="font-bold text-md text-green-600">
-                {phoneNumber}
-              </span>
-            </p>
-            <p className="font-semibold">
-              Services Taken:{" "}
-              <span className="font-bold text-md text-green-600">
-                {serviceNumber}
-              </span>
-            </p>
+        <div className="flex flex-col  w-full">
+          <div className="flex flex-row  w-full">
+            <img className="h-40 mix-blend-multiply mr-1" src={bannerImage} />
+            <div className="flex flex-col w-full h-full">
+              <p className="font-bold text-black text-lg">{name}</p>
+              <p>
+                <span className="inline-flex items-center px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
+                  Registered Date: {registeredDate}
+                </span>
+                <span className="inline-flex items-center mt-2 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
+                  Last login Date: {LastLogin}
+                </span>
+              </p>
+            </div>
+          </div>
+          <div>
+          <p className="font-semibold">email: {email}</p>
+          <p className="font-semibold">
+            Phone Number:{" "}
+            <span className="font-bold text-md text-green-600">
+              {phoneNumber}
+            </span>
+          </p>
+          <p className="font-semibold">
+            Services Taken:{" "}
+            <span className="font-bold text-md text-green-600">
+              {serviceNumber}
+            </span>
+          </p>
           </div>
         </div>
       </div>

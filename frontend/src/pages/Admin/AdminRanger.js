@@ -14,10 +14,11 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Electrician",
       price: "90000",
-      prodStatus: "VERIFIED",
+      policeVerification: true,
       orderCount: "0",
       currentUnit: "20",
       isVerified: true,
+      phone: "8618227097",
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
@@ -27,10 +28,11 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Ac Repair",
       price: "90000",
-      prodStatus: "REJECTED",
+      policeVerification: false,
       orderCount: "0",
       currentUnit: "20",
       isVerified: false,
+      phone: "8618227097",
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
@@ -40,10 +42,11 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Plumber",
       price: "90000",
-      prodStatus: "VERIFIED",
+      policeVerification: true,
       orderCount: "0",
       currentUnit: "20",
       isVerified: true,
+      phone: "8618227097",
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
@@ -53,10 +56,11 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Carpenter",
       price: "90000",
-      prodStatus: "IN_PROGRESS",
+      policeVerification: false,
       orderCount: "0",
       currentUnit: "20",
       isVerified: false,
+      phone: "8618227097",
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
@@ -66,10 +70,11 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Pest Control",
       price: "90000",
-      prodStatus: "REJECTED",
+      policeVerification: false,
       orderCount: "0",
       currentUnit: "20",
       isVerified: false,
+      phone: "8618227097",
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
@@ -79,10 +84,11 @@ const AdminRanger = () => {
       desc: "Excellent performance",
       category: "Electrician",
       price: "90000",
-      prodStatus: "VERIFIED",
+      policeVerification: false,
       orderCount: "0",
       currentUnit: "20",
       isVerified: true,
+      phone: "8618227097",
       bannerImage:
         "https://cdn01.alison-static.net/courses/5657/alison_courseware_intro_5657.jpg",
     },
@@ -133,14 +139,16 @@ const AdminRanger = () => {
     fetchVendorData(auth?._id);
   }, []);
 
-  function updateCategory(e){
+  function updateCategory(e) {
     const selectedCat = e.target.name;
     setCategory(selectedCat);
-    setDropdown(false)
-    setRanger(selectedCat === "All"? rangerList :
-      rangerList.filter((ranger) => {
-        return ranger.category === selectedCat;
-      })
+    setDropdown(false);
+    setRanger(
+      selectedCat === "All"
+        ? rangerList
+        : rangerList.filter((ranger) => {
+            return ranger.category === selectedCat;
+          })
     );
   }
 
@@ -152,53 +160,57 @@ const AdminRanger = () => {
     isVerified,
     prodStatus,
     orderCount,
-    currentUnit,
+    phone,
     id,
+    policeVerification,
   }) => {
     return (
       <div className="flex  lg:flex-row  p-2 w-full bg-white relative border border-black-300 rounded-2xl shadow font-Montserrat px-2 md:flex-col smx:flex-col sm:flex-col">
-        
-        <img src={img} className="object-contain h-64 w-64 bg-gray-200 rounded-2xl" />
-        <div className="p-2 pl-4 flex flex-col justify-around ">
-          <p className="font-bold text-xl text-black-800">{name}</p>
-          <p>{category}</p>
+        <div className="p-2 pl-4 flex flex-col gap-2 justify-around  w-full">
+          <div className="flex flex-row p-1 gap-5 items-center">
+            <img
+              src={img}
+              className="object-cover h-24 w-24 bg-gray-200 rounded-full border-2 border-primary"
+            />
+            <div className="flex flex-col">
+              <p className="font-bold text-2xl text-black-800">{name}</p>
+              <p className="font-semibold text-gray-600">{category}</p>
+            </div>
+          </div>
           <p className="font-bold text-md text-gray-600">
             {formatIndianRupee(price)} /-
           </p>
-          {prodStatus === "IN_PROGRESS" ? (
-            <p className="font-normal w-fit text-lg text-teal-500 bg-teal-400/[.30] px-2 rounded-lg">
-              Police verification in progress!
-            </p>
-          ) : prodStatus === "VERIFIED" ? (
-            <p className="font-normal w-fit text-lg text-green-500 bg-green-400/[.30] px-2 rounded-lg">
-              Police verification Done!
-            </p>
-          ) : prodStatus === "REJECTED" ? (
-            <p className="font-normal w-fit text-lg text-red-500  bg-red-400/[.30] px-2 rounded-lg">
-              Police verification Rejected!
-            </p>
-          ) : (
-            ``
-          )}
+
           <p className="font-bold text-md text-black-800">
             Total orders :
             <span className="text-green-800 text-lg">{orderCount}</span>
           </p>
-          <p className="font-bold text-md text-black-800">
-            Units :<span className="text-green-800 text-lg">{currentUnit}</span>
+          <p className="font-bold text-base text-black-800 ">
+            Phone : <span className="text-gray-800 text-base">{phone}</span>
           </p>
-          <button
-            onClick={() => navigate(`/admin/rangers/${id}`)}
-            className="text-end w-[150px] font-light rounded-lg bg-primary text-white text-lg p-1 flex flex-row justify-center items-center hover:underline "
-          >
-            <p className="mr-3 font-medium">View More </p>
-            <ArrowLongRightIcon height={20} width={20} />
-          </button>
+          <div className="flex flex-row items-center justify-between ">
+            {policeVerification ? (
+              <p className="font-semibold w-fit text-lg text-green-500 bg-green-400/[.30] px-2 rounded-lg">
+                Legally verified!
+              </p>
+            ) : (
+              <p className="font-semibold w-fit text-lg text-red-500  bg-red-400/[.30] px-2 rounded-lg">
+                Not verified!
+              </p>
+            )}
+            <button
+              onClick={() => navigate(`/admin/rangers/${id}`)}
+              className="text-end w-[150px] font-light rounded-lg  text-primary text-lg p-1 flex flex-row justify-center items-center hover:underline hover:underline-offset-2 "
+            >
+              <p className="mr-3 font-medium">View More </p>
+              <ArrowLongRightIcon height={20} width={20} />
+            </button>
+          </div>
         </div>
       </div>
     );
   };
-  const [dropdown,setDropdown]= useState(false)
+  const [dropdown, setDropdown] = useState(false);
   return (
     <section className="w-screen md:w-full h-full bg-background gap-4 flex flex-col">
       <div className="w-screen md:w-full bg-white p-4 flex justify-between px-10 ">
@@ -213,7 +225,7 @@ const AdminRanger = () => {
               aria-haspopup="true"
               onClick={() => setDropdown(!dropdown)}
             >
-              {category=== 'All'? "Select Category" : category}
+              {category === "All" ? "Select Category" : category}
               <svg
                 className="-mr-1 h-5 w-5 text-gray-400"
                 viewBox="0 0 20 20"
@@ -230,10 +242,13 @@ const AdminRanger = () => {
           </div>
 
           <div
-            className={dropdown? ` absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`:'hidden'}
+            className={
+              dropdown
+                ? ` absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`
+                : "hidden"
+            }
             role="menu"
             aria-orientation="vertical"
-            
           >
             <div className="py-1" role="none">
               {categoryList.map((cat, index) => {
@@ -253,7 +268,7 @@ const AdminRanger = () => {
           </div>
         </div>
       </div>
-      <section className="grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-4 max-md:grid-cols-1 place-items-center">
+      <section className="grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-4 max-md:grid-cols-2 max-sm:grid-cols-1 place-items-center">
         {ranger?.map((prod, index) => {
           return (
             <ProductCard
@@ -267,6 +282,8 @@ const AdminRanger = () => {
               orderCount={prod?.orderCount}
               currentUnit={prod?.currentUnit}
               isVerified={prod?.isVerified}
+              policeVerification={prod?.policeVerification}
+              phone={prod?.phone}
             />
           );
         })}
