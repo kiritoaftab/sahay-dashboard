@@ -30,23 +30,21 @@ const StatCard = ({ heading, number, icon }) => {
   );
 };
 const AdminHome = () => {
-  const data = [
+  const RangerData = [
     { name: "Rithesh D", service: "Cleaning", bookings: 10, revenue: 500 },
     { name: "Rithesh D", service: "Cleaning", bookings: 10, revenue: 500 },
     { name: "Rithesh D", service: "Cleaning", bookings: 10, revenue: 500 },
   ];
 
   const perform = [
-    { service: "Maid",ranger: "30",},
-    { service: "Cook",ranger: "30",},
-    { service: "Maid",ranger: "40",},
-    { service: "Maid",ranger: "30",},
-    { service: "Maid",ranger: "30",},
-    { service: "Cook",ranger: "30",},
-    { service: "Maid",ranger: "40",},
-    { service: "Maid",ranger: "30",},
-    
-
+    { service: "Maid", ranger: "30" },
+    { service: "Kitechen Cleaning", ranger: "30" },
+    { service: "Maid", ranger: "40" },
+    { service: "Maid", ranger: "30" },
+    { service: "A/C service", ranger: "30" },
+    { service: "Kitechen Cleaning", ranger: "30" },
+    { service: "Maid", ranger: "40" },
+    { service: "Maid", ranger: "30" },
   ];
   const { auth } = useAuth();
   console.log(auth);
@@ -108,182 +106,164 @@ const AdminHome = () => {
   }, []);
   //NEED TO ADD style : w-screen md:w-full, for all components in home to render properly
   return (
-    <section className="grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-6 max-md:grid-cols-2 place-items-center p-10">
-
-        {/* welcome card */}
-      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl  mt-[-370px]">
+    <section className="grid grid-cols-3 grid-rows-2 p-5 w-screen h-full md:w-full bg-background gap-6 max-md:grid-cols-2 place-items-center">
+      {/* welcome card */}
+      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-[40px]  ">
         <div className="flex flex-col justify-between p-4 leading-normal">
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
+          <h5 className="mb-2 text-3xl font-semibold tracking-tight text-gray-900 ">
             Welcome back, Aesha Upadhyay ! {vendorDoc?.shopName}
           </h5>
           <p className="mb-3 font-semibold text-gray-500  text-balance ">
             Your smart work and skills have led to the following stats
           </p>
         </div>
-        <div className="w-100 flex flex-row justify-around gap-5 ">
-          <div className="flex flex-row border-2 flex flex-col border-background w-3/6 p-5 rounded-3xl gap-2">
+        <div className="w-100 flex flex-row justify-around gap-5 max-md:flex-col ">
+          <div className="flex flex-row border-2 flex flex-col border-background w-3/6 max-md:w-full p-5 rounded-3xl gap-2">
             <h5 className="font-bold">Today's Revenue</h5>
-            <h5 className="text-4xl text-primary font-bold text-violet-700">Rs 20,000</h5>
-            <p className="flex flex-row gap-2 text-gray-500">
-              <ArrowTrendingUpIcon className="h-5 w-5 text-green-400" />{" "}
+            <h5 className="text-4xl text-primary font-semibold text-primary">
+              Rs 20,000
+            </h5>
+            <p className="flex flex-row gap-2 text-gray-500 font-semibold">
+              <ArrowTrendingUpIcon className="h-5 w-5 text-green-400 font-semibold" />{" "}
               <span className="text-green-500"> 5% </span> since yesterday
             </p>
           </div>
-          <div className="flex flex-row border-2 flex flex-col border-background w-3/6 p-5 rounded-3xl gap-2">
+          <div className="flex flex-row border-2 flex flex-col border-background w-3/6 max-md:w-full p-5 rounded-3xl gap-2">
             <h5 className="font-bold">Today's Orders</h5>
-            <h5 className="text-4xl text-primary font-bold text-violet-700">30</h5>
-            <p className="flex flex-row gap-2 text-gray-500">
-              <ArrowTrendingUpIcon className="h-5 w-5 text-green-400" />{" "}
+            <h5 className="text-4xl text-primary font-semibold text-primary">
+              30
+            </h5>
+            <p className="flex flex-row gap-2 text-gray-500 font-semibold">
+              <ArrowTrendingUpIcon className="h-5 w-5 text-green-400 font-semibold" />{" "}
               <span className="text-green-500"> 2% </span> since yesterday
             </p>
           </div>
         </div>
       </div>
 
-
-
       {/* performance */}
-      <div className="flex flex-col justify-around w-full max-md:col-span-2  w-full bg-white rounded-3xl w-3/5 ">
+      <div className="flex flex-col p-1 row-span-2 justify-around w-full max-md:col-span-2 h-fit w-full bg-white rounded-[40px]  ">
         <div className="flex flex-col  p-4 leading-normal">
-          <div className="flex flex-col justify-center p-4 leading-normal">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
-              Perfromance
+          <div className="flex flex-col gap-5 justify-center p-4 leading-normal">
+            <h5 className=" text-3xl text-center font-semibold tracking-tight text-gray-900 ">
+              Performance
             </h5>
 
             <div className="flex flex-row border-2 flex flex-col border-background w-6/6 p-5 rounded-3xl ">
-            <h5 className="font-semibold">Total Orders</h5>
-            <h5 className="text-2xl text-primary font-semibold text-violet-700 mb-5">2090</h5>
+              <h5 className="font-semibold">Total Orders</h5>
+              <h5 className="text-2xl text-primary font-semibold text-violet-700 mb-5">
+                2090
+              </h5>
 
-            <h5 className="font-semibold">Total Customers</h5>
-            <h5 className="text-2xl text-primary font-semibold text-violet-700">500</h5>
-          </div>
-
-
-          <div className="flex flex-row border-2 flex flex-col border-background w-8/6 p-5 rounded-3xl mt-10 ">
-            <h5 className="font-semibold">Total Rangers</h5>
-            <h5 className="text-2xl text-primary font-semibold text-violet-700">300</h5>
-            <div className="flex flex-row mt-5">
-            <div class="mb-2 px-8 pr-[70px]">
-              <div className="font-semibold text-gray-500">
-                Service
-              </div>
+              <h5 className="font-semibold">Total Customers</h5>
+              <h5 className="text-2xl text-primary font-semibold text-violet-700">
+                500
+              </h5>
             </div>
-            <div class="mb-2 px-1">
-              <div className=" font-semibold text-gray-500">
-                Rangers
-              </div>
-            </div>
-            </div>   
-            <div className="flex flex-row">
-            <div className="w-[300px] h-[200px]">
-              {perform.map((item, index) => (
-                <div className=" flex flex-row">
-                  <div class="mb-2 px-8 pr-[100px]">
-                    <div className=" top-[496px] left-[300px] leading-[16px] font-semibold text-dimgray-100">
-                      {item.service}
-                    </div>
-                  </div>
-                  <div class="mb-2 px-1">
-                    <div className=" top-[496px] left-[50px] leading-[16px] font-semibold text-dimgray-100">
-                      {item.ranger}
-                    </div>
-                  </div>
+
+            <div className="flex flex-row border-2 flex flex-col border-background w-8/6 p-5 rounded-3xl  ">
+              <h5 className="font-semibold">Total Rangers</h5>
+              <h5 className="text-3xl text-primary font-semibold text-violet-700">
+                300
+              </h5>
+              <table className="w-full ">
+              <thead className=" text-gray-600 text-[16px]  ">
+                <tr>
+                  <th scope="col" className="p-2 text-left">
+                    Name
+                  </th>
+                  <th scope="col" className="p-2 text-left">
+                    Service
+                  </th>
                   
-                </div>
-              ))}
+                </tr>
+              </thead>
+              <tbody className="overflow-y-auto">
+                {perform.map((item, idx) => {
+                  return (
+                    <tr className=" font-semibold text-black">
+                      <td className="px-1 py-1 items-center">
+                        {item.service}
+                      </td>
+                      <td className="px-1 py-1 text-left">{item.ranger}</td>
+                      
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+              
             </div>
-          </div>
-
-
-          </div>
           </div>
         </div>
       </div>
 
-
-
       {/* booked ranger */}
-      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-3xl  mt-[-370px]">
-        <div className="flex flex-col justify-between p-4 leading-normal">
-          <div className="flex flex-col justify-between p-4 leading-normal">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
-              Most Booked Rangers {vendorDoc?.shopName}
+      <div className="flex flex-col col-span-2 p-5  max-md:col-span-2  w-full bg-white rounded-[40px]  ">
+        <div className="flex flex-col justify-between leading-normal">
+          <div className="flex flex-col justify-between p-2 leading-normal">
+            <h5 className="mb-2 text-[25px] font-semibold tracking-tight text-gray-900 ">
+              Most Booked Rangers
             </h5>
           </div>
-          <div className=" flex flex-row">
-            <div class="mb-2 px-8 pr-[120px]">
-              <div className=" top-[496px] left-[331px] leading-[16px] font-semibold text-gray-500">
-                Name
-              </div>
-            </div>
-            <div class="mb-2 px-1 pr-[100px] ">
-              <div className=" top-[496px] left-[555px] leading-[16px] font-semibold text-gray-500">
-                Service
-              </div>
-            </div>
-            <div class="mb-2 px-1 pr-[80px] w-[200px]">
-              <div className="top-[496px] left-[687px] leading-[16px] font-semibold text-gray-500">
-                Total bookings
-              </div>
-            </div>
-            <div class="mb-2 pr-[200px]">
-              <div className="top-[496px] left-[868px] leading-[16px] font-semibold text-gray-500">
-                Total Revenue
-              </div>
-            </div>
+          <div>
+            <table className="w-full ">
+              <thead className=" text-gray-600 text-[16px]  ">
+                <tr>
+                  <th scope="col" className="p-2 text-left">
+                    Name
+                  </th>
+                  <th scope="col" className="p-2">
+                    Service
+                  </th>
+                  <th scope="col" className="p-2 text-right">
+                    Total Bookings
+                  </th>
+                  <th scope="col" className="p-2 text-right">
+                    Total Revenue
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="max-h-[144px] overflow-y-auto">
+                {RangerData.map((item, idx) => {
+                  return (
+                    <tr className=" font-semibold text-black">
+                      <td className="px-3 py-2 flex flex-row gap-2  items-center">
+                        <img src={admin} className="w-8 h-8" />
+                        {item.name}
+                      </td>
+                      <td className="px-3 py-2 text-center">{item.service}</td>
+                      <td className="px-3 py-2 text-right">{item.bookings}</td>
+                      <td className="px-3 py-2 text-right">{item.revenue}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
-          <div className="flex flex-row">
-            <div className="w-[300px] h-[100px]">
-              {data.map((item, index) => (
-                <div className=" flex flex-row">
-                  <div class="mb-2 px-8 pr-[100px]">
-                    
-                    <div className=" top-[496px] left-[300px] leading-[16px] flex flex-row gap-2 font-semibold text-dimgray-100">
-                    <img src={admin} className="w-6 h-6"/>
-                      {item.name}
-                    </div>
-                  </div>
-                  <div class="mb-2 px-1 pr-[100px] ">
-                    <div className=" top-[496px] left-[5    0px] leading-[16px] font-semibold text-dimgray-100">
-                      {item.service}
-                    </div>
-                  </div>
-                  <div class="mb-2 px-1 pr-[140px] w-[200px]">
-                    <div className="top-[496px] left-[687px] leading-[16px] font-semibold text-dimgray-100">
-                      {item.bookings}
-                    </div>
-                  </div>
-                  <div class="mb-2 px-1 pr-[50px]">
-                    <div className="top-[496px] left-[868px] leading-[16px] font-semibold text-dimgray-100">
-                      {item.revenue}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <hr className="mt-10 h-px my-8 bg-gray-500 border-1 dark:bg-gray-700"/>
-          <div className=" flex flex-row ml-5">
+
+          <hr className="mt-2 my-5 bg-gray-500 border-1 dark:bg-gray-700" />
+          <div className=" flex flex-row ml-5 gap-10">
             <div>
-              <div className="  leading-[16px] font-semibold text-black-500 pr-5 text-xl">
+              <div className="  leading-[12px] font-semibold text-black-500 pr-5 text-lg">
                 Ongoing Bookings
               </div>
-              <div className="  mt-6 font-semibold  text-blueviolet-100 pr-5 text-5xl text-violet-700 ">
+              <div className="  mt-2 font-semibold  text-blueviolet-100 pr-5 text-4xl text-violet-700 ">
                 40
               </div>
             </div>
             <div>
-              <div className="  leading-[16px] font-semibold text-black-500 text-xl">
+              <div className="  leading-[12px] font-semibold text-black-500 text-lg">
                 Pending payments
               </div>
-              <div className="  mt-6 font-semibold  text-blueviolet-100 pr-5 text-5xl text-violet-700">
+              <div className="  mt-2 font-semibold  text-blueviolet-100 pr-5 text-4xl text-violet-700">
                 20
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-column justify-around w-full max-md:col-span-2"></div>
+     
     </section>
   );
 };
