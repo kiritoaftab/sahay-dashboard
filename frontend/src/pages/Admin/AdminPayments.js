@@ -137,15 +137,19 @@ const AdminPayment = () => {
     return (
       <div className="flex flex-col p-2 w-full bg-white relative border border-black-300 rounded-2xl shadow font-Montserrat md:flex-col smx:flex-col sm:flex-col">
         <div className="p-2 pl-4 flex flex-col justify-around">
-          <p className="font-bold text-md mb-1 text-black-800">
-            Customer: {customer.customerName}
-          </p>
-          <p className="font-bold text-md mb-1 text-black-800">
-            Ranger: {ranger.Rangername}
-          </p>
-          <p className="font-bold text-l mb-3 text-black-800 text-right mr-5">
-            Booking ID: {bookingId}
-          </p>
+          <div className="flex flex-row justify-between">
+            <div className="p-2 pl-4 flex flex-col justify-around">
+              <p className="font-bold text-md mb-1 text-black-800">
+                Customer: {customer.customerName}
+              </p>
+              <p className="font-bold text-md mb-1 text-black-800">
+                Ranger: {ranger.Rangername}
+              </p>
+            </div>
+            <p className="font-bold text-l mb-3 text-black-800 text-right mr-5">
+              Booking ID: {bookingId}
+            </p>
+          </div>
           <div className="flex flex-col-2 justify-between mx-1 mr-5">
             <div>
               <p className="font-semibold text-xl text-black-800 mb-2">

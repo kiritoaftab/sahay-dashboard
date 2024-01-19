@@ -131,7 +131,7 @@ const AdminCustomer = () => {
             <div className="flex flex-col w-full h-full">
               <p className="font-bold text-black text-lg">{name}</p>
               <p>
-                <span className="inline-flex items-center px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
+                <span className="inline-flex items-center  mt-5 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
                   Registered Date: {registeredDate}
                 </span>
                 <span className="inline-flex items-center mt-2 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
@@ -181,7 +181,7 @@ const AdminCustomer = () => {
             </button>
           </form>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-1">
           {customerData?.map((item, index) => {
             return (
               <ProductCard
