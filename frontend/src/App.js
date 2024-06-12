@@ -5,6 +5,9 @@ import { AdminLayout } from "./components";
 import { AdminAddRanger, AdminCustomer, AdminHome, AdminPayments, AdminRanger, AdminService } from "./pages";
 import Login from "./pages/Login";
 import AdminRangerDetails from "./pages/Admin/AdminRangerDetails";
+import AdminVendor from "./pages/Admin/AdminVendor";
+import AddVendor from "./pages/Admin/AddVendor";
+import EditVendor from "./pages/Admin/EditVendor";
 
 
 function App() {
@@ -17,11 +20,17 @@ function App() {
       <Route element={<PersistLogin/>}>
         <Route path="admin" element={<AdminLayout/>} >
           <Route path="" element={<AdminHome/>} />
+          
+          {/* TODO: DHEERAJ  */}
+          <Route path="vendors" element={<AdminVendor/>}/>
+          <Route path="addVendor" element={<AddVendor/>}/>
+          <Route path="editVendor/:id" element={<EditVendor/>}/>
+
           <Route path="rangers" element={<AdminRanger/>} />
           <Route path="customers" element={<AdminCustomer/>} />
           <Route path="addRanger" element={<AdminAddRanger/>} />
           <Route path="payments" element={<AdminPayments/>} />
-          <Route path="services" element={<AdminService/>} />
+          <Route path="bookings" element={<AdminService/>} />
           <Route path="rangers/:id" element={<AdminRangerDetails/>}/> 
         </Route>
 

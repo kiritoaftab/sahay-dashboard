@@ -3,7 +3,7 @@ import AdminRanger from "./Admin/AdminRanger";
 import AdminAddRanger from "./Admin/AdminAddRanger";
 import AdminCustomer from "./Admin/AdminCustomer";
 import AdminPayments from "./Admin/AdminPayments";
-import AdminService from "./Admin/AdminService";
+import AdminService from "./Admin/AdminBookings";
 
 
 export {AdminHome, AdminRanger, AdminAddRanger,AdminCustomer,AdminPayments,AdminService}

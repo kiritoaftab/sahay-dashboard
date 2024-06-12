@@ -58,7 +58,7 @@ const categoryMap = {
   Furniture: ["All", "Home", "Office"],
   Sports: ["All", "Volleyball", "Football", "Cricket", "Gym", "Basketball"],
 };
-const BASE_URL = "http://some.domain.name:8080/api";
+const BASE_URL = "http://sahay24x7.com:4000/api/";
 function formatIndianRupee(number) {
   // Check if the input is a valid number
   if (isNaN(number)) {
