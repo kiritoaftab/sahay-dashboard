@@ -74,6 +74,29 @@ function formatIndianRupee(number) {
   return formattedAmount;
 }
 
+function formatDuration(minutes) {
+  if(minutes == 0){
+    return '0 mins';
+  }
+  const days = Math.floor(minutes / (24 * 60));
+  minutes %= (24 * 60);
+  const hours = Math.floor(minutes / 60);
+  minutes %= 60;
+
+  let duration = '';
+  if (days > 0) {
+    duration += `${days}d `;
+  }
+  if (hours > 0) {
+    duration += `${hours}hrs `;
+  }
+  if (minutes > 0) {
+    duration += `${minutes}mins`;
+  }
+  console.log(duration);
+  return duration.trim();
+}
+
 export {
   BASE_URL,
   logo,
@@ -91,4 +114,5 @@ export {
   categoryMap,
   admin,
   accessorriesImg,
+  formatDuration
 };
