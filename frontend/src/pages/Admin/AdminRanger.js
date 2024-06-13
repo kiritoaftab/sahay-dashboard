@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../axiosInstance/axiosApi";
 import { formatIndianRupee } from "../../constants";
-import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 const AdminRanger = () => {
   const rangerList = [
@@ -152,65 +151,8 @@ const AdminRanger = () => {
     );
   }
 
-  const ProductCard = ({
-    img,
-    name,
-    category,
-    price,
-    isVerified,
-    prodStatus,
-    orderCount,
-    phone,
-    id,
-    policeVerification,
-  }) => {
-    return (
-      <div className="flex  lg:flex-row  p-2 w-full bg-white relative border border-black-300 rounded-2xl shadow font-Montserrat px-2 md:flex-col smx:flex-col sm:flex-col">
-        <div className="p-2 pl-4 flex flex-col gap-2 justify-around  w-full">
-          <div className="flex flex-row p-1 gap-5 items-center">
-            <img
-              src={img}
-              className="object-cover h-24 w-24 bg-gray-200 rounded-full border-2 border-primary"
-            />
-            <div className="flex flex-col">
-              <p className="font-bold text-2xl text-black-800">{name}</p>
-              <p className="font-semibold text-gray-600">{category}</p>
-            </div>
-          </div>
-          <p className="font-bold text-md text-gray-600">
-            {formatIndianRupee(price)} /-
-          </p>
-
-          <p className="font-bold text-md text-black-800">
-            Total orders :
-            <span className="text-green-800 text-lg">{orderCount}</span>
-          </p>
-          <p className="font-bold text-base text-black-800 ">
-            Phone : <span className="text-gray-800 text-base">{phone}</span>
-          </p>
-          <div className="flex flex-row items-center justify-between ">
-            {policeVerification ? (
-              <p className="font-semibold w-fit text-lg text-green-500 bg-green-400/[.30] px-2 rounded-lg">
-                Legally verified!
-              </p>
-            ) : (
-              <p className="font-semibold w-fit text-lg text-red-500  bg-red-400/[.30] px-2 rounded-lg">
-                Not verified!
-              </p>
-            )}
-            <button
-              onClick={() => navigate(`/admin/rangers/${id}`)}
-              className="text-end w-[150px] font-light rounded-lg  text-primary text-lg p-1 flex flex-row justify-center items-center hover:underline hover:underline-offset-2 "
-            >
-              <p className="mr-3 font-medium">View More </p>
-              <ArrowLongRightIcon height={20} width={20} />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
   const [dropdown, setDropdown] = useState(false);
+
   return (
     <section className="w-screen md:w-full h-full bg-background gap-4 flex flex-col">
       <div className="w-screen md:w-full bg-white p-4 flex justify-between px-10 ">
@@ -219,7 +161,7 @@ const AdminRanger = () => {
           <div>
             <button
               type="button"
-              class=" inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               id="menu-button"
               aria-expanded="true"
               aria-haspopup="true"
@@ -233,9 +175,9 @@ const AdminRanger = () => {
                 aria-hidden="true"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>
@@ -268,25 +210,71 @@ const AdminRanger = () => {
           </div>
         </div>
       </div>
-      <section className="grid grid-cols-3 p-3 w-screen md:w-full bg-background gap-4 max-md:grid-cols-2 max-sm:grid-cols-1 place-items-center">
-        {ranger?.map((prod, index) => {
-          return (
-            <ProductCard
-              key={index}
-              id={prod?.id}
-              img={prod?.bannerImage}
-              name={prod?.name}
-              category={prod?.category}
-              price={prod?.price}
-              prodStatus={prod?.prodStatus}
-              orderCount={prod?.orderCount}
-              currentUnit={prod?.currentUnit}
-              isVerified={prod?.isVerified}
-              policeVerification={prod?.policeVerification}
-              phone={prod?.phone}
-            />
-          );
-        })}
+      <section className="w-screen md:w-full bg-background p-4">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Services</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {ranger.map((ranger, index) => (
+              <tr key={index}>
+                
+                <td className="px-6 py-4 whitespace-nowrap flex items-center">
+                    <img
+                      src={ranger.bannerImage}
+                      className="h-10 w-10 rounded-full object-cover mr-4"
+                      alt={ranger.name}
+                    />
+                    <span className="text-sm font-medium text-gray-900">
+                      {ranger.name}
+                    </span>
+                  </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{ranger.phone}</td>
+                <div className=" my-3 rounded-xl bg-[#FFB0153D]  font-semibold">
+                <td className="px-2 py-2 whitespace-nowrap text-sm text-black text-center">{ranger.category}</td>
+                </div>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{ranger.orderCount}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatIndianRupee(ranger.price)}</td>
+                <td className="">
+                  {/* {ranger.policeVerification ? (
+                    <p className="font-semibold text-green-500">Legally verified!</p>
+                  ) : (
+                    <p className="font-semibold text-red-500">Not verified!</p>
+                  )} */}
+                  <button
+                    onClick={() => navigate(`/admin/rangers/${ranger.id}`)}
+                    className="text-white px-2 py-2 whitespace-nowrap text-sm  rounded-xl bg-indigo-500"
+                  >
+                    View More
+                  </button>
+                </td>
+                <td class="px-6 py-4">
+                      <button>
+                        <TrashIcon className="h-5 w-5 mr-2 text-red-500" />
+                      </button>
+                      <button>
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            value=""
+                            class="sr-only peer"
+                          />
+                          <div class="relative w-11 h-6 bg-red-500  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-green-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                        </label>
+                      </button>
+                    </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
     </section>
   );
