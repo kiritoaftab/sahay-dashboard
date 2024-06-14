@@ -21,12 +21,13 @@ function App() {
         <Route path="admin" element={<AdminLayout/>} >
           <Route path="" element={<AdminHome/>} />
           
-          {/* TODO: DHEERAJ  */}
+        
           <Route path="vendors" element={<AdminVendor/>}/>
           <Route path="addVendor" element={<AddVendor/>}/>
           <Route path="editVendor/:id" element={<EditVendor/>}/>
 
           <Route path="rangers" element={<AdminRanger/>} />
+          
           <Route path="customers" element={<AdminCustomer/>} />
           <Route path="addRanger" element={<AdminAddRanger/>} />
           <Route path="payments" element={<AdminPayments/>} />

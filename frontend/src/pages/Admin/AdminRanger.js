@@ -58,8 +58,8 @@ const AdminRanger = () => {
   
 
   return (
-    <section className="w-screen md:w-full h-full bg-background gap-4 flex flex-col">
-      <div className="w-screen md:w-full bg-white p-4 flex justify-between px-10">
+    <section className="w-screen md:w-full h-full bg-background gap-4 flex flex-col p-5">
+      <div className="w-screen md:w-full bg-white p-5 flex justify-between px-10">
         <p className="text-2xl font-bold">Ranger Details</p>
         <div className="relative inline-block text-left">
           <div>
