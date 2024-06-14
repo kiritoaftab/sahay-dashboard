@@ -86,7 +86,7 @@ const AddVendor = () => {
           <h1 className="text-2xl font-medium">Add Vendor</h1>
           <form onSubmit={addVendor} className="bg-white rounded-2xl border-slate-300 border">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
-              <div className="p-5">
+              <div className="px-5 pt-5">
                 <label
                   htmlFor="firstName"
                   className="block mb-2 text-sm font-medium text-gray-900 ">
@@ -101,7 +101,7 @@ const AddVendor = () => {
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
-              <div className="p-5">
+              <div className="px-5 pt-5">
                 <label
                   htmlFor="lastName"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -116,7 +116,7 @@ const AddVendor = () => {
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
-              <div className="p-5">
+              <div className="px-5">
                 <label
                   htmlFor="phoneNumber"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -132,7 +132,7 @@ const AddVendor = () => {
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
-              <div className="p-5">
+              <div className="px-5">
                 <label
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -147,7 +147,7 @@ const AddVendor = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="p-5">
+              <div className="px-5">
                 <label
                   htmlFor="gstIn"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -163,7 +163,7 @@ const AddVendor = () => {
                   onChange={(e) => setGstIn(e.target.value)}
                 />
               </div>
-              <div className="p-5">
+              <div className="px-5">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -185,7 +185,7 @@ const AddVendor = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-5">
+              <div className="px-5">
                 <label
                   htmlFor="shopName"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -200,7 +200,7 @@ const AddVendor = () => {
                   onChange={(e) => setShopName(e.target.value)}
                 />
               </div>
-              <div className="p-5">
+              <div className="px-5">
                 <label
                   htmlFor="serviceList"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -220,7 +220,7 @@ const AddVendor = () => {
                 </select>
               </div>
             </div>
-            <div className="mb-6 px-10 py-2">
+            <div className="mb-6 px-5 py-2">
               <label
                 htmlFor="address"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -235,8 +235,8 @@ const AddVendor = () => {
                 onChange={(e) => setShopAddress(e.target.value)}
               />
             </div>
-            <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
-              <div className="w-full md:w-auto">
+            
+              <div className="px-5 w-1/3">
                 <label
                   htmlFor="pincode"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -253,7 +253,7 @@ const AddVendor = () => {
                   maxLength={6}
                 />
               </div>
-            </div>
+            
 
             <div className="flex flex-col items-center mb-6">
               <div className="mx-auto max-w-xs">
