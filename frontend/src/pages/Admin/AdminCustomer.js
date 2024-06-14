@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
-import { TrashIcon } from "@heroicons/react/24/outline";
 
 const AdminCustomer = () => {
   const [customerDoc, setCustomerDoc] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const navigate = useNavigate();
 
   const getAllCustomersPagination = async () => {
     try {
@@ -40,7 +37,7 @@ const AdminCustomer = () => {
   return (
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
-        <h1 className="text-2xl font-medium">All Vendors</h1>
+        <h1 className="text-2xl font-medium">All Customers</h1>
         <div className="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
@@ -69,9 +66,6 @@ const AdminCustomer = () => {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Role
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Actions
                 </th>
               </tr>
             </thead>
@@ -107,21 +101,6 @@ const AdminCustomer = () => {
                     </td>
                     <td className="px-6 py-4">{customer?.gender}</td>
                     <td className="px-6 py-4">{customer?.user?.role}</td>
-                    <td className="px-6 py-4">
-                      <button>
-                        <TrashIcon className="h-5 w-5 text-red-500" />
-                      </button>
-                      <button>
-                        <label className="inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            value=""
-                            className="sr-only peer"
-                          />
-                          <div className="relative w-11 h-6 bg-red-500  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-green-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
-                        </label>
-                      </button>
-                    </td>
                   </tr>
                 ))
               ) : (
