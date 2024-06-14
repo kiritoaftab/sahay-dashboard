@@ -17,7 +17,7 @@ const EditVendor = () => {
   const [uploadedUrl, setUploadedUrl] = useState();
   const { id } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   console.log(id);
 
@@ -39,29 +39,28 @@ const EditVendor = () => {
   };
 
   const updateVendor = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const requestBody = {
-      vendorId: id, 
-      email: email, 
-      phone: phone, 
-      profilePic: uploadedUrl, 
-      firstName: firstName, 
-      lastName: lastName, 
-      address: shopAddress, 
-      pincode: pinCode, 
-      shopName: shopName, 
-      shopGstNo: gstIn, 
+      vendorId: id,
+      email: email,
+      phone: phone,
+      profilePic: uploadedUrl,
+      firstName: firstName,
+      lastName: lastName,
+      address: shopAddress,
+      pincode: pinCode,
+      shopName: shopName,
+      shopGstNo: gstIn,
     };
 
     console.log(requestBody);
-    navigate(`/admin/vendors`)
+    navigate(`/admin/vendors`);
     try {
       const response = await axios.post(
         `${BASE_URL}vendor/updateVendor`,
         requestBody
       );
       console.log(response?.data);
-      
     } catch (error) {
       console.error(error, { success: false, msg: "vendor not updated" });
     }
@@ -83,9 +82,11 @@ const EditVendor = () => {
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
         <h1 className="text-2xl font-medium">Vendor Details</h1>
-        <form onSubmit={updateVendor} className="bg-white rounded-2xl border-slate-300 border">
+        <form
+          onSubmit={updateVendor}
+          className="bg-white rounded-2xl border-slate-300 border">
           <div className="grid gap-6 mb-6 md:grid-cols-2">
-            <div className="p-5">
+            <div className="px-5 pt-5">
               <label
                 htmlFor="firstName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -101,7 +102,7 @@ const EditVendor = () => {
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="px-5 pt-5">
               <label
                 htmlFor="lastName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -117,7 +118,7 @@ const EditVendor = () => {
                 onChange={(e) => setLastName(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="px-5">
               <label
                 htmlFor="phoneNumber"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -134,7 +135,7 @@ const EditVendor = () => {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="px-5">
               <label
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -150,7 +151,7 @@ const EditVendor = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="px-5">
               <label
                 htmlFor="gstIn"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -167,7 +168,7 @@ const EditVendor = () => {
                 onChange={(e) => setGstIn(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="px-5">
               <label
                 htmlFor="shopName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -184,7 +185,7 @@ const EditVendor = () => {
               />
             </div>
           </div>
-          <div className="mb-6 px-10 py-2">
+          <div className="mb-6 px-5 py-2">
             <label
               htmlFor="address"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -200,25 +201,23 @@ const EditVendor = () => {
               onChange={(e) => setShopAddress(e.target.value)}
             />
           </div>
-          <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
-            <div className="w-full md:w-auto">
-              <label
-                htmlFor="pincode"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Postal Pincode
-              </label>
-              <input
-                type="number"
-                id="pincode"
-                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="110001"
-                required
-                value={pinCode}
-                onChange={(e) => setPinCode(e.target.value)}
-                min={0}
-                maxLength={6}
-              />
-            </div>
+          <div className="px-5 w-1/3">
+            <label
+              htmlFor="pincode"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Postal Pincode
+            </label>
+            <input
+              type="number"
+              id="pincode"
+              className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="110001"
+              required
+              value={pinCode}
+              onChange={(e) => setPinCode(e.target.value)}
+              min={0}
+              maxLength={6}
+            />
           </div>
 
           <div className="flex flex-col items-center mb-6">
