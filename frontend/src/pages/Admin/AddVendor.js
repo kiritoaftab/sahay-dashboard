@@ -17,12 +17,12 @@ const AddVendor = () => {
   const [pinCode, setPinCode] = useState();
   const [service, setService] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedService, setSelectedService] = useState('');
+  const [selectedService, setSelectedService] = useState("");
 
   const [file, setFile] = useState(null);
   const [uploadedUrl, setUploadedUrl] = useState();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -60,8 +60,8 @@ const AddVendor = () => {
         `${BASE_URL}vendor/addVendor`,
         requestBody
       );
-      console.log(response.data)
-      navigate(`/admin/vendors`)
+      console.log(response.data);
+      navigate(`/admin/vendors`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add vendor" });
     }
@@ -82,19 +82,20 @@ const AddVendor = () => {
   return (
     <>
       <>
-        <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
-          <form onSubmit={addVendor}>
+        <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
+          <h1 className="text-2xl font-medium">Add Vendor</h1>
+          <form onSubmit={addVendor} className="bg-white rounded-2xl">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div className="p-5">
                 <label
                   htmlFor="firstName"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   First name
                 </label>
                 <input
                   type="text"
                   id="firstName"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="First Name"
                   required
                   onChange={(e) => setFirstName(e.target.value)}
@@ -109,7 +110,7 @@ const AddVendor = () => {
                 <input
                   type="text"
                   id="lastName"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Last Name"
                   required
                   onChange={(e) => setLastName(e.target.value)}
@@ -124,7 +125,7 @@ const AddVendor = () => {
                 <input
                   type="tel"
                   id="phoneNumber"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="98XXXXXX99"
                   pattern="[0-9]{10}"
                   required
@@ -140,7 +141,7 @@ const AddVendor = () => {
                 <input
                   type="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="your@email.com"
                   required
                   onChange={(e) => setEmail(e.target.value)}
@@ -155,7 +156,7 @@ const AddVendor = () => {
                 <input
                   type="text"
                   id="gstIn"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="29ABCDE1111LAZ"
                   pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
                   required
@@ -172,7 +173,7 @@ const AddVendor = () => {
                   <input
                     type={showPassword ? "text" : "password"}
                     id="password"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10" // added pr-10
+                    className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10" // added pr-10
                     placeholder="*********"
                     required
                     onChange={(e) => setPassword(e.target.value)}
@@ -193,7 +194,7 @@ const AddVendor = () => {
                 <input
                   type="text"
                   id="shopName"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Shop Name"
                   required
                   onChange={(e) => setShopName(e.target.value)}
@@ -207,7 +208,7 @@ const AddVendor = () => {
                 </label>
                 <select
                   id="serviceList"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                   onChange={(e) => setSelectedService(e.target.value)}>
                   <option value="">Select an option</option>
@@ -228,7 +229,7 @@ const AddVendor = () => {
               <textarea
                 type="text"
                 id="address"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Your address"
                 required
                 onChange={(e) => setShopAddress(e.target.value)}
@@ -244,7 +245,7 @@ const AddVendor = () => {
                 <input
                   type="number"
                   id="pincode"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="110001"
                   required
                   onChange={(e) => setPinCode(e.target.value)}
@@ -254,12 +255,12 @@ const AddVendor = () => {
               </div>
             </div>
 
-            <div className="flex items-start mb-6">
+            <div className="flex flex-col items-center mb-6">
               <div className="mx-auto max-w-xs">
                 <label
                   htmlFor="example1"
                   className="mb-1 block text-sm font-medium text-gray-700">
-                  Upload file
+                  Profile Picture
                 </label>
                 <input
                   id="example1"
@@ -270,6 +271,11 @@ const AddVendor = () => {
                   onChange={handleFileUpload}
                 />
               </div>
+              {uploadedUrl && (
+                <div className="mt-2 flex justify-center">
+                  <img src={uploadedUrl} className="h-32 w-32" alt="Uploaded" />
+                </div>
+              )}
             </div>
 
             <div className=" bottom-0 left-0 w-full flex justify-center p-4">
