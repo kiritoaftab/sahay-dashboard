@@ -84,7 +84,7 @@ const AddVendor = () => {
       <>
         <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
           <h1 className="text-2xl font-medium">Add Vendor</h1>
-          <form onSubmit={addVendor} className="bg-white rounded-2xl">
+          <form onSubmit={addVendor} className="bg-white rounded-2xl border-slate-300 border-2">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div className="p-5">
                 <label

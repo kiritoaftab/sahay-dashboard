@@ -83,7 +83,7 @@ const EditVendor = () => {
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
         <h1 className="text-2xl font-medium">Vendor Details</h1>
-        <form onSubmit={updateVendor} className="bg-white rounded-2xl">
+        <form onSubmit={updateVendor} className="bg-white rounded-2xl border-slate-300 border-2">
           <div className="grid gap-6 mb-6 md:grid-cols-2">
             <div className="p-5">
               <label
