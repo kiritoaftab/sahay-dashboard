@@ -36,10 +36,11 @@ const AdminVendor = () => {
   };
   return (
     <>
-      <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
+        <h1 className="text-2xl font-medium">All Vendors</h1>
+        <div class="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+            <thead class="text-xs text-gray-700 uppercase bg-slate-100 ">
               <tr>
                 <th scope="col" class="p-4">
                   <div class="flex items-center">

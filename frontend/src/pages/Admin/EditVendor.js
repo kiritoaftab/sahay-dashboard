@@ -13,7 +13,6 @@ const EditVendor = () => {
   const [shopName, setShopName] = useState();
   const [shopAddress, setShopAddress] = useState();
   const [pinCode, setPinCode] = useState();
-  const [district, setDistrict] = useState();
   const [file, setFile] = useState(null);
   const [uploadedUrl, setUploadedUrl] = useState();
   const { id } = useParams();
@@ -42,16 +41,16 @@ const EditVendor = () => {
   const updateVendor = async (e) => {
     e.preventDefault()
     const requestBody = {
-      vendorId: id, //
-      email: email, //
-      phone: phone, //
-      profilePic: uploadedUrl, //
-      firstName: firstName, //
-      lastName: lastName, //
-      address: shopAddress, //
-      pincode: pinCode, //
-      shopName: shopName, //
-      shopGstNo: gstIn, //
+      vendorId: id, 
+      email: email, 
+      phone: phone, 
+      profilePic: uploadedUrl, 
+      firstName: firstName, 
+      lastName: lastName, 
+      address: shopAddress, 
+      pincode: pinCode, 
+      shopName: shopName, 
+      shopGstNo: gstIn, 
     };
 
     console.log(requestBody);
@@ -82,8 +81,9 @@ const EditVendor = () => {
 
   return (
     <>
-      <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
-        <form onSubmit={updateVendor}>
+      <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
+        <h1 className="text-2xl font-medium">Vendor Details</h1>
+        <form onSubmit={updateVendor} className="bg-white rounded-2xl border-slate-300 border">
           <div className="grid gap-6 mb-6 md:grid-cols-2">
             <div className="p-5">
               <label
@@ -94,7 +94,7 @@ const EditVendor = () => {
               <input
                 type="text"
                 id="firstName"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="First Name"
                 required
                 value={firstName}
@@ -110,7 +110,7 @@ const EditVendor = () => {
               <input
                 type="text"
                 id="lastName"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Last Name"
                 required
                 value={lastName}
@@ -126,7 +126,7 @@ const EditVendor = () => {
               <input
                 type="tel"
                 id="phoneNumber"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="98XXXXXX99"
                 pattern="[0-9]{10}"
                 required
@@ -143,7 +143,7 @@ const EditVendor = () => {
               <input
                 type="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="your@email.com"
                 required
                 value={email}
@@ -159,7 +159,7 @@ const EditVendor = () => {
               <input
                 type="text"
                 id="gstIn"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="29ABCDE1111LAZ"
                 pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
                 required
@@ -176,7 +176,7 @@ const EditVendor = () => {
               <input
                 type="text"
                 id="shopName"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Shop Name"
                 required
                 value={shopName}
@@ -193,7 +193,7 @@ const EditVendor = () => {
             <textarea
               type="text"
               id="address"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Your address"
               required
               value={shopAddress}
@@ -210,7 +210,7 @@ const EditVendor = () => {
               <input
                 type="number"
                 id="pincode"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="110001"
                 required
                 value={pinCode}
@@ -226,7 +226,7 @@ const EditVendor = () => {
               <label
                 htmlFor="example1"
                 className="mb-1 block text-sm font-medium text-gray-700">
-                Upload file
+                Profile Picture
               </label>
               <input
                 id="example1"
