@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
 
 const AddRanger = () => {
@@ -16,10 +17,12 @@ const AddRanger = () => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [service, setService] = useState([]);
-  const [vendorId, setVendorId] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [selectedService, setSelectedService] = useState("");
-  
+  const [vendorId, setVendorId] = useState("");
+  const [vendors, setVendors] = useState([]);
+  const [selectedVendor, setSelectedVendor] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [profilePicUrl, setProfilePicUrl] = useState("");
   const [aadharImgUrl, setAadharImgUrl] = useState("");
   const [panImgUrl, setPanImgUrl] = useState("");
@@ -89,12 +92,35 @@ const AddRanger = () => {
     getAllServices();
   }, []);
 
+  useEffect(() => {
+    const getAllVendors = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}vendor/getAllVendors`);
+        console.log(response.data);
+        setVendors(response.data.vendorDoc._id);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAllVendors();
+  }, []);
+
   return (
     <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
       <div className="w-screen md:w-full bg-background p-5 flex justify-between px-10">
         <p className="text-2xl font-bold">Add Ranger</p>
         <div className="relative inline-block text-left">
-          <h1>search</h1>
+          <input
+            type="text"
+            placeholder="Search..."
+            // value={searchTerm}
+            // onChange={handleChange}
+            className="w-full p-2 pl-10 border rounded-md focus:outline-none" 
+          />
+          <FaSearch
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+            size={20}
+          />
         </div>
       </div>
       <div className=" p-5 ">
@@ -245,20 +271,20 @@ const AddRanger = () => {
               />
             </div>
             <div className="mb-6 px-5 py-2">
-            <label
-              htmlFor="address"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Address
-            </label>
-            <textarea
-              id="address"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Your address"
-              required
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
+              <label
+                htmlFor="address"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Address
+              </label>
+              <textarea
+                id="address"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Your address"
+                required
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
             <div className="p-5">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Gender
@@ -294,8 +320,6 @@ const AddRanger = () => {
                 >
                   Female
                 </label>
-                
-                
               </div>
             </div>
             <div className="p-5">
@@ -319,24 +343,30 @@ const AddRanger = () => {
                 ))}
               </select>
             </div>
-            <div className="p-5">
+            <div>
               <label
-                htmlFor="vendorId"
+                htmlFor="vendorList"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Vendor
+                Select Vendor
               </label>
-              <input
-                type="text"
-                id="vendorId"
+              <select
+                id="vendorList"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Vendor ID"
+                value={selectedVendor}
+                onChange={(e) => setSelectedVendor(e.target.value)}
                 required
-                onChange={(e) => setVendorId(e.target.value)}
-              />
+              >
+                <option value="">Select an option</option>
+                {vendors.map((vendor) => (
+                  <option key={vendor._id} value={vendor._id}>
+                    {vendor.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-          
+
           <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
             <div className="w-full md:w-auto">
               <label
@@ -355,7 +385,11 @@ const AddRanger = () => {
               />
               {profilePicUrl && (
                 <div className="mt-2 flex justify-center">
-                  <img src={profilePicUrl} className="h-32 w-32" alt="Profile" />
+                  <img
+                    src={profilePicUrl}
+                    className="h-32 w-32"
+                    alt="Profile"
+                  />
                 </div>
               )}
             </div>
