@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
 
-const AdminLayout = (props) => {
+const VendorLayout = (props) => {
   const [collapsed, setSidebarCollapsed] = useState(false);
   const [showSidebar,setShowSidebar] = useState(false);
   return (
@@ -35,4 +35,4 @@ const AdminLayout = (props) => {
     </div>
   );
 };
-export default AdminLayout;
+export default VendorLayout;

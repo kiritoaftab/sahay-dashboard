@@ -5,7 +5,6 @@ import { BASE_URL, categoryMap } from "../../constants";
 import axios from "../../axiosInstance/axiosApi";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { TrashIcon } from "@heroicons/react/24/outline";
 
 const AdminAddRanger = () => {
   // const awsSecretKey = process.env.REACT_APP_AWS_SECRET_KEY;
