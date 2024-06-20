@@ -1,205 +1,133 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
-import axios from "../../axiosInstance/axiosApi";
-import { formatIndianRupee } from "../../constants";
-import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { BASE_URL } from "../../constants";
 
 const AdminCustomer = () => {
-  const [vendorDoc, setVendorDoc] = useState(null);
-  const [topProducts, setTopProducts] = useState(null);
-  const [K, setK] = useState(3);
-  const { auth } = useAuth();
-  const customerData = [
-    {
-      id: "1",
-      bannerImage:
-        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      registeredDate: "15th January 2024",
-      LastLogin: "18th January 2024",
-      email: "gojo@gmail.com",
-      name: "Satoru Gojo",
-      phoneNumber: "937848373828",
-      serviceNumber: "5",
-    },
-    {
-      id: "2",
-      bannerImage:
-        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      registeredDate: "15th January 2024",
-      LastLogin: "18th January 2024",
-      email: "tanjiro@gmail.com",
-      name: "Tanjiro",
-      phoneNumber: "937848373828",
-      serviceNumber: "10",
-    },
-    {
-      id: "3",
-      bannerImage:
-        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      registeredDate: "15th January 2024",
-      LastLogin: "18th January 2024",
-      email: "tanjiro@gmail.com",
-      name: "Tanjiro",
-      phoneNumber: "937848373828",
-      serviceNumber: "10",
-    },
-    {
-      id: "4",
-      bannerImage:
-        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      registeredDate: "15th January 2024",
-      LastLogin: "18th January 2024",
-      email: "tanjiro@gmail.com",
-      name: "Tanjiro",
-      phoneNumber: "937848373828",
-      serviceNumber: "10",
-    },
-    {
-      id: "5",
-      bannerImage:
-        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      registeredDate: "15th January 2024",
-      LastLogin: "18th January 2024",
-      email: "tanjiro@gmail.com",
-      name: "Tanjiro",
-      phoneNumber: "937848373828",
-      serviceNumber: "10",
-    },
-    {
-      id: "6",
-      bannerImage:
-        "https://static.vecteezy.com/system/resources/previews/004/341/320/non_2x/man-doing-shopping-flat-concept-icon-guy-hurry-up-with-purchases-bags-sticker-clipart-shopaholic-customer-buyer-cartoon-character-isolated-illustration-on-white-background-vector.jpg",
-      registeredDate: "15th January 2024",
-      LastLogin: "18th January 2024",
-      email: "tanjiro@gmail.com",
-      name: "Tanjiro",
-      phoneNumber: "937848373828",
-      serviceNumber: "10",
-    },
-  ];
-  const fetchTopProducts = async (vendorId, K) => {
-    if (vendorId) {
-      try {
-        const res = await axios.post("/products/vendor/fetchTopKProducts/", {
-          vendorId: vendorId,
-          K: K,
-        });
-        console.log(res.data);
-        setTopProducts(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+  const [customerDoc, setCustomerDoc] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchVendorData = async (userId) => {
+
+  const getAllCustomersPagination = async () => {
     try {
-      const res = await axios.get("/vendor/getVendorByUserId/" + userId);
-      console.log(res.data?.userDoc);
-      fetchTopProducts(res.data?.userDoc?._id, K);
-      setVendorDoc(res.data?.userDoc);
+      const response = await axios.get(
+        `${BASE_URL}customer/getAllCustomers?page=${currentPage}&pageSize=10`
+      );
+      setCustomerDoc(response?.data?.customerDoc);
+      console.log(response?.data);
+      setTotalPages(response?.data?.pagination?.totalPages);
     } catch (error) {
-      console.error(error);
+      console.error(error, {
+        success: false,
+        msg: "Could not get all Customers",
+      });
     }
   };
 
   useEffect(() => {
-    fetchVendorData(auth?._id);
-  }, []);
+    getAllCustomersPagination();
+  }, [currentPage]);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    console.log(K);
-    await fetchTopProducts(vendorDoc?._id, K);
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
   };
-
-  const ProductCard = ({
-    id,
-    bannerImage,
-    registeredDate,
-    LastLogin,
-    email,
-    name,
-    phoneNumber,
-    serviceNumber,
-  }) => {
-    return (
-      <div className="transition duration-300 max-w-2lg bg-white hover:bg-indigo-100 border border-gray-200 rounded-lg lg:flex-row shadow p-5 ">
-        <div className="flex flex-col  w-full">
-          <div className="flex flex-row  w-full">
-            <img className="h-40 mix-blend-multiply mr-1" src={bannerImage} />
-            <div className="flex flex-col w-full h-full">
-              <p className="font-bold text-black text-lg">{name}</p>
-              <p>
-                <span className="inline-flex items-center  mt-5 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                  Registered Date: {registeredDate}
-                </span>
-                <span className="inline-flex items-center mt-2 px-1 py-1 me-2 text-sm font-medium text-blue-800 bg-blue-100 rounded">
-                  Last login Date: {LastLogin}
-                </span>
-              </p>
-            </div>
-          </div>
-          <div>
-          <p className="font-semibold">email: {email}</p>
-          <p className="font-semibold">
-            Phone Number:{" "}
-            <span className="font-bold text-md text-green-600">
-              {phoneNumber}
-            </span>
-          </p>
-          <p className="font-semibold">
-            Services Taken:{" "}
-            <span className="font-bold text-md text-green-600">
-              {serviceNumber}
-            </span>
-          </p>
-          </div>
-        </div>
-      </div>
-    );
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
   };
-
   return (
-    <section className="p-3 w-screen md:w-full h-full bg-background">
-      <div className="bg-white p-5 rounded-lg my-2">
-        <p className="text-4xl pb-10 font-bold">Customers</p>
-
-        <div className="grid grid-cols-2 place-items-start my-2">
-          <form
-            className="w-full flex flex-row justify-start items-center"
-            onSubmit={handleSearch}
-          >
-            <input
-              type="number"
-              className="bg-gray-100 p-2 rounded-lg w-4/5 focus:ring-black-600"
-              placeholder="Enter number to search customers with highest number of Services"
-              onChange={(e) => setK(e.target.value)}
-            />
-            <button className="ml-2">
-              <MagnifyingGlassCircleIcon className="h-10 w-10" />
+    <>
+      <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
+        <h1 className="text-2xl font-medium">All Customers</h1>
+        <div className="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
+              <tr>
+                <th scope="col" className="p-4">
+                  <div className="flex items-center">
+                    <label htmlFor="checkbox-all-search" className="sr-only">
+                      checkbox
+                    </label>
+                  </div>
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Customer name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Phone
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Email
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Address
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Gender
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Role
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {customerDoc && customerDoc.length > 0 ? (
+                customerDoc.map((customer, index) => (
+                  <tr className="bg-white border-b hover:bg-gray-50">
+                    <td className="w-4 p-4">
+                      <div className="flex items-center">
+                        <label
+                          htmlFor="checkbox-all-search"
+                          className="sr-only">
+                          checkbox
+                        </label>
+                      </div>
+                    </td>
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                      {customer?.user?.userName}
+                    </th>
+                    <td className="px-6 py-4">{customer?.user?.phone}</td>
+                    <td className="px-6 py-4">{customer?.user?.email}</td>
+                    <td className="px-6 py-4">
+                      {customer?.addresses?.length > 0
+                        ? customer?.addresses.map((address, index) => (
+                            <div key={index}>
+                              <div className="font-bold">Location:<p className="font-light">{address?.address}</p></div>
+                              <div className="font-bold">Type:<p className="font-light">{address?.addressType}</p></div>
+                            </div>
+                          ))
+                        : "No address available"}
+                    </td>
+                    <td className="px-6 py-4">{customer?.gender}</td>
+                    <td className="px-6 py-4">{customer?.user?.role}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>No Data about Customers Available</tr>
+              )}
+            </tbody>
+          </table>
+          <div className="mt-10 p-5 flex justify-center fixed bottom-0 left-0 w-full ">
+            <button
+              className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
+              onClick={prevPage}
+              disabled={currentPage === 1}>
+              Previous
             </button>
-          </form>
+            <span>
+              Showing {currentPage} of {totalPages}
+            </span>
+            <button
+              className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
+              onClick={nextPage}
+              disabled={currentPage === totalPages}>
+              Next
+            </button>
+          </div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-1">
-          {customerData?.map((item, index) => {
-            return (
-              <ProductCard
-                key={index}
-                id={item.id}
-                bannerImage={item.bannerImage}
-                registeredDate={item.registeredDate}
-                LastLogin={item.LastLogin}
-                email={item.email}
-                name={item.name}
-                phoneNumber={item.phoneNumber}
-                serviceNumber={item.serviceNumber}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

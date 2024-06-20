@@ -6,356 +6,218 @@ import {
   formatDate,
   formatIndianRupee,
   admin,
+  BASE_URL,
 } from "../../constants";
 
 import cn from "classnames";
 
-const AdminService = () => {
-  const [ordersCompletedDoc, setOrdersCompletedDoc] = useState(null);
-  const [ordersPendingDoc, setOrdersPendingDoc] = useState(null);
-  const [vendorDoc, setVendorDoc] = useState(null);
-  const [showPending, setShowPending] = useState(true);
-  const [showCompleted, setShowCompleted] = useState(false);
-  
-  
+const AdminBookings = () => {
 
-
-  const pendingOrders = [
-    {
-      orderId: "87M89",
-      orderTime: new Date("Wed, 27 July 2016 13:30:00"),
-      rangerName: "Aesha upadhay",
-      rangerService: "AC Cleaning",
-      rangerPrice: 299,
-      hoursWorked: 2,
-      accessorries: [
-        {
-          type: "Cleaning Solution",
-          name: "colin X1",
-          price: 300,
-          units: 3,
-        },
-        {
-          type: "Cleaning Solution",
-          name: "colin X1",
-          price: 300,
-          units: 3,
-        },
-      ],
-      discountPercent: 10,
-      serviceTaxPercent: 18,
-      customer:{
-        name:'Aesha upadhya',
-        number:8310050087,
-        location:'678, 7thmain,4th cross, bsd 5th stage , Lovalo road, Bangalore, Karnataka 560087',
-        email:"abc213123@gmail.com"
-      }
-    },
-    {
-      orderId: "87M89",
-      orderTime: new Date("Wed, 27 July 2016 13:30:00"),
-      rangerName: "Aesha upadhay",
-      rangerService: "AC Cleaning",
-      rangerPrice: 299,
-      hoursWorked: 1,
-      accessorries: [
-        {
-          type: "Cleaning Solution",
-          name: "colin X1",
-          price: 300,
-          units: 3,
-        },
-        {
-          type: "Cleaning Solution",
-          name: "colin X1",
-          price: 300,
-          units: 3,
-        },
-      ],
-      discountPercent: 10,
-      serviceTaxPercent: 18,
-      customer:{
-        name:'Aesha upadhya',
-        number:8310050087,
-        location:'678, 7thmain,4th cross, bsd 5th stage , Lovalo road, Bangalore, Karnataka 560087',
-        email:"abc213123@gmail.com"
-      }
-    },
-  ];
-
-  const completedOrders = [{}, {}];
-  const rangers = [
-    {
-      id: "1",
-      name: "Ranger 1",
-      desc: "Excellent performance",
-      price: "90000",
-      prodStatus: "REJECTED",
-      orderCount: "0",
-      currentUnit: "20",
-      bannerImage:
-        "https://www.cnet.com/a/img/resize/eb766a8cf69ce087b8afc5d82be7cf7ef440bdef/hub/2021/10/01/0dc5aad3-9dfe-4be1-b37d-2f643d85cd66/20210925-iphone-13-pro-03.jpg?auto=webp&width=1200",
-    },
-  ];
-
-  const { auth } = useAuth();
-
-  const fetchOrdersData = async (vendorId) => {
-    if (vendorId) {
-      try {
-        const res = await axios.get("/vendor/getOrders/" + vendorId);
-        console.log(res.data);
-        setOrdersPendingDoc(res.data?.ordersPending);
-        setOrdersCompletedDoc(res.data?.ordersCompleted);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  const fetchVendorData = async (userId) => {
-    try {
-      const res = await axios.get("/vendor/getVendorByUserId/" + userId);
-      fetchOrdersData(res.data?.userDoc?._id);
-      setVendorDoc(res.data?.userDoc);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [bookings,setBookings] = useState([]);
+  const [startDate,setStartDate] = useState(new Date());
+  const [endDate,setEndDate] = useState(new Date());
 
   useEffect(() => {
-    fetchVendorData(auth?._id);
+    // Calculate the start date as 7 days before the end date
+    const end = new Date();
+    const start = new Date();
+    start.setDate(end.getDate() - 7);
+
+    setEndDate(end);
+    setStartDate(start);
   }, []);
 
-  const ItemCard = ({ id, bannerImage, name, quantity, price }) => {
-    return <div className="border border-gray-500 rounded-md p-2"></div>;
-  };
+  const fetchBookings = async () => {
+    try {
+      console.log(startDate,endDate);
+      const res = await axios.get(`${BASE_URL}booking/getAllBookingBetweenDatesPagination`, {
+        params: {
+          startDate: startDate, 
+          endDate: endDate 
+        }
+      });
+      console.log(res.data);
+      setBookings(res.data.bookings);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  const OrderCard = ({
-    orderId,
-    orderTime,
-    accessorries,
-    rangerPrice,
-    rangerName,
-    rangerService,
-    hoursWorked,
-    discountPercent,
-    serviceTaxPercent,
-    customer,
-  }) => {
-    let subTotal = rangerPrice * hoursWorked;
-    accessorries.forEach((item) => {
-      subTotal += item.price * item.units;
-    });
-    let Total =
-      subTotal -
-      parseInt((subTotal * discountPercent) / 100) +
-      parseInt((subTotal * serviceTaxPercent) / 100);
-    return (
-      <div className="w-full flex bg-white p-4 border border-background border-2 rounded-3xl  font-bold lg:flex-row md:flex-col">
-        <div className="flex w-full flex-col gap-2  p-2">
-          <div>
-            <h2>Order ID: #{orderId}</h2>
-            <p className="text-gray-500 text-[15px]"> 27 July 2016 13:30</p>
-          </div>
-          <div>
-            <table className="w-full text-sm text-center rtl:text-right">
-              <thead className=" text-gray-600 font-normal uppercase  ">
-                <tr>
-                  <th scope="col" className="px-10 py-3">
-                    Service and accessorries
-                  </th>
-                  <th scope="col" className="px-10 py-3">
-                    Price
-                  </th>
-                  <th scope="col" className="px-10 py-3">
-                    QTY
-                  </th>
-                  <th scope="col" className="px-10 py-3">
-                    Total
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="bg-white font-medium text-gray-500">
-                  <td className="px-3 py-2 flex flex-row gap-2  items-center">
-                    <img src={admin} className="w-8 h-8" />
-
-                    <div className="flex flex-col">
-                      <p className="underline text-black font-medium">
-                        
-                        {rangerName}
-                      </p>
-                      <p className="text-xs font-normal text-left">
-                        
-                        {rangerService}
-                      </p>
-                    </div>
-                  </td>
-
-                  <td className="px-3 py-2">Rs {rangerPrice}/hr</td>
-                  <td className="px-3 py-2">
-                    {hoursWorked} hr{hoursWorked > 1 && `s`}
-                  </td>
-                  <td className="px-3 py-2">Rs {rangerPrice * hoursWorked}</td>
-                </tr>
-                {accessorries.map((item, idx) => {
-                  return (
-                    <tr className="bg-white font-medium text-gray-500">
-                      <td className="px-3 py-2 flex flex-row gap-2 items-center">
-                        <img src={accessorriesImg} className="w-8 h-8" />
-
-                        <div className="flex flex-col">
-                          <p className=" text-black font-medium">
-                            
-                            {item.type}
-                          </p>
-                          <p className="text-xs font-normal text-left">
-                          
-                            {item.name}
-                          </p>
-                        </div>
-                      </td>
-
-                      <td className="px-3 py-2">Rs {item.price}</td>
-                      <td className="px-3 py-2">{item.units}</td>
-                      <td className="px-3 py-2">
-                        Rs {item.price * item.units}
-                      </td>
-                    </tr>
-                  );
-                })}
-                <tr className="bg-white font-medium text-gray-500">
-                  <td className=""></td>
-                  <td className=""></td>
-                  <td className=" font-semibold p-1">Sub Total:</td>
-                  <td className="p-1">Rs {subTotal}</td>
-                </tr>
-                <tr className="bg-white font-medium text-gray-500">
-                  <td className=""></td>
-                  <td className=""></td>
-                  <td className="p-1 font-semibold">Discount:</td>
-                  <td className="p-1">
-                    -{parseInt((subTotal * discountPercent) / 100)}
-                  </td>
-                </tr>
-                <tr className="bg-white font-medium text-gray-500">
-                  <td className=""></td>
-                  <td className=""></td>
-                  <td className="p-1 font-semibold">Tax:</td>
-                  <td className="p-1">
-                    +{parseInt((subTotal * serviceTaxPercent) / 100)}
-                  </td>
-                </tr>
-                <tr className="bg-white font-medium text-gray-500 border-t">
-                  <td className=""></td>
-                  <td className=""></td>
-                  <td className="p-1 text-black font-bold">Total:</td>
-                  <td className="p-1 text-black font-bold">{Total}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="w-fit m-2 border-background border-2 flex gap-5 flex-col p-3 rounded-3xl">
-          <h5 className="text-gray-500 text-lg  text-center">
-            Customer Details
-          </h5>
-          <div className="flex gap-5 items-center p-5">
-            <img src={admin} className="w-13 h-13 rounded-full" />
-            <p className="">{customer.name}</p>
-          </div>
-          <div className="flex flex-row px-5 gap-10 justify-around">
-                <div className="w-3/6 ">
-                    <p className="font-medium text-gray-600"><span className="font-semibold text-black"> Location: </span> {customer.location}</p>
-                </div>
-                <div className="w-3/6 flex  flex-col gap-3">
-                    <p className="font-medium text-gray-600"><span className="font-semibold text-black"> Email: </span><br/> {customer.email}</p>
-                    <p className="font-medium text-gray-600"><span className="font-semibold text-black"> Number: </span>{customer.number}</p>
-                </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  useEffect(() => {
+    if (startDate && endDate) {
+      fetchBookings();
+    }
+  }, [startDate, endDate]);
 
   return (
-    <section className="p-10  w-screen md:w-full bg-background grid grid-cols-1">
-      <div className="flex flex-wrap text-sm font-medium text-center text-gray-500  ">
-        <div
-          className={cn({
-            "inline-block p-4 gap-3 flex flex-row items-center rounded-t-2xl hover:text-gray-600 hover:bg-gray-50 cursor-pointer font-semibold":
-              !showPending,
-            "inline-block p-4 gap-3  flex flex-row text-black items-center font-semibold bg-white rounded-t-2xl active cursor-pointer":
-              showPending,
-          })}
-          onClick={() => {
-            setShowPending(true);
-            setShowCompleted(false);
-          }}
-        >
-          Pending Orders
-          <div
-            className={cn({
-              "bg-background px-3 py-1 rounded-lg": showPending,
-              "bg-gray-500 text-white px-3 py-1 rounded-lg": !showPending,
-            })}
-          >
-            {pendingOrders.length}
-          </div>
-        </div>
-        <div
-          className={cn({
-            "inline-block p-4 gap-3 flex flex-row rounded-t-2xl items-center hover:text-gray-600 hover:bg-gray-50 cursor-pointer font-semibold":
-              !showCompleted,
-            "inline-block p-4 gap-3  flex flex-row text-black items-center font-semibold bg-white rounded-t-2xl active cursor-pointer":
-              showCompleted,
-          })}
-          onClick={() => {
-            setShowPending(false);
-            setShowCompleted(true);
-          }}
-        >
-          Completed Orders
-          <div
-            className={cn({
-              "bg-background px-2 py-1  rounded-lg": showCompleted,
-              "bg-gray-500 text-white px-2  py-1 rounded-lg": !showCompleted,
-            })}
-          >
-            {pendingOrders.length}
-          </div>
-        </div>
-      </div>
-      <div className="bg-white p-5 flex flex-col gap-5  rounded-tr-3xl rounded-b-3xl">
-        {showPending ? (
-          //  Array.isArray(ordersPendingDoc) ? ordersPendingDoc.map((order,index)=> {
+    <section className="p-10  w-screen md:w-full bg-background">
+      <p className="font-medium text-xl mb-5">All Bookings</p>
 
-          pendingOrders.map((item, index) => {
-            return (
-              <OrderCard
-                key={index}
-                rangerPrice={item.rangerPrice}
-                orderId={item.orderId}
-                orderTime={item.orderTime}
-                accessorries={item.accessorries}
-                rangerName={item.rangerName}
-                rangerService={item.rangerService}
-                discountPercent={item.discountPercent}
-                serviceTaxPercent={item.serviceTaxPercent}
-                hoursWorked={item.hoursWorked}
-                customer={item.customer}
-              />
-            );
-          })
-        ) : showCompleted ? (
-          <div></div>
-        ) : (
-          ``
-        )}
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+          <div>
+            <button
+              id="dropdownRadioButton"
+              data-dropdown-toggle="dropdownRadio"
+              className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              type="button"
+            >
+              <svg
+                className="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+              </svg>
+              Last 30 days
+              <svg
+                className="w-2.5 h-2.5 ms-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <div
+              id="dropdown"
+              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            >
+              <ul
+                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownDefaultButton"
+              >
+                <li>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Settings
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Earnings
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >
+                    Sign out
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <label for="table-search" className="sr-only">
+            Search
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
+              <svg
+                className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="table-search"
+              className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search for items"
+            />
+          </div>
+        </div>
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Customer Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Service
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Booking Date Time
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Ranger
+              </th>
+              
+              <th scope="col" className="px-6 py-3">
+                Start End OTP
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Duration
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Total
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {bookings?.map((booking,index) => {
+             return(
+              <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {booking?.customer?.firstName}
+              </th>
+              <td className="px-6 py-4"><span className="px-2 py-1 rounded-full font-semibold bg-[#FFB0153D] text-[#1E1E1E]">{booking?.service?.name}</span></td>
+              <td className="px-6 py-4 text-black">{formatDate(booking?.bookingDateTime)}</td>
+              <td className="px-6 py-4 text-black">{booking?.ranger?.firstName ? booking?.ranger?.firstName : `Yet to be Assigned` }</td>
+              
+              <td className="px-6 py-4 text-black">{booking?.startOtp} - {booking?.endOtp}</td>
+              <td className="px-6 py-4 text-green-500 font-semibold">{booking?.duration ? booking?.duration : `0 mins`}</td>
+              <td className="text-black text-lg">{booking?.totalPrice ? booking?.totalPrice : 0}</td>
+              <td className="text-black">{booking?.status}</td>
+            </tr>
+             )
+            })
+
+            }
+           
+          </tbody>
+        </table>
       </div>
     </section>
   );
 };
 
-export default AdminService;
+export default AdminBookings;
