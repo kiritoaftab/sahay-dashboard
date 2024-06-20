@@ -30,6 +30,7 @@ function App() {
           <Route path="editVendor/:id" element={<EditVendor/>}/>
 
           <Route path="rangers" element={<AdminRanger/>} />
+          
           <Route path="customers" element={<AdminCustomer/>} />
           <Route path="addRanger" element={<AdminAddRanger/>} />
           <Route path="payments" element={<AdminPayments/>} />

@@ -1,519 +1,266 @@
 import React, { useEffect, useState } from "react";
+import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../axiosInstance/axiosApi";
-import { TrashIcon } from "@heroicons/react/24/outline";
-// import AWS from "aws-sdk";
+import { BASE_URL } from "../../constants";
 
 const AdminRangerDetails = () => {
-  const { id } = useParams();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [pinCode, setPinCode] = useState("");
+  const [address, setAddress] = useState("");
+  const [vendorId, setVendorId] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [aadharImgUrl, setAadharImgUrl] = useState("");
+  const [panImgUrl, setPanImgUrl] = useState("");
+  const [selectedService, setSelectedService] = useState("");
+  const [service, setService] = useState([]);
+  const [vendors, setVendors] = useState([]);
 
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [productDoc, setProductDoc] = useState(null);
+  console.log(id);
 
-  
-  const [productCurrentUnit, setProductCurrentUnit] = useState(0);
-  const [productHeight, setProductHeight] = useState(0);
-  const [productWidth, setProductWidth] = useState(0);
-  const [productWeight, setProductWeight] = useState(0);
-  const [productPrice, setProductPrice] = useState(0);
-  const [productDescription, setProdDesc] = useState("");
-  const [featureList, setFeatureList] = useState([]);
-  const [editedFeatures, setEditedFeatures] = useState(
-    Array(featureList.length).fill(false)
-  );
-  const [prodImages, setProdImages] = useState([]);
-  const [feature, setFeature] = useState("");
-
-  //ranger
-  const [verified,setVerified] = useState("");
-  const [rangerName, setrangerName] = useState("");
-  const [rangerNumber,setRangerNumber] = useState(0);
-  const [price,setPrice] = useState(0);
-  
-
-  //File related
-  const [files, setFiles] = useState([]);
-  const [fileUrls, setFileUrls] = useState([]);
-  const [fileUrl, setFileUrl] = useState(null);
-  const [file, setFile] = useState(null);
-  const [uploadPercent, setUploadPercent] = useState(null);
-
-  const rangerDetails = [
-    {
-      id: "1",
-      name: "Ranger 1",
-      desc: "Excellent performance",
-      price: "90000",
-      prodStatus: "REJECTED",
-      orderCount: "0",
-      currentUnit: "20",
-      bannerImage:
-        "https://www.cnet.com/a/img/resize/eb766a8cf69ce087b8afc5d82be7cf7ef440bdef/hub/2021/10/01/0dc5aad3-9dfe-4be1-b37d-2f643d85cd66/20210925-iphone-13-pro-03.jpg?auto=webp&width=1200",
-    },
-  ];
-
-  const handleFileChangeV2 = (e) => {
-    // Uploaded file
-    const file = e.target.files[0];
-    // Changing file state
-    setFile(file);
-  };
-
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(selectedFiles);
-  };
-
-  // const awsSecretKey = process.env.REACT_APP_AWS_SECRET_KEY;
-  // const awsAccessKey = process.env.REACT_APP_AWS_ACCESS_KEY;
-
-  //  const uploadFile = async (e) => {
-  //     e.preventDefault();
-  //      // S3 Bucket Name
-  //      const S3_BUCKET = "awsbucket99999";
-
-  //      // S3 Region
-  //      const REGION = 'ap-south-1';
-
-  //      // S3 Credentials
-  //      AWS.config.update({
-  //        accessKeyId: awsAccessKey,
-  //        secretAccessKey: awsSecretKey,
-  //      });
-  //      const s3 = new AWS.S3({
-  //        params: { Bucket: S3_BUCKET },
-  //        region: REGION,
-  //      });
-
-  //      // Files Parameters
-
-  //      const params = {
-  //        Bucket: S3_BUCKET,
-  //        // Key: "unionpigmyimages/" + file.name,
-  //        Key: `aftab/` + file.name,
-  //        // Key: "unionpigmyimages/" + file.name,
-  //        Body: file,
-  //      };
-
-  //      // Uploading file to s3
-
-  //      var upload = s3
-  //        .putObject(params)
-  //        .on("httpUploadProgress", (evt) => {
-  //          // File uploading progress
-  //          console.log(
-  //            "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-  //          );
-  //          setUploadPercent("Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%")
-  //        })
-  //        .promise();
-
-  //      await upload.then((err, data) => {
-  //        console.log(err);
-  //        // const fileURL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/unionpigmyimages/${file.name}`;
-  //        const fileURL = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/aftab/${file.name}`;
-  //        // Fille successfully uploaded
-  //        console.log(fileURL)
-  //        setFileUrl(fileURL)
-  //        alert("File uploaded successfully.");
-
-  //      });
-  //    };
-
-  //  const uploadFiles = async (e) => {
-  //   e.preventDefault();
-  //   const S3_BUCKET = "awsbucket99999";
-  //   const REGION = "ap-south-1";
-
-  //   AWS.config.update({
-  //     accessKeyId: awsAccessKey,
-  //     secretAccessKey: awsSecretKey,
-  //   });
-
-  //   const s3 = new AWS.S3({
-  //     params: { Bucket: S3_BUCKET },
-  //     region: REGION,
-  //   });
-
-  //   const uploadPromises = files.map((file) => {
-  //     const params = {
-  //       Bucket: S3_BUCKET,
-  //       Key: `aftab/images/${file.name}`,
-  //       Body: file,
-  //     };
-
-  //     return s3
-  //       .putObject(params)
-  //       .on("httpUploadProgress", (evt) => {
-  //         // File uploading progress
-  //         console.log(
-  //           "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-  //         );
-  //         setUploadPercent(
-  //           "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-  //         );
-  //       })
-  //       .promise();
-  //   });
-
-  //   try {
-  //     await Promise.all(uploadPromises);
-  //     const newFileUrls = files.map(
-  //       (file) =>
-  //         `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/aftab/images/${file.name}`
-  //     );
-  //     setFileUrls(newFileUrls);
-  //     alert("Files uploaded successfully.");
-  //   } catch (error) {
-  //     console.error("Error uploading files:", error);
-  //   }
-  // };
-
-  const fetchProduct = async (productId) => {
+  const getRangerById = async () => {
     try {
-      const res = await axios.get("/products/" + productId);
-      console.log(res.data);
-      setProductDoc(res.data?.product);
+      const response = await axios.get(`${BASE_URL}ranger/getRangerById/${id}`);
+      setFirstName(response?.data?.rangerDoc?.firstName);
+      setLastName(response?.data?.rangerDoc?.lastName);
+      setPhone(response?.data?.rangerDoc?.user?.phone);
+      setEmail(response?.data?.rangerDoc?.user?.email);
+      setPinCode(response?.data?.rangerDoc?.vendor?.pincode);
+      setAddress(response?.data?.rangerDoc?.address);
+      setVendorId(response?.data?.rangerDoc?.vendor?._id);
+      setProfilePicUrl(response?.data?.rangerDoc?.user?.profilePic);
+      setAadharImgUrl(response?.data?.rangerDoc?.aadharImgUrl);
+      setPanImgUrl(response?.data?.rangerDoc?.panImgUrl);
     } catch (error) {
-      console.error(error);
+      console.error(error, { success: false, msg: "Internal Server" });
     }
   };
 
-  const addFeature = (feature) => {
-    if (feature.trim() !== "") {
-      setFeatureList((prevFeatures) => [...prevFeatures, feature]);
-      setEditedFeatures((prevEdited) => [...prevEdited, false]);
-    }
-  };
-
-  const removeFeature = (index) => {
-    setFeatureList((prevFeatures) => {
-      const updatedFeatures = [...prevFeatures];
-      updatedFeatures.splice(index, 1);
-      return updatedFeatures;
-    });
-
-    setEditedFeatures((prevEdited) => {
-      const updatedEdited = [...prevEdited];
-      updatedEdited.splice(index, 1);
-      return updatedEdited;
-    });
-  };
-
-  const handleEditClick = (index) => {
-    setEditedFeatures((prevEdited) => {
-      const updatedEdited = [...prevEdited];
-      updatedEdited[index] = !updatedEdited[index];
-      return updatedEdited;
-    });
-  };
-
-  const handleFeatureChange = (index, value) => {
-    setFeatureList((prevFeatures) => {
-      const updatedFeatures = [...prevFeatures];
-      updatedFeatures[index] = value;
-      return updatedFeatures;
-    });
-  };
-
-  useEffect(() => {
-    if (productDoc) {
-      setrangerName(productDoc?.name);
-      setProductCurrentUnit(productDoc?.currentUnit);
-      setProductHeight(productDoc?.height);
-      setProductWidth(productDoc?.width);
-      setProductWeight(productDoc?.weight);
-      setProductPrice(productDoc?.price);
-      setProdDesc(productDoc?.desc);
-      setFeatureList(productDoc?.featureList);
-      setProdImages(productDoc?.prodImages);
-      setFileUrl(productDoc?.bannerImage);
-      setFileUrls(productDoc?.prodImages);
-    }
-  }, [productDoc]);
-
-  useEffect(() => {
-    fetchProduct(id);
-  }, []);
-
-  const handleSubmit = async (e) => {
+  const updateRanger = async (e) => {
     e.preventDefault();
-    const reqBody = {
-      prodId: productDoc?._id,
-      name: rangerName,
-      units: productCurrentUnit,
-      height: productHeight,
-      width: productWidth,
-      weight: productWeight,
-      price: productPrice,
-      desc: productDescription,
-      featureList,
-      bannerImage: fileUrl,
-      prodImages: fileUrls,
+    const requestBody = {
+      rangerId: id,
+      email: email,
+      phone: phone,
+      profilePic: profilePicUrl,
+      firstName: firstName,
+      lastName: lastName,
+      vendorId: vendorId,
+      address: address,
+      pincode: pinCode,
+      aadharImg: aadharImgUrl,
+      panImg: panImgUrl,
+      serviceList: [selectedService],
     };
 
-    console.log(reqBody);
-
+    console.log(requestBody);
     try {
-      const res = await axios.post("/products/editProduct", reqBody);
-      console.log(res.data);
-      navigate("/vendor/products");
+      const response = await axios.post(`${BASE_URL}ranger/updateRanger`, requestBody);
+      console.log(response?.data);
+      if (response.status === 200) {
+        alert("Ranger Updated successfully")
+      } else {
+        alert("Ranger update failed")
+      }
+      navigate(`/admin/rangers`);
     } catch (error) {
-      console.error(error);
+      console.error(error, { success: false, msg: "vendor not updated" });
     }
+  };
+
+  useEffect(() => {
+    const getAllServices = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}service/getAllServices`);
+        console.log(response?.data);
+        setService(response?.data?.serviceDoc);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAllServices();
+  }, []);
+
+  useEffect(() => {
+    const getAllVendors = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}vendor/getAllVendors`);
+        console.log(response?.data);
+        setVendors(response?.data?.vendors);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAllVendors();
+  }, []);
+
+  const handleFileUpload = async (e, type) => {
+    const file = e.target.files[0];
+    const blobName = file?.name;
+    const url = await uploadToAzureStorage(file, blobName);
+
+    if (type === "profile") {
+      setProfilePicUrl(url);
+    } else if (type === "aadhar") {
+      setAadharImgUrl(url);
+    } else if (type === "pan") {
+      setPanImgUrl(url);
+    }
+  };
+
+  useEffect(() => {
+    getRangerById();
+  }, [id]);
+
+  const getVendorName = (vendorId) => {
+    const vendor = vendors.find((vendor) => vendor._id === vendorId);
+    return vendor ? `${vendor.firstName} ${vendor.lastName}` : "Unknown Vendor";
   };
 
   return (
     <section className="w-full md:w-full bg-background ">
       <div className="bg-white p-5 rounded-lg m-5">
         <p className="font-bold text-3xl mb-4 ">Ranger Details</p>
-        <div className="flex flex-row">
-          <div className="basis-1/4 flex flex-col justify-start">
-            <img
-              className="h-64 w-64 mix-blend-multiply object-scale-down"
-              src={fileUrl}
-            />
-            <input className="my-3" type="file" onChange={handleFileChangeV2} />
-            <button
-              className="bg-blue-600 font-normal p-2 hover:bg-blue-500 text-md rounded-lg w-2/3 text-white"
-              type="button"
-              //  onClick={uploadFile}
-            >
-              Change Banner Image
-            </button>
-          </div>
-
-          <form
-            className="basis-3/4 flex flex-col justify-center gap-2"
-            onSubmit={(e) => handleSubmit(e)}
-          >
-            <label className="text-lg font-medium mb-2">Name</label>
-            <input
-              type="name"
-              placeholder="Product name"
-              className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-              value={rangerName}
-              onChange={(e) => setrangerName(e.target.value)}
-            />
-
-            <div className="grid grid-cols-3 gap-3">
-              <div>
-                <label className="text-lg font-medium mb-2">Phone Number</label>
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={rangerNumber}
-                  onChange={(e) => {
-                    setRangerNumber(e.target.value);
-                  }}
-                />
-              </div>
-              <div>
-                <label className="text-lg font-medium mb-2">
-                  Adhaar Number
-                </label>
-                <input
-                  type="number"
-                  placeholder="Adhaar Number"
-                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={productWidth}
-                  onChange={(e) => {
-                    setProductWidth(e.target.value);
-                  }}
-                />
-              </div>
-              <div>
-                <label className="text-lg font-medium mb-2">Pincode</label>
-                <input
-                  type="number"
-                  placeholder="Pincode"
-                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={productWeight}
-                  onChange={(e) => {
-                    setProductWeight(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              <div>
-                <label className="text-lg font-medium mb-2">Price</label>
-                <input
-                  type="number"
-                  placeholder="Price"
-                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={price}
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                />
-              </div>
-              <div>
-                <label className="text-lg font-medium mb-2">
-                  Starting Time
-                </label>
-                <input
-                  type="time"
-                  placeholder="Starting Hour"
-                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={productWidth}
-                  onChange={(e) => {
-                    setProductWidth(e.target.value);
-                  }}
-                />
-              </div>
-              <div>
-                <label className="text-lg font-medium mb-2">Ending Time</label>
-                <input
-                  type="time"
-                  placeholder="Ending Hour"
-                  className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                  value={productWeight}
-                  onChange={(e) => {
-                    setProductWeight(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <label className="text-lg font-medium mb-2">Location</label>
-            <input
-              type="text"
-              placeholder="Location"
-              className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-              value={productDescription}
-              onChange={(e) => {
-                setProdDesc(e.target.value);
-              }}
-            />
-            <label className="text-lg font-medium mb-2 my-2">Services</label>
-            <div className="flex flex-row justify-between mb-5">
-              <input
-                className="bg-slate-100 rounded-lg p-3 w-4/5 border border-black-500"
-                type="text"
-                placeholder="Enter a service"
-                value={feature}
-                onChange={(e) => setFeature(e.target.value)}
-              />
-              <button
-                className="bg-green-800 hover:bg-green-700 text-white rounded-lg ml-2 w-1/5  font-semibold px-4 py-2"
-                type="button"
-                onClick={() => addFeature(feature)}
-              >
-                Add
-              </button>
+        <form onSubmit={updateRanger}>
+          <div className="flex flex-row">
+            <div className="basis-1/4 flex flex-col justify-start">
+              <img className="h-64 w-64 mix-blend-multiply object-scale-down" src={profilePicUrl} alt="Profile" />
+              <input className="my-3" type="file" onChange={(e) => handleFileUpload(e, "profile")} />
             </div>
 
-            <label className="text-lg font-medium mb-2 my-2" >
-              Police verification
-            </label>
-            <div className="flex flex-row justify-between mb-5" >
-              <select
-                className="bg-slate-100 rounded-lg p-3 w-4/5 border border-black-500"
-                placeholder="Enter a service"
-                value={verified}
-                onChange={(e) => setVerified(e.target.value)}
-              >
-                <option selected>Choose an option</option>
-                <option value="IN_PROGRESS">In Progress</option>
-                <option value="VERIFIED">Verified</option>
-                <option value="REJECTED">Rejected</option>
-              </select>
-
-              <button
-                className="bg-green-800 hover:bg-green-700 text-white rounded-lg ml-2 w-1/5  font-semibold px-4 py-2"
-                type="button"
-                onClick={() => addFeature(feature)}
-              >
-                Add
-              </button>
-            </div>
-            {rangerDetails.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-row justify-between bg-slate-100 text-gray-800 font-medium text-md rounded-lg p-2 mb-4 my-2"
-              >
-                {editedFeatures[index] ? (
+            <div className="basis-3/4 flex flex-col justify-center gap-2">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-lg font-medium mb-2">First Name</label>
                   <input
                     type="text"
-                    value={feature}
-                    className="pl-4"
-                    onChange={(e) => handleFeatureChange(index, e.target.value)}
+                    placeholder="First Name"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
-                ) : (
-                  <div>{item.bannerImage}</div>
-                )}
+                </div>
                 <div>
-                  <div className="flex flex-row justify-around">
-                    <div
-                      className="hover:bg-white hover:font-bold mx-3"
-                      onClick={() => handleEditClick(index)}
-                    >
-                      Edit
-                    </div>
-                    <div
-                      className="hover:bg-white hover:font-bold mx-3"
-                      onClick={() => removeFeature(index)}
-                    >
-                      <TrashIcon height={20} width={20} />
-                    </div>
-                  </div>
+                  <label className="text-lg font-medium mb-2">Last Name</label>
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </div>
               </div>
-            ))}
-            <label className="text-lg font-medium mb-2 my-3">
-              Ranger Images
-            </label>
-            <input type="file" onChange={handleFileChange} multiple />
-            <div className="grid grid-cols-3 gap-3 place-items-center">
-              {fileUrls?.map((prodImg, index) => {
-                return (
-                  <img
-                    className="h-40 w-40 mix-blend-multiply object-scale-down"
-                    src={prodImg}
-                    key={index}
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="text-lg font-medium mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    placeholder="Phone Number"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
-                );
-              })}
+                </div>
+                <div>
+                  <label className="text-lg font-medium mb-2">Email</label>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="text-lg font-medium mb-2">Pincode</label>
+                  <input
+                    type="number"
+                    placeholder="Pincode"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    value={pinCode}
+                    onChange={(e) => setPinCode(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="serviceList" className="text-lg font-medium mb-2">Select Service</label>
+                  <select
+                    id="serviceList"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    required
+                    onChange={(e) => setSelectedService(e.target.value)}
+                  >
+                    <option value="">Select an option</option>
+                    {service?.map((service) => (
+                      <option key={service?._id} value={service?._id}>
+                        {service?.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-6">
+                  <label htmlFor="address" className="text-lg font-medium mb-2">Address</label>
+                  <textarea
+                    id="address"
+                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    placeholder="Your address"
+                    value={address}
+                    required
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
+                <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
+                  <label htmlFor="aadharImg" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Upload Aadhar Image
+                  </label>
+                  <input
+                    id="aadharImg"
+                    accept="image/*"
+                    type="file"
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+                    onChange={(e) => handleFileUpload(e, "aadhar")}
+                  />
+                  {aadharImgUrl && <img src={aadharImgUrl} alt="Aadhar" className="h-32 w-32 object-fill border rounded-md" />}
+                </div>
+                <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
+                  <label htmlFor="panImg" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Upload PAN Image
+                  </label>
+                  <input
+                    id="panImg"
+                    accept="image/*"
+                    type="file"
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+                    onChange={(e) => handleFileUpload(e, "pan")}
+                  />
+                  {panImgUrl && <img src={panImgUrl} alt="PAN" className="h-32 w-32 object-fill border rounded-md" />}
+                </div>
+              </div>
             </div>
-            <button
-              className="w-3/5 bg-blue-800 text-white hover:bg-blue-700 rounded-lg p-3"
-              type="button"
-            >
-              Change Product Images (must upload all images at once)
-            </button>
-
-            <button
-              className="w-1/3 text-center bg-green-800 text-white hover:bg-green-700 rounded-lg p-1 m-5"
-              type="submit"
-            >
-              Edit Product
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="bg-white p-5 rounded-lg m-5">
-        <p className="font-bold text-3xl ">Ranger Metrics</p>
-        <div className="grid grid-cols-2 gap-3 place-items-start">
-          <img
-            className="h-40 mix-blend-multiply"
-            src={productDoc?.bannerImage}
-          />
-          <div className="flex flex-col justify-between">
-            <p className="font-medium text-2xl">
-              Order Count :{" "}
-              <span className="font-bold text-green-500">
-                {productDoc?.orderCount}
-              </span>
-            </p>
-            <p className="font-medium text-2xl">
-              Product Status:{" "}
-              <span className="font-bold ">{productDoc?.prodStatus}</span>
-            </p>
           </div>
-        </div>
+
+          <div className="mb-6">
+            <label className="text-lg font-medium mb-2">Vendor</label>
+            <p>{getVendorName(vendorId)}</p>
+          </div>
+
+          <button type="submit" className="mt-5 w-36 bg-primary p-3 text-white rounded-lg">
+            Update
+          </button>
+        </form>
       </div>
     </section>
   );
