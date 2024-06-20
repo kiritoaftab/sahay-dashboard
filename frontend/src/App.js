@@ -41,7 +41,7 @@ function App() {
         {/* TODO: DHEERAJ */}
         <Route path="vendor" element={<VendorLayout/>}>
           <Route path="" element={<VendorHome/>}/>
-          <Route path="ranger" element={<VendorRangers/>}/>
+          <Route path="rangers" element={<VendorRangers/>}/>
           <Route path="bookings" element={<VendorBookings/>}/>
           <Route path="addRanger" element={<VendorAddRanger/>}/>
         </Route>
