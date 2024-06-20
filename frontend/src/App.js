@@ -13,6 +13,7 @@ import VendorHome from "./pages/Vendor/VendorHome";
 import VendorRangers from "./pages/Vendor/VendorRangers";
 import VendorBookings from "./pages/Vendor/VendorBookings";
 import VendorAddRanger from "./pages/Vendor/VendorAddRanger";
+import VendorRangerDetails from "./pages/Vendor/VendorRangerDetails";
 
 function App() {
   return (
@@ -38,12 +39,13 @@ function App() {
           <Route path="rangers/:id" element={<AdminRangerDetails/>}/> 
         </Route>
 
-        {/* TODO: DHEERAJ */}
+        {/* TODO: DHEERAJ and jag */}
         <Route path="vendor" element={<VendorLayout/>}>
           <Route path="" element={<VendorHome/>}/>
-          <Route path="ranger" element={<VendorRangers/>}/>
           <Route path="bookings" element={<VendorBookings/>}/>
+          <Route path="rangers" element={<VendorRangers/>}/>
           <Route path="addRanger" element={<VendorAddRanger/>}/>
+          <Route path="editRanger/:id" element={<VendorRangerDetails/>}/>
         </Route>
 
       </Route>
