@@ -124,13 +124,13 @@ const VendorRangerDetails = () => {
   };
 
   return (
-    <section className="w-full md:w-full bg-background ">
+    <section className="w-fit md:w-full lg:w-full sm:w-full bg-background ">
       <div className="bg-white p-5 rounded-lg m-5">
         <p className="font-bold text-3xl mb-4 ">Ranger Details</p>
         <form onSubmit={updateRanger}>
-          <div className="flex flex-row">
+          <div className="flex flex-col md:flex-col lg:flex-row xl:flex-row">
             <div className="basis-1/4 flex flex-col justify-start">
-              <img className="h-64 w-64 mix-blend-multiply object-scale-down" src={profilePicUrl} alt="Profile" />
+              <img className="h-64 w-64 mix-blend-multiply object-fit" src={profilePicUrl} alt="Profile" />
               <input className="my-3" type="file" onChange={(e) => handleFileUpload(e, "profile")} />
             </div>
 
