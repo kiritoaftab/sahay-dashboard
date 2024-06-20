@@ -17,6 +17,7 @@ const AdminRangerDetails = () => {
   const [panImgUrl, setPanImgUrl] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [service, setService] = useState([]);
+  const [vendors, setVendors] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,9 +63,9 @@ const AdminRangerDetails = () => {
     try {
       const response = await axios.post(`${BASE_URL}ranger/updateRanger`, requestBody);
       console.log(response?.data);
-      if(response.status === 200){
+      if (response.status === 200) {
         alert("Ranger Updated successfully")
-      }else{
+      } else {
         alert("Ranger update failed")
       }
       navigate(`/admin/rangers`);
@@ -86,6 +87,19 @@ const AdminRangerDetails = () => {
     getAllServices();
   }, []);
 
+  useEffect(() => {
+    const getAllVendors = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}vendor/getAllVendors`);
+        console.log(response?.data);
+        setVendors(response?.data?.vendors);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAllVendors();
+  }, []);
+
   const handleFileUpload = async (e, type) => {
     const file = e.target.files[0];
     const blobName = file?.name;
@@ -103,6 +117,11 @@ const AdminRangerDetails = () => {
   useEffect(() => {
     getRangerById();
   }, [id]);
+
+  const getVendorName = (vendorId) => {
+    const vendor = vendors.find((vendor) => vendor._id === vendorId);
+    return vendor ? `${vendor.firstName} ${vendor.lastName}` : "Unknown Vendor";
+  };
 
   return (
     <section className="w-full md:w-full bg-background ">
@@ -214,7 +233,7 @@ const AdminRangerDetails = () => {
                     className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                     onChange={(e) => handleFileUpload(e, "aadhar")}
                   />
-                  {aadharImgUrl && <img src={aadharImgUrl} alt="Aadhar"  className="h-32 w-32 object-fill border rounded-md" />}
+                  {aadharImgUrl && <img src={aadharImgUrl} alt="Aadhar" className="h-32 w-32 object-fill border rounded-md" />}
                 </div>
                 <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
                   <label htmlFor="panImg" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -227,12 +246,17 @@ const AdminRangerDetails = () => {
                     className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                     onChange={(e) => handleFileUpload(e, "pan")}
                   />
-                  {panImgUrl && <img src={panImgUrl} alt="PAN"  className="h-32 w-32 object-fill border rounded-md" />}
+                  {panImgUrl && <img src={panImgUrl} alt="PAN" className="h-32 w-32 object-fill border rounded-md" />}
                 </div>
               </div>
             </div>
           </div>
-          
+
+          <div className="mb-6">
+            <label className="text-lg font-medium mb-2">Vendor</label>
+            <p>{getVendorName(vendorId)}</p>
+          </div>
+
           <button type="submit" className="mt-5 w-36 bg-primary p-3 text-white rounded-lg">
             Update
           </button>

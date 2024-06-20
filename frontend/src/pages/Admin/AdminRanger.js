@@ -11,15 +11,7 @@ const AdminRanger = () => {
   const [rangerList, setRangerList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [services, setServices] = useState([]);
-
-  // const serviceDetails = services.map(serv => serv.servicesDetails);
-  // const flattenedServiceDetails = services.flatMap(
-  //   (serv ) => serv.servicesDetails
-  // );
-
-  // console.log("flattenedServiceDetails", flattenedServiceDetails);
-
+  const [serviceDetails, setServiceDetails] = useState({});
   const { auth } = useAuth();
   const navigate = useNavigate();
 
@@ -28,7 +20,6 @@ const AdminRanger = () => {
       const res = await axios.get(
         `${BASE_URL}ranger/getAllRanger?page=${currentPage}&pageSize=10`
       );
-      console.log(res.data.rangerDoc);
       setRangerList(res.data.rangerDoc);
       setTotalPages(res.data.pagination.totalPages);
     } catch (error) {
@@ -39,10 +30,13 @@ const AdminRanger = () => {
   const fetchServices = async () => {
     try {
       const res = await axios.get(
-        `${BASE_URL}rangerService/populateServices?page=1&pageSize=2`
+        `${BASE_URL}rangerService/populateServices?page=1&pageSize=10`
       );
-      console.log(res.data.rangers);
-      setServices(res.data.rangers);
+      const services = res.data.rangers.reduce((acc, ranger) => {
+        acc[ranger._id] = ranger.servicesDetails;
+        return acc;
+      }, {});
+      setServiceDetails(services);
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +56,7 @@ const AdminRanger = () => {
   };
 
   return (
-    <section className="w-screen md:w-full h-full bg-background gap-4 flex flex-col ">
+    <section className="w-screen md:w-full h-full bg-background gap-4 flex flex-col">
       <div className="w-screen md:w-full bg-background p-3 flex justify-between px-10">
         <p className="text-2xl font-bold">Ranger Details</p>
         <div className="relative inline-block text-left">
@@ -70,8 +64,6 @@ const AdminRanger = () => {
             <input
               type="text"
               placeholder="Search..."
-              // value={searchTerm}
-              // onChange={handleChange}
               className="w-full p-2 pl-10 border rounded-md focus:outline-none"
             />
             <FaSearch
@@ -85,25 +77,25 @@ const AdminRanger = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Name
               </th>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Phone
               </th>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Services
               </th>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Booking
               </th>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Duration
               </th>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Details
               </th>
-              <th className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+              <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                 Action
               </th>
             </tr>
@@ -112,12 +104,6 @@ const AdminRanger = () => {
             {rangerList.map((ranger, index) => (
               <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap flex items-center justify-center">
-                  {/* Uncomment if you need to display images
-        <img
-          src={ranger.bannerImage}
-          className="h-10 w-10 rounded-full object-cover mr-4"
-          alt={ranger.name}
-        /> */}
                   <span className="text-sm font-medium text-gray-900">
                     {ranger.firstName}
                   </span>
@@ -126,12 +112,8 @@ const AdminRanger = () => {
                   {ranger?.user?.phone}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
-                  {services.map((service, serviceIndex) => (
-                    <div key={serviceIndex}>
-                      {service?.servicesDetails?.map((item, itemIndex) => (
-                        <div key={itemIndex}>{item.name}</div>
-                      ))}
-                    </div>
+                  {serviceDetails[ranger._id]?.map((item) => (
+                    <div key={item._id}>{item.name}</div>
                   ))}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">

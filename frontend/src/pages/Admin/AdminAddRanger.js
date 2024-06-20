@@ -55,7 +55,7 @@ const AddRanger = () => {
       profilePic: profilePicUrl,
       firstName,
       lastName,
-      vendorId,
+      vendorId: selectedVendor, // Use selected vendor
       aadharNo,
       panNo,
       gender,
@@ -96,14 +96,19 @@ const AddRanger = () => {
     const getAllVendors = async () => {
       try {
         const response = await axios.get(`${BASE_URL}vendor/getAllVendors`);
-        console.log(response.data);
-        setVendors(response.data.vendorDoc._id);
+        console.log(response?.data);
+        setVendors(response?.data?.vendors);
       } catch (error) {
         console.error(error);
       }
     };
     getAllVendors();
   }, []);
+
+  const getVendorName = (vendorId) => {
+    const vendor = vendors.find((vendor) => vendor._id === vendorId);
+    return vendor ? `${vendor.firstName} ${vendor.lastName}` : "Unknown Vendor";
+  };
 
   return (
     <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
@@ -113,9 +118,7 @@ const AddRanger = () => {
           <input
             type="text"
             placeholder="Search..."
-            // value={searchTerm}
-            // onChange={handleChange}
-            className="w-full p-2 pl-10 border rounded-md focus:outline-none" 
+            className="w-full p-2 pl-10 border rounded-md focus:outline-none"
           />
           <FaSearch
             className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
@@ -123,10 +126,10 @@ const AddRanger = () => {
           />
         </div>
       </div>
-      <div className=" p-5 ">
+      <div className="p-5">
         <form
           onSubmit={addRanger}
-          className="bg-white rounded-2xl border-slate-300 "
+          className="bg-white rounded-2xl border-slate-300"
         >
           <div className="grid gap-6 mb-6 md:grid-cols-2">
             <div className="p-5">
@@ -230,7 +233,6 @@ const AddRanger = () => {
                 id="aadharNo"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="Aadhar Number"
-                pattern="[0-9]{12}"
                 required
                 onChange={(e) => setAadharNo(e.target.value)}
               />
@@ -246,204 +248,169 @@ const AddRanger = () => {
                 type="text"
                 id="panNo"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="ABCDE1234F"
-                pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                placeholder="PAN Number"
                 required
                 onChange={(e) => setPanNo(e.target.value)}
               />
             </div>
             <div className="p-5">
               <label
-                htmlFor="pinCode"
+                htmlFor="gender"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Gender
+              </label>
+              <input
+                type="text"
+                id="gender"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Gender"
+                required
+                onChange={(e) => setGender(e.target.value)}
+              />
+            </div>
+            <div className="p-5">
+              <label
+                htmlFor="pincode"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Pin Code
               </label>
               <input
-                type="number"
-                id="pinCode"
+                type="text"
+                id="pincode"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="110001"
+                placeholder="Pin Code"
                 required
                 onChange={(e) => setPinCode(e.target.value)}
-                min={0}
-                maxLength={6}
               />
             </div>
-            <div className="mb-6 px-5 py-2">
+            <div className="p-5">
               <label
                 htmlFor="address"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Address
               </label>
-              <textarea
+              <input
+                type="text"
                 id="address"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Your address"
+                placeholder="Address"
                 required
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div className="p-5">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Gender
+              <label
+                htmlFor="service"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Service
               </label>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="male"
-                  name="gender"
-                  value="MALE"
-                  className="mr-2"
-                  required
-                  onChange={(e) => setGender(e.target.value)}
-                />
-                <label
-                  htmlFor="male"
-                  className="text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Male
-                </label>
-                <input
-                  type="radio"
-                  id="female"
-                  name="gender"
-                  value="FEMALE"
-                  className="ml-4 mr-2"
-                  required
-                  onChange={(e) => setGender(e.target.value)}
-                />
-                <label
-                  htmlFor="female"
-                  className="text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Female
-                </label>
-              </div>
+              <select
+                id="service"
+                value={selectedService}
+                onChange={(e) => setSelectedService(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option value="">Select a service</option>
+                {service.map((service) => (
+                  <option key={service._id} value={service._id}>
+                    {service.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="p-5">
               <label
-                htmlFor="serviceList"
+                htmlFor="vendor"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Select Service
+                Vendor
               </label>
               <select
-                id="serviceList"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                required
-                onChange={(e) => setSelectedService(e.target.value)}
-              >
-                <option value="">Select an option</option>
-                {service?.map((service) => (
-                  <option key={service?._id} value={service?._id}>
-                    {service?.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label
-                htmlFor="vendorList"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Select Vendor
-              </label>
-              <select
-                id="vendorList"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                id="vendor"
                 value={selectedVendor}
                 onChange={(e) => setSelectedVendor(e.target.value)}
-                required
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               >
-                <option value="">Select an option</option>
+                <option value="">Select a vendor</option>
                 {vendors.map((vendor) => (
                   <option key={vendor._id} value={vendor._id}>
-                    {vendor.name}
+                    {getVendorName(vendor._id)}
                   </option>
                 ))}
               </select>
             </div>
           </div>
-
-          <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
-            <div className="w-full md:w-auto">
-              <label
-                htmlFor="profilePic"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Upload Profile Picture
-              </label>
-              <input
-                id="profilePic"
-                accept="image/*"
-                type="file"
-                className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"
-                required
-                onChange={(e) => handleFileUpload(e, "profile")}
-              />
-              {profilePicUrl && (
-                <div className="mt-2 flex justify-center">
-                  <img
-                    src={profilePicUrl}
-                    className="h-32 w-32"
-                    alt="Profile"
-                  />
-                </div>
-              )}
-            </div>
-            <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
-              <label
-                htmlFor="aadharImg"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Upload Aadhar Image
-              </label>
-              <input
-                id="aadharImg"
-                accept="image/*"
-                type="file"
-                className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"
-                required
-                onChange={(e) => handleFileUpload(e, "aadhar")}
-              />
-              {aadharImgUrl && (
-                <div className="mt-2 flex justify-center">
-                  <img src={aadharImgUrl} className="h-32 w-32" alt="Aadhar" />
-                </div>
-              )}
-            </div>
-            <div className="w-full md:w-auto mt-4 md:mt-0 ">
-              <label
-                htmlFor="panImg"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Upload PAN Image
-              </label>
-              <input
-                id="panImg"
-                accept="image/*"
-                type="file"
-                className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"
-                required
-                onChange={(e) => handleFileUpload(e, "pan")}
-              />
-              {panImgUrl && (
-                <div className="mt-2 flex justify-center">
-                  <img src={panImgUrl} className="h-32 w-32" alt="PAN" />
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="bottom-0 left-0 w-full flex justify-center p-4">
-            <button
-              type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-14 py-2.5 text-center"
+          <div className="p-5">
+            <label
+              htmlFor="profilePic"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Add Ranger
-            </button>
+              Profile Picture
+            </label>
+            <input
+              type="file"
+              id="profilePic"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              onChange={(e) => handleFileUpload(e, "profile")}
+            />
+{profilePicUrl && (
+                  <div className="mt-2 flex justify-center">
+                    <img
+                      src={profilePicUrl}
+                      className="h-32 w-32"
+                      alt="Profile"
+                    />
+                  </div>
+                )}
           </div>
+          <div className="p-5">
+            <label
+              htmlFor="aadharImg"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Aadhar Image
+            </label>
+            <input
+              type="file"
+              id="aadharImg"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              onChange={(e) => handleFileUpload(e, "aadhar")}
+            />
+{aadharImgUrl && (
+                  <div className="mt-2 flex justify-center">
+                    <img src={aadharImgUrl} className="h-32 w-32" alt="Aadhar" />
+                  </div>
+                )}
+          </div>
+          <div className="p-5">
+            <label
+              htmlFor="panImg"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              PAN Image
+            </label>
+            <input
+              type="file"
+              id="panImg"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              onChange={(e) => handleFileUpload(e, "pan")}
+            />
+{panImgUrl && (
+                  <div className="mt-2 flex justify-center">
+                    <img src={panImgUrl} className="h-32 w-32" alt="PAN" />
+                  </div>
+                )}
+          </div>
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </section>
