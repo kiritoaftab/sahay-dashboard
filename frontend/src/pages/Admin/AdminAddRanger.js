@@ -4,6 +4,7 @@ import { BASE_URL } from "../../constants";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AddRanger = () => {
   const [firstName, setFirstName] = useState("");
@@ -26,7 +27,7 @@ const AddRanger = () => {
   const [profilePicUrl, setProfilePicUrl] = useState("");
   const [aadharImgUrl, setAadharImgUrl] = useState("");
   const [panImgUrl, setPanImgUrl] = useState("");
-
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -74,6 +75,12 @@ const AddRanger = () => {
         requestBody
       );
       console.log(response.data);
+      if (response.status === 200) {
+        alert("Ranger Updated successfully")
+      } else {
+        alert("Ranger update failed")
+      }
+      navigate(`/admin/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add ranger" });
     }
@@ -357,15 +364,11 @@ const AddRanger = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               onChange={(e) => handleFileUpload(e, "profile")}
             />
-{profilePicUrl && (
-                  <div className="mt-2 flex justify-center">
-                    <img
-                      src={profilePicUrl}
-                      className="h-32 w-32"
-                      alt="Profile"
-                    />
-                  </div>
-                )}
+            {profilePicUrl && (
+              <div className="mt-2 flex justify-center">
+                <img src={profilePicUrl} className="h-32 w-32" alt="Profile" />
+              </div>
+            )}
           </div>
           <div className="p-5">
             <label
@@ -380,11 +383,11 @@ const AddRanger = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               onChange={(e) => handleFileUpload(e, "aadhar")}
             />
-{aadharImgUrl && (
-                  <div className="mt-2 flex justify-center">
-                    <img src={aadharImgUrl} className="h-32 w-32" alt="Aadhar" />
-                  </div>
-                )}
+            {aadharImgUrl && (
+              <div className="mt-2 flex justify-center">
+                <img src={aadharImgUrl} className="h-32 w-32" alt="Aadhar" />
+              </div>
+            )}
           </div>
           <div className="p-5">
             <label
@@ -399,11 +402,11 @@ const AddRanger = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               onChange={(e) => handleFileUpload(e, "pan")}
             />
-{panImgUrl && (
-                  <div className="mt-2 flex justify-center">
-                    <img src={panImgUrl} className="h-32 w-32" alt="PAN" />
-                  </div>
-                )}
+            {panImgUrl && (
+              <div className="mt-2 flex justify-center">
+                <img src={panImgUrl} className="h-32 w-32" alt="PAN" />
+              </div>
+            )}
           </div>
           <button
             type="submit"
