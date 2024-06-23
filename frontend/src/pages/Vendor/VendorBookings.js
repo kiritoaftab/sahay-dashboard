@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 const VendorBooking = () => {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("INITIATED");
   const [bookingDoc, setBookingDoc] = useState("");
+
+  const navigate = useNavigate();
 
   const getBookingsByStatus = async () => {
     try {
@@ -12,6 +15,7 @@ const VendorBooking = () => {
         `${BASE_URL}booking/getBookingByStatus/${status}`
       );
       console.log(res?.data);
+      setBookingDoc(res?.data?.bookingDoc);
     } catch (error) {
       console.error(error);
     }
@@ -19,18 +23,33 @@ const VendorBooking = () => {
 
   useEffect(() => {
     getBookingsByStatus(status);
+    console.log(bookingDoc);
   }, [status]);
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
   };
 
+  const getTimeDifference = (start, end) => {
+    const startTime = new Date(start);
+    const endTime = new Date(end);
+    const diffMs = endTime - startTime;
+    const diffSecs = Math.floor(diffMs / 1000);
+    const hours = Math.floor(diffSecs / 3600);
+    const minutes = Math.floor((diffSecs % 3600) / 60);
+    const seconds = diffSecs % 60;
+    const formattedDiff = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    return formattedDiff;
+  };
+
   return (
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
         <h1 className="text-2xl font-medium">All Bookings</h1>
-        <div class="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
-          <div className="flex space-x-4 mb-4">
+        <div className="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="flex space-x-4 mb-4 p-4">
             <button
               onClick={() => handleStatusChange("INITIATED")}
               className="btn">
@@ -42,112 +61,277 @@ const VendorBooking = () => {
               Completed ({bookingDoc.length})
             </button>
             <button
-              onClick={() => handleStatusChange("BOOKING_STARTED"||"PRICE_CALCULATED"||"PAYMENT_COMPLETED")}
+              onClick={() =>
+                handleStatusChange(
+                  "BOOKING_STARTED" || "PRICE_CALCULATED" || "PAYMENT_COMPLETED"
+                )
+              }
               className="btn">
-              On-going
+              On-going({bookingDoc.length})
             </button>
           </div>
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-slate-100 ">
-              <tr>
-                <th scope="col" class="p-4">
-                  <div class="flex items-center">
-                    <label for="checkbox-all-search" class="sr-only">
-                      checkbox
-                    </label>
-                  </div>
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Vendor name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Phone
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Service
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Booking Date-Time
-                </th>
-                {/* <th scope="col" class="px-6 py-3">
-                  Revenue
-                </th> */}
-                <th scope="col" class="px-6 py-3">
-                  Location
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Assign
-                </th>
-              </tr>
-            </thead>
-            {/* <tbody>
-              {vendorDoc && vendorDoc.length > 0 ? (
-                vendorDoc.map((vendor, index) => (
-                  <tr class="bg-white border-b hover:bg-gray-50">
-                    <td class="w-4 p-4">
-                      <div class="flex items-center">
-                        <label for="checkbox-all-search" class="sr-only">
-                          checkbox
-                        </label>
-                      </div>
-                    </td>
-                    <th
-                      scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                      {vendor?.user?.userName}
+
+          {status === "INITIATED" && (
+            <div>
+              <h2>Initiated Bookings</h2>
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Customer name
                     </th>
-                    <td class="px-6 py-4">{vendor?.user?.phone}</td>
-                    <td class="px-6 py-4">{vendor?.shopName}</td>
-                    <td class="px-6 py-4">{vendor?.noOfBooking}</td>
-                    <td class="px-6 py-4">{vendor?.noOfRanger}</td>
-                    <td class="px-6 py-4">
-                      <button
-                        className="bg-indigo-700 hover:bg-indigo-500 text-white text-xs font-normal p-1.5 rounded-md"
-                        onClick={() =>
-                          navigate(`/admin/editVendor/${vendor?._id}`)
-                        }>
-                        View More
-                      </button>
-                    </td>
-                    <td class="px-6 py-4">
-                      <button>
-                        <TrashIcon className="h-5 w-5 text-red-500" />
-                      </button>
-                      <button>
-                        <label class="inline-flex items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            value=""
-                            class="sr-only peer"
-                          />
-                          <div class="relative w-11 h-6 bg-red-500  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-green-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
-                        </label>
-                      </button>
-                    </td>
+                    <th scope="col" className="px-6 py-3">
+                      Customer Phone
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Service
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Booking Date-Time
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Location
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Assign
+                    </th>
                   </tr>
-                ))
-              ) : (
-                <tr>No Data about Vendors Available</tr>
-              )}
-            </tbody> */}
-          </table>
-          {/* <div className="mt-10 p-5 flex justify-center fixed bottom-0 left-0 w-full ">
-            <button
-              className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
-              onClick={prevPage}
-              disabled={currentPage === 1}>
-              Previous
-            </button>
-            <span>
-              Showing {currentPage} of {totalPages}
-            </span>
-            <button
-              className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
-              onClick={nextPage}
-              disabled={currentPage === totalPages}>
-              Next
-            </button>
-          </div> */}
+                </thead>
+                <tbody>
+                  {bookingDoc &&
+                    bookingDoc.map((booking) => (
+                      <tr key={booking._id}>
+                        <td className="px-6 py-3 text-lg text-black">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td>
+                        <td className="px-6 py-3 text-lg text-black">
+                          {booking?.customer?.phone}
+                        </td>
+                        <td className="px-6 py-3">
+                          <button className="bg-purple-200 bg-opacity-14 text-black text-xs font-medium p-1.5 rounded-md">
+                            {booking?.service?.name}
+                          </button>
+                        </td>
+                        <td className="px-6 py-3 text-lg text-black">
+                          {new Date(
+                            booking?.bookingDateTime
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                            hour12: true,
+                          })}
+                        </td>
+                        <td className="px-6 py-3 text-lg text-black">
+                          {booking?.address?.address}
+                        </td>
+                        <td className="px-9 py-3 text-lg text-black">
+                          <button
+                            className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
+                            onClick={()=>{navigate(`/vendor/bookings/assignRanger/${booking._id}`)}}
+                          >
+                            Assign Ranger
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="ml-2 w-4 h-4">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                              />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {status === "COMPLETED" && (
+            <div>
+              <h2>Completed Bookings</h2>
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Customer Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Service
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Book Date-Time
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Start-End Time
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Start-End OTP
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Duration
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Item
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Total Price
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bookingDoc &&
+                    bookingDoc.map((booking) => (
+                      <tr key={booking._id}>
+                        <td className="px-6 py-3 text-black text-lg">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          <button
+                            className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md"
+                            onClick={() => {
+                              navigate(`/vendor/bookingDetails/${booking._id}`);
+                            }}>
+                            {booking?.service?.name}
+                          </button>
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          {new Date(
+                            booking?.bookingDateTime
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                            hour12: true,
+                          })}
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          {new Date(booking?.startTime).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "numeric",
+                              second: "numeric",
+                              hour12: true,
+                            }
+                          )}
+                          -
+                          {new Date(booking?.endTime).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "numeric",
+                              second: "numeric",
+                              hour12: true,
+                            }
+                          )}
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">{`${booking?.startOtp} - ${booking?.endOtp}`}</td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          {getTimeDifference(
+                            booking?.startTime,
+                            booking?.endTime
+                          )}
+                          Hrs
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          ₹{booking?.service?.price}
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg flex items-center">
+                          ₹{booking?.totalPrice}
+                          <button  className="text-indigo-700" onClick={()=>{navigate(`/vendor/bookingDetails/${booking._id}`)}}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="ml-2 w-4 h-4">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                              />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {status === "BOOKING_STARTED" && (
+            <div>
+              <h2>Completed Bookings</h2>
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Customer Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Service
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Booking Date-Time
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Customer Phone
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Ranger
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Location
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bookingDoc &&
+                    bookingDoc.map((booking) => (
+                      <tr key={booking._id}>
+                        <td className="px-6 py-3 text-black text-lg">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          <button className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md">
+                            {booking?.service?.name}
+                          </button>
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          {new Date(
+                            booking?.bookingDateTime
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                            hour12: true,
+                          })}
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          {booking?.customer?.phone}
+                        </td>
+                        <td className="px-6 py-3 text-black text-lg">{`${booking?.ranger?.firstName} ${booking?.ranger?.lastName}`}</td>
+                        <td className="px-6 py-3 text-black text-lg">
+                          {booking?.address?.address}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </section>
     </>

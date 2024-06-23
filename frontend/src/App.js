@@ -13,6 +13,8 @@ import VendorHome from "./pages/Vendor/VendorHome";
 import VendorRangers from "./pages/Vendor/VendorRangers";
 import VendorBookings from "./pages/Vendor/VendorBookings";
 import VendorAddRanger from "./pages/Vendor/VendorAddRanger";
+import AssignRanger from "./pages/Vendor/AssignRanger";
+import BookingDetails from "./pages/Vendor/BookingDetails";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
           <Route path="" element={<VendorHome/>}/>
           <Route path="rangers" element={<VendorRangers/>}/>
           <Route path="bookings" element={<VendorBookings/>}/>
+          <Route path="bookingDetails/:id" element={<BookingDetails/>}/>
+          <Route path="bookings/assignRanger/:id" element={<AssignRanger/>}/>
           <Route path="addRanger" element={<VendorAddRanger/>}/>
         </Route>
 
