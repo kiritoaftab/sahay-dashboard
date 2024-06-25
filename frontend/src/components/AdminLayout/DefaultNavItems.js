@@ -36,14 +36,14 @@ export const defaultNavItems = [
     icon: <ShoppingBagIcon className="w-6 h-6" />,
   },
   {
-    label: "Customers",
-    href: "/admin/customers",
-    icon: <ShoppingCartIcon className="w-6 h-6" />,
-  },
-  {
     label: "Add Ranger",
     href: "/admin/addRanger",
     icon: <FolderPlusIcon className="w-6 h-6" />,
+  },
+  {
+    label: "Customers",
+    href: "/admin/customers",
+    icon: <ShoppingCartIcon className="w-6 h-6" />,
   },
   {
     label: "Payments",

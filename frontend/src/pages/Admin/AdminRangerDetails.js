@@ -15,7 +15,7 @@ const AdminRangerDetails = () => {
   const [profilePicUrl, setProfilePicUrl] = useState("");
   const [aadharImgUrl, setAadharImgUrl] = useState("");
   const [panImgUrl, setPanImgUrl] = useState("");
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]); // Changed to array
   const [service, setService] = useState([]);
   const [vendors, setVendors] = useState([]);
 
@@ -37,6 +37,7 @@ const AdminRangerDetails = () => {
       setProfilePicUrl(response?.data?.rangerDoc?.user?.profilePic);
       setAadharImgUrl(response?.data?.rangerDoc?.aadharImgUrl);
       setPanImgUrl(response?.data?.rangerDoc?.panImgUrl);
+      setSelectedServices(response?.data?.rangerDoc?.serviceList || []); // Initialize selected services
     } catch (error) {
       console.error(error, { success: false, msg: "Internal Server" });
     }
@@ -56,7 +57,7 @@ const AdminRangerDetails = () => {
       pincode: pinCode,
       aadharImg: aadharImgUrl,
       panImg: panImgUrl,
-      serviceList: [selectedService],
+      serviceList: selectedServices, // Use the array of selected services
     };
 
     console.log(requestBody);
@@ -64,9 +65,9 @@ const AdminRangerDetails = () => {
       const response = await axios.post(`${BASE_URL}ranger/updateRanger`, requestBody);
       console.log(response?.data);
       if (response.status === 200) {
-        alert("Ranger Updated successfully")
+        alert("Ranger Updated successfully");
       } else {
-        alert("Ranger update failed")
+        alert("Ranger update failed");
       }
       navigate(`/admin/rangers`);
     } catch (error) {
@@ -123,10 +124,27 @@ const AdminRangerDetails = () => {
     return vendor ? `${vendor.firstName} ${vendor.lastName}` : "Unknown Vendor";
   };
 
+  const handleServiceChange = (e) => {
+    const options = e.target.options;
+    const selectedServices = [];
+    for (let i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        selectedServices.push(options[i].value);
+      }
+    }
+    setSelectedServices(selectedServices);
+  };
+
+  const removeService = (serviceId) => {
+    setSelectedServices((prevSelectedServices) =>
+      prevSelectedServices.filter((service) => service !== serviceId)
+    );
+  };
+
   return (
     <section className="w-fit md:w-full lg:w-full sm:w-full bg-background ">
       <div className="bg-white p-5 rounded-lg m-5">
-        <p className="font-bold text-3xl mb-4 ">Ranger Details</p>
+        <p className="font-bold text-3xl mb-4">Ranger Details</p>
         <form onSubmit={updateRanger}>
           <div className="flex flex-col md:flex-col lg:flex-row xl:flex-row">
             <div className="basis-1/4 flex flex-col justify-start">
@@ -193,14 +211,15 @@ const AdminRangerDetails = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor="serviceList" className="text-lg font-medium mb-2">Select Service</label>
+                  <label htmlFor="serviceList" className="text-lg font-medium mb-2">Select Services</label>
                   <select
                     id="serviceList"
                     className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
+                    multiple
                     required
-                    onChange={(e) => setSelectedService(e.target.value)}
+                    value={selectedServices}
+                    onChange={handleServiceChange}
                   >
-                    <option value="">Select an option</option>
                     {service?.map((service) => (
                       <option key={service?._id} value={service?._id}>
                         {service?.name}
@@ -255,6 +274,27 @@ const AdminRangerDetails = () => {
           <div className="mb-6">
             <label className="text-lg font-medium mb-2">Vendor</label>
             <p>{getVendorName(vendorId)}</p>
+          </div>
+
+          <div className="mb-6">
+            <label className="text-lg font-medium mb-2">Selected Services</label>
+            <div className="flex flex-wrap gap-2">
+              {selectedServices.map((serviceId) => {
+                const serviceObj = service.find((srv) => srv._id === serviceId);
+                return (
+                  <div key={serviceId} className="flex items-center gap-2 bg-slate-100 p-2 rounded-lg border border-black-500">
+                    <span>{serviceObj?.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeService(serviceId)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <button type="submit" className="mt-5 w-36 bg-primary p-3 text-white rounded-lg">

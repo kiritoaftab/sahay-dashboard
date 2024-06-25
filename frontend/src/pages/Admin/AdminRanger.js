@@ -21,6 +21,7 @@ const AdminRanger = () => {
         `${BASE_URL}ranger/getAllRanger?page=${currentPage}&pageSize=10`
       );
       setRangerList(res.data.rangerDoc);
+      console.log(res.data.rangerDoc);
       setTotalPages(res.data.pagination.totalPages);
     } catch (error) {
       console.error(error);
@@ -32,11 +33,14 @@ const AdminRanger = () => {
       const res = await axios.get(
         `${BASE_URL}rangerService/populateServices?page=1&pageSize=10`
       );
+
+      
       const services = res.data.rangers.reduce((acc, ranger) => {
         acc[ranger._id] = ranger.servicesDetails;
         return acc;
       }, {});
       setServiceDetails(services);
+      console.log(services);
     } catch (error) {
       console.error(error);
     }
