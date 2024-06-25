@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaSearch, FaTimes } from "react-icons/fa";
 import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const VendorAddRanger = () => {
   const [firstName, setFirstName] = useState("");
@@ -18,7 +17,7 @@ const VendorAddRanger = () => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [service, setService] = useState([]);
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]);
   const [vendorId, setVendorId] = useState("");
   const [vendors, setVendors] = useState([]);
   const [selectedVendor, setSelectedVendor] = useState("");
@@ -56,7 +55,7 @@ const VendorAddRanger = () => {
       profilePic: profilePicUrl,
       firstName,
       lastName,
-      vendorId: selectedVendor, // Use selected vendor
+      vendorId: selectedVendor,
       aadharNo,
       panNo,
       gender,
@@ -64,7 +63,7 @@ const VendorAddRanger = () => {
       pincode,
       aadharImg: aadharImgUrl,
       panImg: panImgUrl,
-      serviceList: [selectedService],
+      serviceList: selectedServices.map((service) => service._id),
     };
 
     console.log(requestBody);
@@ -76,11 +75,11 @@ const VendorAddRanger = () => {
       );
       console.log(response.data);
       if (response.status === 200) {
-        alert("Ranger Updated successfully")
+        alert("Ranger Added successfully");
       } else {
-        alert("Ranger update failed")
+        alert("Ranger could not be added");
       }
-      navigate(`/admin/rangers`);
+      navigate(`/vendor/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add ranger" });
     }
@@ -115,6 +114,26 @@ const VendorAddRanger = () => {
   const getVendorName = (vendorId) => {
     const vendor = vendors.find((vendor) => vendor._id === vendorId);
     return vendor ? `${vendor.firstName} ${vendor.lastName}` : "Unknown Vendor";
+  };
+
+  const handleServiceChange = (e) => {
+    const { options } = e.target;
+    const selected = [];
+    for (const option of options) {
+      if (option.selected) {
+        const serviceObj = service.find((svc) => svc._id === option.value);
+        if (serviceObj) {
+          selected.push(serviceObj);
+        }
+      }
+    }
+    setSelectedServices(selected);
+  };
+
+  const removeService = (serviceId) => {
+    setSelectedServices((prevSelectedServices) =>
+      prevSelectedServices.filter((service) => service._id !== serviceId)
+    );
   };
 
   return (
@@ -183,6 +202,7 @@ const VendorAddRanger = () => {
                 id="phoneNumber"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="98XXXXXX99"
+                maxLength={10}
                 pattern="[0-9]{10}"
                 required
                 onChange={(e) => setPhone(e.target.value)}
@@ -224,7 +244,7 @@ const VendorAddRanger = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute right-3 text-gray-600 cursor-pointer"
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <FaEye /> :<FaEyeSlash /> }
                 </div>
               </div>
             </div>
@@ -239,7 +259,7 @@ const VendorAddRanger = () => {
                 type="text"
                 id="aadharNo"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Aadhar Number"
+                placeholder="xxxx-xxxx-xxxx"
                 required
                 onChange={(e) => setAadharNo(e.target.value)}
               />
@@ -249,47 +269,15 @@ const VendorAddRanger = () => {
                 htmlFor="panNo"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                PAN Number
+                Pan Number
               </label>
               <input
                 type="text"
                 id="panNo"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="PAN Number"
+                placeholder="XXXXXXXXXX"
                 required
                 onChange={(e) => setPanNo(e.target.value)}
-              />
-            </div>
-            <div className="p-5">
-              <label
-                htmlFor="gender"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Gender
-              </label>
-              <input
-                type="text"
-                id="gender"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Gender"
-                required
-                onChange={(e) => setGender(e.target.value)}
-              />
-            </div>
-            <div className="p-5">
-              <label
-                htmlFor="pincode"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Pin Code
-              </label>
-              <input
-                type="text"
-                id="pincode"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Pin Code"
-                required
-                onChange={(e) => setPinCode(e.target.value)}
               />
             </div>
             <div className="p-5">
@@ -299,29 +287,86 @@ const VendorAddRanger = () => {
               >
                 Address
               </label>
-              <input
-                type="text"
+              <textarea
                 id="address"
+                rows="4"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Address"
+                placeholder="Your Address"
                 required
                 onChange={(e) => setAddress(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="p-5">
+              <label
+                htmlFor="pincode"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Pincode
+              </label>
+              <input
+                type="text"
+                id="pincode"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="xxxxxx"
+                required
+                onChange={(e) => setPinCode(e.target.value)}
               />
+            </div>
+            <div className="p-5">
+              <label
+                htmlFor="gender"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Gender
+              </label>
+              <select
+                id="gender"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="p-5">
+              <label
+                htmlFor="vendorId"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Vendor
+              </label>
+              <select
+                id="vendorId"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                onChange={(e) => setSelectedVendor(e.target.value)}
+              >
+                <option value="">Select Vendor</option>
+                {vendors.map((vendor) => (
+                  <option key={vendor._id} value={vendor._id}>
+                    {getVendorName(vendor._id)}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="p-5">
               <label
                 htmlFor="service"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Service
+                Select Services
               </label>
               <select
                 id="service"
-                value={selectedService}
-                onChange={(e) => setSelectedService(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                multiple
+                className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+                value={selectedServices.map((service) => service._id)}
+                onChange={handleServiceChange}
               >
-                <option value="">Select a service</option>
                 {service.map((service) => (
                   <option key={service._id} value={service._id}>
                     {service.name}
@@ -330,90 +375,91 @@ const VendorAddRanger = () => {
               </select>
             </div>
             <div className="p-5">
-              <label
-                htmlFor="vendor"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Vendor
-              </label>
-              <select
-                id="vendor"
-                value={selectedVendor}
-                onChange={(e) => setSelectedVendor(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              >
-                <option value="">Select a vendor</option>
-                {vendors.map((vendor) => (
-                  <option key={vendor._id} value={vendor._id}>
-                    {getVendorName(vendor._id)}
-                  </option>
-                ))}
-              </select>
+            <h3 className="text-lg font-semibold mb-2">Selected Services:</h3>
+            <div className="flex flex-wrap gap-2">
+              {selectedServices.map((service) => (
+                <div
+                  key={service._id}
+                  className="flex items-center bg-gray-200 p-2 rounded-md"
+                >
+                  <span>{service.name}</span>
+                  <FaTimes
+                    className="ml-2 text-red-500 cursor-pointer"
+                    onClick={() => removeService(service._id)}
+                  />
+                </div>
+              ))}
             </div>
           </div>
-          <div className="p-5">
-            <label
-              htmlFor="profilePic"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Profile Picture
-            </label>
-            <input
-              type="file"
-              id="profilePic"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              onChange={(e) => handleFileUpload(e, "profile")}
-            />
-            {profilePicUrl && (
+            <div className="p-5">
+              <label
+                htmlFor="profilePic"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Profile Picture
+              </label>
+              <input
+                type="file"
+                id="profilePic"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={(e) => handleFileUpload(e, "profile")}
+              />
+              {profilePicUrl && (
               <div className="mt-2 flex justify-center">
                 <img src={profilePicUrl} className="h-32 w-32" alt="Profile" />
               </div>
             )}
-          </div>
-          <div className="p-5">
-            <label
-              htmlFor="aadharImg"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Aadhar Image
-            </label>
-            <input
-              type="file"
-              id="aadharImg"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              onChange={(e) => handleFileUpload(e, "aadhar")}
-            />
-            {aadharImgUrl && (
+            </div>
+            <div className="p-5">
+              <label
+                htmlFor="aadharImg"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Aadhar Image
+              </label>
+              <input
+                type="file"
+                id="aadharImg"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={(e) => handleFileUpload(e, "aadhar")}
+              />
+              {aadharImgUrl && (
               <div className="mt-2 flex justify-center">
                 <img src={aadharImgUrl} className="h-32 w-32" alt="Aadhar" />
               </div>
             )}
-          </div>
-          <div className="p-5">
-            <label
-              htmlFor="panImg"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              PAN Image
-            </label>
-            <input
-              type="file"
-              id="panImg"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              onChange={(e) => handleFileUpload(e, "pan")}
-            />
-            {panImgUrl && (
+            </div>
+            <div className="p-5">
+              <label
+                htmlFor="panImg"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                PAN Image
+              </label>
+              <input
+                type="file"
+                id="panImg"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={(e) => handleFileUpload(e, "pan")}
+              />
+              {panImgUrl && (
               <div className="mt-2 flex justify-center">
                 <img src={panImgUrl} className="h-32 w-32" alt="PAN" />
               </div>
             )}
+            </div>
           </div>
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Submit
-          </button>
+
+          
+
+          <div className="flex items-center justify-center p-6 border-t border-gray-200 rounded-b">
+            <button
+              type="submit"
+              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            >
+              Add Ranger
+            </button>
+          </div>
         </form>
       </div>
     </section>
