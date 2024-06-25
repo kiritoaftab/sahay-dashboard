@@ -64,9 +64,6 @@ const AdminCustomer = () => {
                 <th scope="col" className="px-6 py-3">
                   Gender
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Role
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -100,7 +97,6 @@ const AdminCustomer = () => {
                         : "No address available"}
                     </td>
                     <td className="px-6 py-4">{customer?.gender}</td>
-                    <td className="px-6 py-4">{customer?.user?.role}</td>
                   </tr>
                 ))
               ) : (
