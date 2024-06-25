@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../axiosInstance/axiosApi";
 import { BASE_URL } from "../../constants";
 
-const AdminRangerDetails = () => {
+const VendorRangerDetails = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -69,7 +69,7 @@ const AdminRangerDetails = () => {
       } else {
         alert("Ranger update failed");
       }
-      navigate(`/admin/rangers`);
+      navigate(`/vendor/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "vendor not updated" });
     }
@@ -306,4 +306,4 @@ const AdminRangerDetails = () => {
   );
 };
 
-export default AdminRangerDetails;
+export default VendorRangerDetails;
