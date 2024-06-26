@@ -6,6 +6,8 @@ import axios from "../../axiosInstance/axiosApi";
 import { formatDuration } from "../../constants";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const VendorRangers = () => {
   const [rangerList, setRangerList] = useState([]);
@@ -149,24 +151,26 @@ const VendorRangers = () => {
             ))}
           </tbody>
         </table>
-        <div className="mt-10 p-5 flex justify-center">
+        <div className="mt-10  flex  justify-center">
+          <div className=" border  bg-[#D9D9D9] rounded-full flex justify-center">
           <button
-            className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
+            className={`focus:outline-none text-black p-2   text-2xl`}
             onClick={prevPage}
             disabled={currentPage === 1}
           >
-            Previous
+            <MdKeyboardArrowLeft />
           </button>
-          <span>
-            Showing {currentPage} of {totalPages}
-          </span>
+          <p className="p-2">
+             {currentPage} / {totalPages}
+          </p>
           <button
-            className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
+            className={`focus:outline-none text-black p-2  text-2xl`}
             onClick={nextPage}
             disabled={currentPage === totalPages}
           >
-            Next
+            <MdKeyboardArrowRight />
           </button>
+          </div>
         </div>
       </section>
     </section>

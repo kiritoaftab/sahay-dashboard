@@ -138,27 +138,16 @@ const VendorAddRanger = () => {
 
   return (
     <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
-      <div className="w-screen md:w-full bg-background p-5 flex justify-between px-10">
+      <div className="w-screen md:w-full bg-background p-3 flex justify-between px-10">
         <p className="text-2xl font-bold">Add Ranger</p>
-        <div className="relative inline-block text-left">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full p-2 pl-10 border rounded-md focus:outline-none"
-          />
-          <FaSearch
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
-            size={20}
-          />
-        </div>
       </div>
-      <div className="p-5">
+      <div className="p-3">
         <form
           onSubmit={addRanger}
           className="bg-white rounded-2xl border-slate-300"
         >
           <div className="grid gap-6 mb-6 md:grid-cols-2">
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="firstName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -174,7 +163,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="lastName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -190,7 +179,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setLastName(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="phoneNumber"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -208,7 +197,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -224,7 +213,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -248,7 +237,7 @@ const VendorAddRanger = () => {
                 </div>
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="aadharNo"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -264,7 +253,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setAadharNo(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="panNo"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -280,7 +269,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setPanNo(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="address"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -296,7 +285,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setAddress(e.target.value)}
               ></textarea>
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="pincode"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -312,7 +301,7 @@ const VendorAddRanger = () => {
                 onChange={(e) => setPinCode(e.target.value)}
               />
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="gender"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -331,7 +320,7 @@ const VendorAddRanger = () => {
                 <option value="other">Other</option>
               </select>
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="vendorId"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -352,7 +341,7 @@ const VendorAddRanger = () => {
                 ))}
               </select>
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="service"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -374,7 +363,7 @@ const VendorAddRanger = () => {
                 ))}
               </select>
             </div>
-            <div className="p-5">
+            <div className="p-3">
             <h3 className="text-lg font-semibold mb-2">Selected Services:</h3>
             <div className="flex flex-wrap gap-2">
               {selectedServices.map((service) => (
@@ -391,7 +380,7 @@ const VendorAddRanger = () => {
               ))}
             </div>
           </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="profilePic"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -410,7 +399,7 @@ const VendorAddRanger = () => {
               </div>
             )}
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="aadharImg"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -429,7 +418,7 @@ const VendorAddRanger = () => {
               </div>
             )}
             </div>
-            <div className="p-5">
+            <div className="p-3">
               <label
                 htmlFor="panImg"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -452,7 +441,7 @@ const VendorAddRanger = () => {
 
           
 
-          <div className="flex items-center justify-center p-6 border-t border-gray-200 rounded-b">
+          <div className="flex items-center justify-center p-6 rounded-b">
             <button
               type="submit"
               className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
