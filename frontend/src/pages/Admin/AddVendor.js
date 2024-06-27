@@ -4,6 +4,7 @@ import { BASE_URL } from "../../constants";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import uploadToAzureStorage from "../../util/uploadToAzureStorage";
 import { useNavigate } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
 
 const AddVendor = () => {
   const [firstName, setFirstName] = useState();
@@ -50,7 +51,7 @@ const AddVendor = () => {
       pincode: pinCode,
       shopName: shopName,
       shopGstNo: gstIn,
-      serviceList: [selectedService],
+      serviceList: [selectedService.map((service)=>service._id)],
     };
 
     console.log(requestBody);
@@ -79,6 +80,27 @@ const AddVendor = () => {
     };
     getAllServices();
   }, []);
+
+  const handleServiceChange = (e) => {
+    const { options } = e.target;
+    const selected = [];
+    for (const option of options) {
+      if (option.selected) {
+        const serviceObj = service.find((svc) => svc._id === option.value);
+        if (serviceObj) {
+          selected.push(serviceObj);
+        }
+      }
+    }
+    setSelectedService(selected);
+  };
+
+  const removeService = (serviceId) => {
+    setSelectedService((prevSelectedServices) =>
+      prevSelectedServices.filter((service) => service._id !== serviceId)
+    );
+  };
+
   return (
     <>
       <>
@@ -210,7 +232,9 @@ const AddVendor = () => {
                   id="serviceList"
                   className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
-                  onChange={(e) => setSelectedService(e.target.value)}>
+                  multiple
+                  value={selectedService && selectedService.map((service)=> service._id)}
+                  onChange={handleServiceChange}>
                   <option value="">Select an option</option>
                   {service?.map((service) => (
                     <option key={service?._id} value={service?._id}>
@@ -219,6 +243,22 @@ const AddVendor = () => {
                   ))}
                 </select>
               </div>
+              <div className="p-5">
+              <h3 className="text-lg font-semibold mb-2">Selected Services:</h3>
+              <div className="flex flex-wrap gap-2">
+                {selectedService && selectedService.map((service) => (
+                  <div
+                    key={service._id}
+                    className="flex items-center bg-gray-200 p-2 rounded-md">
+                    <span>{service.name}</span>
+                    <FaTimes
+                      className="ml-2 text-red-500 cursor-pointer"
+                      onClick={() => removeService(service._id)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
             </div>
             <div className="mb-6 px-5 py-2">
               <label

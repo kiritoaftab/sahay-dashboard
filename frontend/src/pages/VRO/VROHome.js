@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL, formatDuration } from "../../constants";
 import axios from "../../axiosInstance/axiosApi";
 
-const VendorHome = () => {
+const VROHome = () => {
   const [totals, setTotals] = useState(null);
   const [topVendors, setTopVendors] = useState([]);
   const [topRangers, setTopRangers] = useState([]);
@@ -130,4 +130,4 @@ const VendorHome = () => {
     </section>
   );
 };
-export default VendorHome;
+export default VROHome;

@@ -16,6 +16,8 @@ import VendorAddRanger from "./pages/Vendor/VendorAddRanger";
 import AssignRanger from "./pages/Vendor/AssignRanger";
 import BookingDetails from "./pages/Vendor/BookingDetails";
 import VendorRangerDetails from "./pages/Vendor/VendorRangerDetails";
+import VROLayout from "./components/VROLayout";
+import VROHome from "./pages/VRO/VROHome"
 
 function App() {
   return (
@@ -52,6 +54,10 @@ function App() {
           <Route path="editRanger/:id" element={<VendorRangerDetails/>}/>
         </Route>
 
+        <Route path="vro" element={<VROLayout/>}>
+        <Route path="" element={<VROHome/>}/>
+        </Route>
+        
       </Route>
 
       

@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash, FaSearch, FaTimes } from "react-icons/fa";
 import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
 import { useNavigate } from "react-router-dom";
 
-const AddRanger = () => {
+const AdminAddRanger = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -79,7 +79,7 @@ const AddRanger = () => {
       } else {
         alert("Ranger could not be added");
       }
-      navigate(`/admin/rangers`);
+      navigate(`/vendor/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add ranger" });
     }
@@ -137,11 +137,11 @@ const AddRanger = () => {
   };
 
   return (
-    <section className="w-screen md:w-full bg-background gap-3 flex flex-col">
+    <section className="w-screen md:w-full bg-background gap-4 flex flex-col">
       <div className="w-screen md:w-full bg-background p-3 flex justify-between px-10">
         <p className="text-2xl font-bold">Add Ranger</p>
       </div>
-      <div className="px-5">
+      <div className="p-3">
         <form
           onSubmit={addRanger}
           className="bg-white rounded-2xl border-slate-300"
@@ -455,4 +455,4 @@ const AddRanger = () => {
   );
 };
 
-export default AddRanger;
+export default AdminAddRanger;
