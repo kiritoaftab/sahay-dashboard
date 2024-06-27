@@ -74,7 +74,7 @@ const VendorAddRanger = () => {
         requestBody
       );
       console.log(response.data);
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("Ranger Added successfully");
       } else {
         alert("Ranger could not be added");

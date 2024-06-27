@@ -56,7 +56,7 @@ const VendorRangers = () => {
   };
 
   return (
-    <section className="w-screen md:w-full lg:w-full  h-full bg-background  flex flex-col">
+    <section className="w-screen md:w-full lg:w-full h-full bg-background flex flex-col">
       <div className="w-full bg-background p-3 flex flex-col md:flex-row justify-between px-5 md:px-10">
         <p className="text-xl md:text-2xl font-bold">Ranger Details</p>
         <div className="relative mt-2 md:mt-0 w-full md:w-auto">
@@ -98,7 +98,7 @@ const VendorRangers = () => {
                   {ranger?.userDetails?.phone}
                 </td>
                 <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
-                  {Array.isArray(ranger?.servicesDetails) ? 
+                {Array.isArray(ranger?.servicesDetails) ? 
                     ranger.servicesDetails.map((service) => service.name).join(", ") : 
                     ""
                   }
