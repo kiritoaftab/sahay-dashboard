@@ -57,11 +57,7 @@ const AdminRanger = () => {
 
   const toggleStatus = async (userId, currentStatus) => {
     console.log("User ID:", userId);
-    if (!userId) {
-        console.error("User ID is undefined");
-        return;
-    }
-
+    
     const newStatus = currentStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE";
     console.log("Toggling status for user ID:", userId, "to", newStatus);
 
@@ -74,11 +70,6 @@ const AdminRanger = () => {
       fetchRangers(searchQuery);
     } catch (error) {
       console.error("Error updating status:", error);
-      console.error("Request details:", {
-        url: `${BASE_URL}user/updateStatus`,
-        userId,
-        status: newStatus,
-      });
     }
   };
 
@@ -115,7 +106,7 @@ const AdminRanger = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {rangerList.map((ranger, index) => {
-              console.log("Ranger:", ranger);
+              // console.log("Ranger:", ranger);
               return (
                 <tr key={index}>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap flex items-center justify-center">
