@@ -117,9 +117,9 @@ const AdminVendor = () => {
                     </button>
                   </td>
                   <td className="px-6 py-4">
-                    <button>
+                    {/* <button>
                       <TrashIcon className="h-5 w-5 text-red-500" />
-                    </button>
+                    </button> */}
                     <button>
                       <label className="inline-flex items-center cursor-pointer">
                         <input type="checkbox" value="" className="sr-only peer" />

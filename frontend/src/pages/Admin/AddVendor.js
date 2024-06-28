@@ -61,6 +61,11 @@ const AddVendor = () => {
         `${BASE_URL}vendor/addVendor`,
         requestBody
       );
+      if (response.status === 201) {
+        alert("Vendor Added successfully");
+      } else {
+        alert("vendor could not be added");
+      }
       console.log(response.data);
       navigate(`/admin/vendors`);
     } catch (error) {
@@ -149,7 +154,7 @@ const AddVendor = () => {
                   id="phoneNumber"
                   className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="98XXXXXX99"
-                  pattern="[0-9]{10}"
+                  maxLength={10}
                   required
                   onChange={(e) => setPhone(e.target.value)}
                 />
@@ -180,7 +185,7 @@ const AddVendor = () => {
                   id="gstIn"
                   className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="29ABCDE1111LAZ"
-                  pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
+                  // pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
                   required
                   onChange={(e) => setGstIn(e.target.value)}
                 />

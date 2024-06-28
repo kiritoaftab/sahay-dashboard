@@ -118,9 +118,9 @@ const VendorRangers = () => {
                   </button>
                 </td>
                 <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-center">
-                  <button>
+                  {/* <button>
                     <TrashIcon className="h-5 w-5 mr-2 text-red-500" />
-                  </button>
+                  </button> */}
                   <button>
                     <label className="inline-flex items-center cursor-pointer">
                       <input
