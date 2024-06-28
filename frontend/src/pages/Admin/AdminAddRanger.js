@@ -79,7 +79,7 @@ const AdminAddRanger = () => {
       } else {
         alert("Ranger could not be added");
       }
-      navigate(`/vendor/rangers`);
+      navigate(`/admin/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add ranger" });
     }

@@ -53,6 +53,20 @@ const AdminVendor = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
+  const toggleStatus = async (userId, currentStatus) => {
+    const newStatus = currentStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    try {
+      const res = await axios.post(`${BASE_URL}user/updateStatus`, {
+        userId,
+        status: newStatus,
+      });
+      console.log("Status update response:", res.data);
+      fetchVendors(searchQuery);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
   return (
     <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
       <div className="w-full bg-background p-3 flex flex-col md:flex-row justify-between px-5 md:px-10">
@@ -117,12 +131,9 @@ const AdminVendor = () => {
                     </button>
                   </td>
                   <td className="px-6 py-4">
-                    {/* <button>
-                      <TrashIcon className="h-5 w-5 text-red-500" />
-                    </button> */}
-                    <button>
+                    <button onClick={() => toggleStatus(vendor?.user?._id, vendor?.user?.status)}>
                       <label className="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" value="" className="sr-only peer" />
+                        <input type="checkbox" className="sr-only peer" checked={vendor?.user?.status === "ACTIVE"} readOnly />
                         <div className="relative w-11 h-6 bg-red-500 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-green-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                       </label>
                     </button>
