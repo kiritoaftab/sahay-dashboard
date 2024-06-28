@@ -124,7 +124,7 @@ const AdminRanger = () => {
                     </span>
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                    {ranger?.userDetails?.phone}
+                    {ranger?.user?.phone}
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
                     {Array.isArray(ranger?.servicesDetails) ? 

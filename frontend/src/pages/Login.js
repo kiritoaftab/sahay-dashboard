@@ -34,6 +34,8 @@ const SignUpForm = () => {
 
           if (res.data.userDoc.role === 'ADMIN') {
             navigate('/admin');
+          } else if (res.data.userDoc.role === 'VRO') {
+            navigate('/vro');
           } else {
             navigate('/vendor');
           }
