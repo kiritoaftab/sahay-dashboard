@@ -71,7 +71,14 @@ const AdminRanger = () => {
         status: newStatus,
       });
       console.log("Status update response:", res.data);
-      fetchRangers(searchQuery);
+      // Update the status in the local state
+      setRangerList((prevList) =>
+        prevList.map((ranger) =>
+          ranger.user === userId
+            ? { ...ranger, user: { ...ranger.user, status: newStatus } }
+            : ranger
+        )
+      );
     } catch (error) {
       console.error("Error updating status:", error);
       console.error("Request details:", {
@@ -147,12 +154,13 @@ const AdminRanger = () => {
                     </button>
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-center">
-                    <button onClick={() => toggleStatus(ranger?.user, ranger?.userDetails?.status)}>
+                    <button onClick={() => toggleStatus(ranger.user, ranger.user.status)}>
                       <label className="inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={ranger?.userDetails?.status === "ACTIVE"}
+                          checked={ranger.user.status === "ACTIVE"}
                           className="sr-only peer"
+                          readOnly
                         />
                         <div className="relative w-11 h-6 bg-red-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-green-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                       </label>

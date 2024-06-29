@@ -19,6 +19,8 @@ import VendorRangerDetails from "./pages/Vendor/VendorRangerDetails";
 import VROLayout from "./components/VROLayout";
 import VROHome from "./pages/VRO/VROHome"
 import AddServices from "./pages/Services/AddServices";
+import AdminVRO from "./pages/Admin/AllVro";
+import AddVRO from "./pages/Admin/AddVro";
 
 function App() {
   return (
@@ -38,6 +40,9 @@ function App() {
           <Route path="rangers" element={<AdminRanger/>} />
           {/*Services  */}
           <Route path="addServices" element={<AddServices/>}/>
+          {/* all vro */}
+          <Route path="allVro" element={<AdminVRO />}/>
+          <Route path="addVro" element={<AddVRO/>}/>
 
           <Route path="customers" element={<AdminCustomer/>} />
           <Route path="addRanger" element={<AdminAddRanger/>} />
