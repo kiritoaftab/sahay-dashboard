@@ -56,9 +56,9 @@ function App() {
        
         <Route path="vendor" element={<VendorLayout/>}>
           <Route path="" element={<VendorHome/>}/>
-          <Route path="rangers" element={<VendorRangers/>}/>
           <Route path="bookings" element={<VendorBookings/>}/>
           <Route path="bookingDetails/:id" element={<BookingDetails/>}/>
+          <Route path="rangers" element={<VendorRangers/>}/>
           <Route path="bookings/assignRanger/:id" element={<AssignRanger/>}/>
           <Route path="addRanger" element={<VendorAddRanger/>}/>
           <Route path="editRanger/:id" element={<VendorRangerDetails/>}/>
