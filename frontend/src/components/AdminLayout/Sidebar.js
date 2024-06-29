@@ -1,7 +1,7 @@
 // components/Sidebar.tsx
 import React, { useState } from "react";
 import cn from "classnames";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { defaultNavItems } from "./DefaultNavItems";
 import useAuth from "../../hooks/useAuth";
 import { logo } from "../../constants";
@@ -14,6 +14,7 @@ import {
 
 const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { auth } = useAuth();
   const [openItems, setOpenItems] = useState({});
 
@@ -22,12 +23,19 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
     navigate('/');
   };
 
-  const toggleItem = (label, href) => {
+  const toggleItem = (label) => {
     setOpenItems((prev) => ({ ...prev, [label]: !prev[label] }));
-    if (href) navigate(href);
   };
 
   const Icon = collapsed ? ChevronDoubleRightIcon : ChevronDoubleLeftIcon;
+
+  const isActive = (href) => {
+    if (href === '/admin') {
+      return location.pathname === href;
+    }
+    return location.pathname.startsWith(href);
+  };
+
   return (
     <div
       className={cn({
@@ -55,7 +63,6 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
               "hover:bg-white/[.30]": true, // colors
               "w-10 h-10 rounded-full": true, // shape
             })}
-            // 👇 set the collapsed state on click
             onClick={() => setCollapsed(!collapsed)}
           >
             <Icon className="w-5 h-5" />
@@ -68,17 +75,21 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
               const hasSubItems = item.items && item.items.length > 0;
               return (
                 <li key={index} className="text-white font-semibold">
-                  <button
-                    className={cn({
-                      "hover:bg-white/[.20] flex transition-colors duration-300 rounded-md p-2 mx-3 gap-4":
-                        !collapsed,
-                      "hover:bg-white/[.20] flex transition-colors duration-300 rounded-full p-2 mx-3 w-10 h-10":
-                        collapsed,
-                    })}
-                    onClick={() => (hasSubItems ? toggleItem(item.label, item.href) : navigate(item.href))}
+                  <NavLink
+                    to={item.href}
+                    className={({ isActive: isNavLinkActive }) =>
+                      cn({
+                        "hover:bg-white/[.20] flex transition-colors duration-300 rounded-md p-2 mx-3 gap-4":
+                          !collapsed,
+                        "hover:bg-white/[.20] flex transition-colors duration-300 rounded-full p-2 mx-3 w-10 h-10":
+                          collapsed,
+                        "bg-blue-500": isNavLinkActive && isActive(item.href),
+                      })
+                    }
+                    onClick={() => (hasSubItems ? toggleItem(item.label) : navigate(item.href))}
                   >
                     {item.icon} <span>{!collapsed && item.label}</span>
-                  </button>
+                  </NavLink>
                   {hasSubItems && openItems[item.label] && (
                     <ul className="ml-4">
                       {item.items.map((subItem, subIndex) => (
@@ -91,9 +102,20 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
                               collapsed,
                           })}
                         >
-                          <button className="flex gap-2" onClick={() => navigate(subItem.href)}>
+                          <NavLink
+                            to={subItem.href}
+                            className={({ isActive: isSubNavLinkActive }) =>
+                              cn({
+                                "hover:bg-white/[.20] flex transition-colors duration-300 rounded-md p-2 mx-3 gap-4":
+                                  !collapsed,
+                                "hover:bg-white/[.20] flex transition-colors duration-300 rounded-full p-2 mx-3 w-10 h-10":
+                                  collapsed,
+                                "bg-blue-500": isSubNavLinkActive && isActive(subItem.href),
+                              })
+                            }
+                          >
                             {subItem.icon} <span>{!collapsed && subItem.label}</span>
-                          </button>
+                          </NavLink>
                         </li>
                       ))}
                     </ul>

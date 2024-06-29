@@ -1,5 +1,6 @@
 // components/defaultNavItems.tsx
 import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   HomeIcon,
   ShoppingBagIcon,
@@ -8,12 +9,11 @@ import {
   BuildingStorefrontIcon,
   BanknotesIcon,
   FolderPlusIcon,
-  
 } from "@heroicons/react/24/outline";
 import { TbTools } from "react-icons/tb";
 import { CiUser } from "react-icons/ci";
-// define a NavItem prop
 
+// Define a NavItem prop
 export const defaultNavItems = [
   {
     label: "Dashboard",
@@ -46,7 +46,7 @@ export const defaultNavItems = [
   },
   {
     label: "VRO",
-    icon: <CiUser  className="w-6 h-6" />,
+    icon: <CiUser className="w-6 h-6" />,
     href: "/admin/allVro",
     items: [
       {
@@ -61,11 +61,6 @@ export const defaultNavItems = [
     href: "/admin/customers",
     icon: <ShoppingCartIcon className="w-6 h-6" />,
   },
-  // {
-  //   label: "Payments",
-  //   href: "/admin/payments",
-  //   icon: <PresentationChartLineIcon className="w-6 h-6" />,
-  // },
   {
     label: "Bookings",
     href: "/admin/bookings",
@@ -76,5 +71,31 @@ export const defaultNavItems = [
     href: "/admin/addServices",
     icon: <TbTools className="w-6 h-6" />,
   },
-  
 ];
+
+const Sidebar = () => {
+  const location = useLocation();
+
+  return (
+    <nav className="flex flex-col">
+      {defaultNavItems.map((item, index) => (
+        <NavLink
+          key={index}
+          to={item.href}
+          className={({ isActive }) =>
+            `flex items-center p-2 my-1 rounded-lg ${
+              isActive
+                ? "bg-blue-500 text-white"
+                : "text-gray-700 hover:bg-blue-200"
+            }`
+          }
+        >
+          {item.icon}
+          <span className="ml-3">{item.label}</span>
+        </NavLink>
+      ))}
+    </nav>
+  );
+};
+
+export default Sidebar;
