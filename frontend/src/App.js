@@ -21,6 +21,7 @@ import VROHome from "./pages/VRO/VROHome"
 import AddServices from "./pages/Services/AddServices";
 import AdminVRO from "./pages/Admin/AllVro";
 import AddVRO from "./pages/Admin/AddVro";
+import AllServices from "./pages/Services/AllServices";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="rangers" element={<AdminRanger/>} />
           {/*Services  */}
           <Route path="addServices" element={<AddServices/>}/>
+          <Route path="allServices" element={<AllServices/>}/>
           {/* all vro */}
           <Route path="allVro" element={<AdminVRO />}/>
           <Route path="addVro" element={<AddVRO/>}/>

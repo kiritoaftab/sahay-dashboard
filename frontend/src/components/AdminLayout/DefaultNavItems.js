@@ -57,6 +57,18 @@ export const defaultNavItems = [
     ],
   },
   {
+    label: "Services",
+    href: "/admin/allServices",
+    icon: <TbTools className="w-6 h-6" />,
+    items: [
+      {
+        label: "Add Service",
+        href: "/admin/addServices",
+        icon: <FolderPlusIcon className="w-6 h-6" />,
+      },
+    ],
+  },
+  {
     label: "Customers",
     href: "/admin/customers",
     icon: <ShoppingCartIcon className="w-6 h-6" />,
@@ -65,11 +77,6 @@ export const defaultNavItems = [
     label: "Bookings",
     href: "/admin/bookings",
     icon: <BanknotesIcon className="w-6 h-6" />,
-  },
-  {
-    label: "Add Services",
-    href: "/admin/addServices",
-    icon: <TbTools className="w-6 h-6" />,
   },
 ];
 
