@@ -5,28 +5,17 @@ import { useParams } from "react-router-dom";
 import Modal from "../../components/Modal";
 
 const AssignRanger = () => {
-  const [rangers, setRangers] = useState();
+  const [rangers, setRangers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [rangerId, setrangerId] = useState();
   const [vendorId, setvendorId] = useState();
+  const [bookingDoc,setBookingDoc] = useState(null);
+  const [vendorDoc,setVendorDoc] = useState(null);
 
   const { id } = useParams();
 
   console.log(id, rangerId, vendorId);
-  const getAllRangers = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}ranger/getAllRanger?page=${currentPage}&pageSize=10`
-      );
-      console.log(response?.data);
-      setRangers(response?.data?.rangerDoc);
-      setCurrentPage(response?.data?.pagination?.page)
-      await console.log(rangers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleConfirm = async () => {
     try {
@@ -35,13 +24,49 @@ const AssignRanger = () => {
     }
   };
 
-  useEffect(() => {
-    getAllRangers();
-  }, [currentPage]);
-
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const fetchBookingById = async (bookingId) => {
+    try {
+      const res = await axios.get(`${BASE_URL}booking/specificId`,{
+        params:{
+          type:"BOOKING",
+          id:bookingId
+        }
+      })
+      console.log(res.data);
+      setBookingDoc(res.data.bookingDocs);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchRangersByVendor =async (vendorId) => {
+    try {
+      const res = await axios.get(`${BASE_URL}ranger/getRangersByVendorId/${vendorId}`);
+      console.log(res.data);
+      setRangers(res.data.rangerDoc);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchVendorByUser = async () => {
+    try {
+      const userId = sessionStorage.getItem('auth');
+      const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
+      setVendorDoc(res.data.vendorDoc);
+      fetchRangersByVendor(res.data.vendorDoc._id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    fetchBookingById(id);
+    fetchVendorByUser();
+  },[])
 
   return (
     <>
@@ -73,30 +98,30 @@ const AssignRanger = () => {
             </thead>
             <tbody>
               {rangers &&
-                rangers.map((booking) => (
-                  <tr key={booking._id}>
-                    <td className="px-6 py-3 text-lg text-black">{`${booking?.firstName} ${booking?.lastName}`}</td>
+                rangers.map((ranger) => (
+                  <tr key={ranger._id}>
+                    <td className="px-6 py-3 text-lg text-black">{`${ranger?.firstName} ${ranger?.lastName}`}</td>
                     <td className="px-6 py-3 text-lg text-black">
-                      {booking?.user?.phone}
+                      {ranger?.user?.phone}
                     </td>
                     <td className="px-6 py-3">
                       <button className="bg-purple-200 bg-opacity-14 text-black text-xs font-medium p-1.5 rounded-md">
-                        {booking?.service?.name}
+                        {ranger?.service?.name}
                       </button>
                     </td>
                     <td className="px-6 py-3 text-lg text-black">
-                      {`${booking?.vendor?.firstName}${booking?.vendor?.lastName} ${booking?.vendor?._id}`}
+                      {`${ranger?.vendor?.firstName}${ranger?.vendor?.lastName} ${ranger?.vendor?._id}`}
                     </td>
                     <td className="px-6 py-3 text-lg text-black">
-                      {booking?.status}
+                      {ranger?.status}
                     </td>
                     <td className="px-9 py-3 text-lg text-black">
                       <button
                         className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
                         onClick={() => {
                           setShowModal(true);
-                          setvendorId(booking?.vendor?._id)
-                          setrangerId(booking?._id)
+                          setvendorId(ranger?.vendor?._id)
+                          setrangerId(ranger?._id)
                         }}>
                         Assign Ranger
                         <svg

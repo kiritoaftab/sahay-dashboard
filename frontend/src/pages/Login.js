@@ -26,7 +26,7 @@ const SignUpForm = () => {
       console.log(res.data.userDoc);
 
       if (res.data.success) {
-        if (res.data.userDoc.role === 'RANGER') {
+        if (res.data.userDoc.role === 'RANGER' || res.data.userDoc.role === 'CUSTOMER' ) {
           alert("Rangers are not allowed to log in.");
         } else {
           setAuth(res.data.userDoc._id);
