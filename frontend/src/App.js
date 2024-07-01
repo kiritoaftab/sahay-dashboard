@@ -23,6 +23,7 @@ import AdminVRO from "./pages/Admin/AllVro";
 import AddVRO from "./pages/Admin/AddVro";
 import AllServices from "./pages/Services/AllServices";
 import EditService from "./pages/Services/EditService";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
     <Route path="/" element={<Layout/>}>
       {/* public routes */}
       <Route exact path="/" element={<Login/>} />
-
+      <Route exact path="/reset-password" element={<ResetPassword/>} />
       <Route element={<PersistLogin/>}>
         <Route path="admin" element={<AdminLayout/>} >
           <Route path="" element={<AdminHome/>} />

@@ -49,6 +49,10 @@ const SignUpForm = () => {
     }
   };
 
+  const handleForgotPassword = () => {
+    navigate('/reset-password');
+  };
+
   return (
     <div className="login-container">
       <div className="overlay"></div>
@@ -84,6 +88,11 @@ const SignUpForm = () => {
               <FiEyeOff onClick={() => setShowPassword(!showPassword)} className="toggle-password-icon" />
             )}
           </div>
+
+          <div className='text-gray-400 text-right mb-4'>
+            <p className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</p>
+          </div>
+
           <button type="submit" className="button-confirm rounded-full">Login</button>
         </form>
       </div>

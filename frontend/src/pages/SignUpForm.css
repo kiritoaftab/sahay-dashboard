@@ -62,7 +62,7 @@
 
 .password-container {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 4px; /* Reduce margin here */
 }
 
 .toggle-password-icon {
@@ -80,8 +80,12 @@
   color: white;
   border: none;
   border-radius: 20px;
-  margin-bottom: 20px;
   cursor: pointer;
+}
+
+.forgot-password {
+  cursor: pointer;
+  margin-bottom: 20px; /* Adjust margin here if needed */
 }
 
 @media (min-width: 768px) {
