@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { BASE_URL } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 const AllServices = () => {
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchServices();
@@ -19,7 +22,7 @@ const AllServices = () => {
       const response = await axios.get(url);
       console.log("API Response:", response.data);
       setServices(response.data.serviceDoc);
-      setTotalPages(Math.ceil(response.data.serviceDoc.length / pageSize));
+      setTotalPages(Math.ceil(response.data.total / pageSize));
     } catch (error) {
       console.error("Error fetching services:", error);
     }
@@ -65,7 +68,8 @@ const AllServices = () => {
                   <img src={service.iconImage} alt={`${service.name} icon`} className="mx-auto max-w-12 max-h-12" />
                 </td>
                 <td className="px-2 md:px-6 py-4 whitespace-nowrap text-center">
-                  <button className="bg-blue-500 rounded-lg w-16 h-10 text-white flex items-center justify-center focus:outline-none">
+                  <button onClick={() => navigate(`/admin/updateServices/${service._id}`)} 
+                  className="bg-blue-500 rounded-lg w-16 h-10 text-white flex items-center justify-center focus:outline-none">
                     Edit
                   </button>
                 </td>

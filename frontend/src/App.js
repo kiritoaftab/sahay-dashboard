@@ -22,6 +22,7 @@ import AddServices from "./pages/Services/AddServices";
 import AdminVRO from "./pages/Admin/AllVro";
 import AddVRO from "./pages/Admin/AddVro";
 import AllServices from "./pages/Services/AllServices";
+import EditService from "./pages/Services/EditService";
 
 function App() {
   return (
@@ -39,18 +40,19 @@ function App() {
           <Route path="editVendor/:id" element={<EditVendor/>}/>
 
           <Route path="rangers" element={<AdminRanger/>} />
+          <Route path="addRanger" element={<AdminAddRanger/>} />
+          <Route path="rangers/:id" element={<AdminRangerDetails/>}/>
           {/*Services  */}
           <Route path="addServices" element={<AddServices/>}/>
           <Route path="allServices" element={<AllServices/>}/>
+          <Route path="updateServices/:id" element={<EditService />} />
           {/* all vro */}
           <Route path="allVro" element={<AdminVRO />}/>
           <Route path="addVro" element={<AddVRO/>}/>
 
           <Route path="customers" element={<AdminCustomer/>} />
-          <Route path="addRanger" element={<AdminAddRanger/>} />
           <Route path="payments" element={<AdminPayments/>} />
           <Route path="bookings" element={<AdminService/>} />
-          <Route path="rangers/:id" element={<AdminRangerDetails/>}/>
 
            
         </Route>
