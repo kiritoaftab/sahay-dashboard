@@ -46,6 +46,7 @@ const ResetPassword = () => {
     try {
       const res = await axios.post(`${BASE_URL}user/verifyOtp`, { otp, userId });
       if (res.data.success) {
+        alert("OTP verified successfully");
         setStep(3);
       } else {
         alert("OTP verification failed");
