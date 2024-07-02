@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import logo from '../constants/images/sahay 1.png';
 import { BASE_URL } from "../constants";
 
 const ResetPassword = () => {
@@ -81,8 +82,9 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <div className="flex justify-center items-center h-screen bg-[#EDEDFF]">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+      <img src={logo} alt="Logo" className="logo mb-3" />
         {step === 1 && (
           <form onSubmit={handleSendOtp} className="space-y-4">
             <h2 className="text-2xl font-semibold mb-6">Reset Password</h2>
