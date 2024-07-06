@@ -11,8 +11,8 @@ const AssignRanger = () => {
   const [showModal, setShowModal] = useState(false);
   const [rangerId, setrangerId] = useState();
   const [vendorId, setvendorId] = useState();
-  const [bookingDoc,setBookingDoc] = useState(null);
-  const [vendorDoc,setVendorDoc] = useState(null);
+  const [bookingDoc, setBookingDoc] = useState(null);
+  const [vendorDoc, setVendorDoc] = useState(null);
 
   const { id } = useParams();
 
@@ -29,67 +29,91 @@ const AssignRanger = () => {
     setShowModal(false);
   };
 
-  const fetchBookingById = async (bookingId,vendorId) => {
+  const fetchBookingById = async (bookingId, vendorId) => {
     try {
-      const res = await axios.get(`${BASE_URL}booking/specificId`,{
-        params:{
-          type:"BOOKING",
-          id:bookingId
-        }
-      })
+      const res = await axios.get(`${BASE_URL}booking/specificId`, {
+        params: {
+          type: "BOOKING",
+          id: bookingId,
+        },
+      });
       console.log(res.data);
       setBookingDoc(res.data.bookingDocs);
-      fetchRangersByVendorAndService(vendorId,res.data.bookingDocs?.service?._id);
+      fetchRangersByVendorAndService(
+        vendorId,
+        res.data.bookingDocs?.service?._id
+      );
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const fetchRangersByVendorAndService =async (vendorId,serviceId) => {
+  const fetchRangersByVendorAndService = async (vendorId, serviceId) => {
     try {
-      const res = await axios.get(`${BASE_URL}ranger/getRangersByVendorIdAndServiceId`,{
-        params:{
-          vendorId,
-          serviceId
+      const res = await axios.get(
+        `${BASE_URL}ranger/getRangersByVendorIdAndServiceId`,
+        {
+          params: {
+            vendorId,
+            serviceId,
+          },
         }
-      });
+      );
       console.log(res.data);
       setRangers(res.data.rangerDoc);
     } catch (error) {
       console.log(error);
-      alert('No rangers found for the service')
+      alert("No rangers found for the service");
     }
-  }
+  };
 
   const fetchVendorByUser = async () => {
     try {
-      const userId = sessionStorage.getItem('auth');
+      const userId = sessionStorage.getItem("auth");
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
       setVendorDoc(res.data.vendorDoc);
-      fetchBookingById(id,res.data.vendorDoc._id);
+      fetchBookingById(id, res.data.vendorDoc._id);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   useEffect(() => {
-    
     fetchVendorByUser();
-  },[])
+  }, []);
 
   return (
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
         <h1 className="text-xl font-medium">Assign Ranger</h1>
-        <div>
-          <p>Customer name: {bookingDoc?.customer?.firstName}</p>
-          <p>Address : {bookingDoc?.address?.address}</p>
-          <p>Address Type: {bookingDoc?.address?.addressType}</p>
-          <a target="_blank" href={`https://www.google.com/maps?q=${
-                              bookingDoc?.address?.latitude
-                            },${
-                              bookingDoc?.address?.longitude
-                            }`}><FaLocationDot/></a>
-          <p>Service : {bookingDoc?.service?.name}</p>
+        <div className="bg-white p-6 rounded-lg shadow-md max-w-md  mt-6">
+          <p className="text-lg font-semibold mb-2">
+            Customer name:{" "}
+            <span className="font-normal">
+              {bookingDoc?.customer?.firstName}
+            </span>
+          </p>
+          <p className="text-lg font-semibold mb-2">
+            Address:{" "}
+            <span className="font-normal">{bookingDoc?.address?.address}</span>
+          </p>
+          <p className="text-lg font-semibold mb-2">
+            Address Type:{" "}
+            <span className="font-normal">
+              {bookingDoc?.address?.addressType}
+            </span>
+          </p>
+          <a
+            className="inline-flex items-center text-blue-500 hover:text-blue-700 mb-2"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://www.google.com/maps?q=${bookingDoc?.address?.latitude},${bookingDoc?.address?.longitude}`}
+          >
+            <FaLocationDot className="mr-1" /> View on Map
+          </a>
+          <p className="text-lg font-semibold mb-2">
+            Service:{" "}
+            <span className="font-normal">{bookingDoc?.service?.name}</span>
+          </p>
         </div>
         <div className="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -139,9 +163,10 @@ const AssignRanger = () => {
                         className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
                         onClick={() => {
                           setShowModal(true);
-                          setvendorId(ranger?.vendor?._id)
-                          setrangerId(ranger?._id)
-                        }}>
+                          setvendorId(ranger?.vendor?._id);
+                          setrangerId(ranger?._id);
+                        }}
+                      >
                         Assign Ranger
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +174,8 @@ const AssignRanger = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="ml-2 w-4 h-4">
+                          className="ml-2 w-4 h-4"
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
