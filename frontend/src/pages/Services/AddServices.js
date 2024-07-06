@@ -104,6 +104,7 @@ const AddServices = () => {
                 Banner Image
               </label>
               <input
+                accept="image/*"
                 type="file"
                 id="bannerPic"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -123,6 +124,7 @@ const AddServices = () => {
                 Service Icon
               </label>
               <input
+              accept="image/*"
                 type="file"
                 id="iconPic"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

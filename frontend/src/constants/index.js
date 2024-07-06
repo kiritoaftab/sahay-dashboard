@@ -50,6 +50,20 @@ function formatDate(dateString) {
 
 }
 
+
+function formatDateV2(dateString) {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth()+1;
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  return `${year}-${month.toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`
+ 
+}
+
 const categoryMap = {
   All: ["All"],
   Clothing: ["All", "Men", "Women", "Kids"],
@@ -114,5 +128,6 @@ export {
   categoryMap,
   admin,
   accessorriesImg,
-  formatDuration
+  formatDuration,
+  formatDateV2
 };

@@ -58,8 +58,8 @@ const AdminRanger = () => {
   const toggleStatus = async (userId, currentStatus) => {
     console.log("User ID:", userId);
     if (!userId) {
-        console.error("User ID is undefined");
-        return;
+      console.error("User ID is undefined");
+      return;
     }
 
     const newStatus = currentStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE";
@@ -89,6 +89,14 @@ const AdminRanger = () => {
     }
   };
 
+  const chunkArray = (array, chunkSize) => {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
+  };
+
   return (
     <section className="w-screen md:w-full lg:w-full h-full bg-background gap-4 flex flex-col">
       <div className="w-full bg-background p-3 flex flex-col md:flex-row justify-between px-5 md:px-10">
@@ -110,7 +118,15 @@ const AdminRanger = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              {["Name", "Phone", "Services", "Booking", "Duration", "Details", "Action"].map((heading) => (
+              {[
+                "Name",
+                "Phone",
+                "Services",
+                "Booking",
+                "Duration",
+                "Details",
+                "Action",
+              ].map((heading) => (
                 <th
                   key={heading}
                   className="px-2 md:px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center"
@@ -134,10 +150,19 @@ const AdminRanger = () => {
                     {ranger?.user?.phone}
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
-                    {Array.isArray(ranger?.servicesDetails) ? 
-                      ranger.servicesDetails.map((service) => service.name).join(", ") : 
-                      ""
-                    }
+                    {Array.isArray(ranger?.servicesDetails)
+                      ? chunkArray(ranger.servicesDetails, 3).map(
+                          (chunk, index) => (
+                            <span key={index}>
+                              {chunk.map((service) => service.name).join(", ")}
+                              {index <
+                                Math.floor(
+                                  ranger.servicesDetails.length / 3
+                                ) && <br />}
+                            </span>
+                          )
+                        )
+                      : ""}
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                     {ranger.noOfBooking}
@@ -154,7 +179,11 @@ const AdminRanger = () => {
                     </button>
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-center">
-                    <button onClick={() => toggleStatus(ranger.user, ranger.user.status)}>
+                    <button
+                      onClick={() =>
+                        toggleStatus(ranger.user._id, ranger.user.status)
+                      }
+                    >
                       <label className="inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"

@@ -72,6 +72,7 @@ const VendorRangerDetails = () => {
       navigate(`/vendor/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "vendor not updated" });
+      alert('Could not update Ranger');
     }
   };
 
@@ -149,7 +150,7 @@ const VendorRangerDetails = () => {
           <div className="flex flex-col md:flex-col lg:flex-row xl:flex-row">
             <div className="basis-1/4 flex flex-col justify-start">
               <img className="h-64 w-64 mix-blend-multiply object-scale-down" src={profilePicUrl} alt="Profile" />
-              <input className="my-3" type="file" onChange={(e) => handleFileUpload(e, "profile")} />
+              <input className="my-3" accept="image/*" type="file" onChange={(e) => handleFileUpload(e, "profile")} />
             </div>
 
             <div className="basis-3/4 flex flex-col justify-center gap-2">

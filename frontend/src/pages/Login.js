@@ -31,7 +31,7 @@ const SignUpForm = () => {
         } else {
           setAuth(res.data.userDoc._id);
           sessionStorage.setItem('auth', res.data.userDoc._id);
-
+          sessionStorage.setItem('role',res.data.userDoc.role);
           if (res.data.userDoc.role === 'ADMIN') {
             navigate('/admin');
           } else if (res.data.userDoc.role === 'VRO') {

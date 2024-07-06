@@ -82,6 +82,7 @@ const AdminAddRanger = () => {
       navigate(`/admin/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add ranger" });
+      alert('Could not add Ranger');
     }
   };
 
@@ -388,6 +389,7 @@ const AdminAddRanger = () => {
                 Profile Picture
               </label>
               <input
+                accept="image/*"
                 type="file"
                 id="profilePic"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -407,6 +409,7 @@ const AdminAddRanger = () => {
                 Aadhar Image
               </label>
               <input
+               accept="image/*"
                 type="file"
                 id="aadharImg"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -426,6 +429,7 @@ const AdminAddRanger = () => {
                 PAN Image
               </label>
               <input
+               accept="image/*"
                 type="file"
                 id="panImg"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

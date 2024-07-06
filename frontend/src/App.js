@@ -24,6 +24,7 @@ import AddVRO from "./pages/Admin/AddVro";
 import AllServices from "./pages/Services/AllServices";
 import EditService from "./pages/Services/EditService";
 import ResetPassword from "./pages/ResetPassword";
+import RequireAuth from "./components/Auth/RequireAuth";
 
 function App() {
   return (
@@ -32,8 +33,10 @@ function App() {
       {/* public routes */}
       <Route exact path="/" element={<Login/>} />
       <Route exact path="/reset-password" element={<ResetPassword/>} />
-      <Route element={<PersistLogin/>}>
-        <Route path="admin" element={<AdminLayout/>} >
+      
+      {/* admin , vro routes */}
+      <Route element={<RequireAuth allowedRole={["ADMIN","VRO"]} />}>
+      <Route path="admin" element={<AdminLayout/>} >
           <Route path="" element={<AdminHome/>} />
           
           <Route path="vendors" element={<AdminVendor/>}/>
@@ -43,11 +46,11 @@ function App() {
           <Route path="rangers" element={<AdminRanger/>} />
           <Route path="addRanger" element={<AdminAddRanger/>} />
           <Route path="rangers/:id" element={<AdminRangerDetails/>}/>
-          {/*Services  */}
+          
           <Route path="addServices" element={<AddServices/>}/>
           <Route path="allServices" element={<AllServices/>}/>
           <Route path="updateServices/:id" element={<EditService />} />
-          {/* all vro */}
+          
           <Route path="allVro" element={<AdminVRO />}/>
           <Route path="addVro" element={<AddVRO/>}/>
 
@@ -57,9 +60,11 @@ function App() {
 
            
         </Route>
-
-       
-        <Route path="vendor" element={<VendorLayout/>}>
+      </Route>
+        
+       {/* vendor routes */}
+       <Route element={<RequireAuth allowedRole={["VENDOR"]}/>}>
+       <Route path="vendor" element={<VendorLayout/>}>
           <Route path="" element={<VendorHome/>}/>
           <Route path="bookings" element={<VendorBookings/>}/>
           <Route path="bookingDetails/:id" element={<BookingDetails/>}/>
@@ -68,21 +73,18 @@ function App() {
           <Route path="addRanger" element={<VendorAddRanger/>}/>
           <Route path="editRanger/:id" element={<VendorRangerDetails/>}/>
         </Route>
-
-        <Route path="vro" element={<VROLayout/>}>
-        <Route path="" element={<VROHome/>}/>
-
+       </Route>
+        
+      {/* vro routes */}
+      <Route element={<RequireAuth allowedRole={["VRO"]} />}>
+      <Route path="vro" element={<VROLayout/>}>
+          <Route path="" element={<VROHome/>}/>
         </Route>
-
-        
-        
       </Route>
 
-      
-
+      </Route>
       {/* invalid route */}
       <Route path="*" element={<p>Invalid page</p>} />
-    </Route>
 
   </Routes>
   );

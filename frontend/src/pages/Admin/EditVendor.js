@@ -63,6 +63,7 @@ const EditVendor = () => {
       console.log(response?.data);
     } catch (error) {
       console.error(error, { success: false, msg: "vendor not updated" });
+      alert('Could not edit Vendor')
     }
   };
 

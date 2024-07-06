@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
 
 const AdminCustomer = () => {
   const [customerDoc, setCustomerDoc] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
 
   const getAllCustomersPagination = async () => {
     try {
@@ -69,32 +70,70 @@ const AdminCustomer = () => {
             <tbody>
               {customerDoc && customerDoc.length > 0 ? (
                 customerDoc.map((customer, index) => (
-                  <tr className="bg-white border-b hover:bg-gray-50">
+                  <tr
+                    key={index}
+                    className="bg-white border-b hover:bg-gray-50"
+                  >
                     <td className="w-4 p-4">
                       <div className="flex items-center">
                         <label
                           htmlFor="checkbox-all-search"
-                          className="sr-only">
+                          className="sr-only"
+                        >
                           checkbox
                         </label>
                       </div>
                     </td>
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                    >
                       {customer?.user?.userName}
                     </th>
                     <td className="px-6 py-4">{customer?.user?.phone}</td>
                     <td className="px-6 py-4">{customer?.user?.email}</td>
                     <td className="px-6 py-4">
-                      {customer?.addresses?.length > 0
-                        ? customer?.addresses.map((address, index) => (
-                            <div key={index}>
-                              <div className="font-bold">Location:<p className="font-light">{address?.address}</p></div>
-                              <div className="font-bold">Type:<p className="font-light">{address?.addressType}</p></div>
-                            </div>
-                          ))
-                        : "No address available"}
+                      {Array.isArray(customer?.addresses) &&
+                      customer?.addresses?.length > 0 ? (
+                        <div key={index}>
+                          <div className="font-bold">
+                            Location:
+                            <p className="font-light">
+                              {
+                                customer?.addresses[
+                                  customer?.addresses.length - 1
+                                ]?.address
+                              }
+                            </p>
+                          </div>
+                          <div className="font-bold">
+                            Type:
+                            <p className="font-light">
+                              {
+                                customer?.addresses[
+                                  customer?.addresses.length - 1
+                                ]?.addressType
+                              }
+                            </p>
+                          </div>
+                          <a
+                            target="_blank"
+                            href={`https://www.google.com/maps?q=${
+                              customer?.addresses[
+                                customer?.addresses.length - 1
+                              ]?.latitude
+                            },${
+                              customer?.addresses[
+                                customer?.addresses.length - 1
+                              ]?.longitude
+                            }`}
+                          >
+                            <FaLocationDot />{" "}
+                          </a>
+                        </div>
+                      ) : (
+                        "No address available"
+                      )}
                     </td>
                     <td className="px-6 py-4">{customer?.gender}</td>
                   </tr>
@@ -104,22 +143,26 @@ const AdminCustomer = () => {
               )}
             </tbody>
           </table>
-          <div className="mt-10 p-5 flex justify-center fixed bottom-0 left-0 w-full ">
-            <button
-              className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
-              onClick={prevPage}
-              disabled={currentPage === 1}>
-              Previous
-            </button>
-            <span>
-              Showing {currentPage} of {totalPages}
-            </span>
-            <button
-              className={`focus:outline-none text-white bg-purple-500 hover:bg-purple-500 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 mx-2`}
-              onClick={nextPage}
-              disabled={currentPage === totalPages}>
-              Next
-            </button>
+          <div className="mt-10 flex justify-center">
+            <div className="border bg-[#D9D9D9] rounded-full flex justify-center">
+              <button
+                className={`focus:outline-none text-black p-2 text-2xl`}
+                onClick={prevPage}
+                disabled={currentPage === 1}
+              >
+                <MdKeyboardArrowLeft />
+              </button>
+              <p className="p-2">
+                {currentPage} / {totalPages}
+              </p>
+              <button
+                className={`focus:outline-none text-black p-2 text-2xl`}
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+              >
+                <MdKeyboardArrowRight />
+              </button>
+            </div>
           </div>
         </div>
       </section>

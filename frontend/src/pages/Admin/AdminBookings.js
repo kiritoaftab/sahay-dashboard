@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
 import axios from "../../axiosInstance/axiosApi";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import {
   accessorriesImg,
   formatDate,
   formatIndianRupee,
   admin,
   BASE_URL,
+  formatDateV2,
 } from "../../constants";
 
 import cn from "classnames";
@@ -16,16 +17,21 @@ const AdminBookings = () => {
   const [bookings,setBookings] = useState([]);
   const [startDate,setStartDate] = useState(new Date());
   const [endDate,setEndDate] = useState(new Date());
+  const [dropdown,setDropdown] = useState(false);
+  const [noOfDays,setNoOfDays] = useState(7);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     // Calculate the start date as 7 days before the end date
     const end = new Date();
     const start = new Date();
-    start.setDate(end.getDate() - 7);
+    start.setDate(end.getDate() - noOfDays);
+    start.setHours(0, 0, 0, 0);
 
-    setEndDate(end);
-    setStartDate(start);
-  }, []);
+    setEndDate(formatDateV2(end));
+    setStartDate(formatDateV2(start));
+  }, [noOfDays]);
 
   const fetchBookings = async () => {
     try {
@@ -33,11 +39,13 @@ const AdminBookings = () => {
       const res = await axios.get(`${BASE_URL}booking/getAllBookingBetweenDatesPagination`, {
         params: {
           startDate: startDate, 
-          endDate: endDate 
+          endDate: endDate,
+          page:currentPage,
         }
       });
       console.log(res.data);
       setBookings(res.data.bookings);
+      setTotalPages(res.data.pagination.totalPages);
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +55,15 @@ const AdminBookings = () => {
     if (startDate && endDate) {
       fetchBookings();
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate,currentPage]);
+
+  const nextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
 
   return (
     <section className="p-10  w-screen md:w-full bg-background">
@@ -61,6 +77,7 @@ const AdminBookings = () => {
               data-dropdown-toggle="dropdownRadio"
               className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               type="button"
+              onClick={()=> setDropdown(!dropdown)}
             >
               <svg
                 className="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
@@ -71,7 +88,7 @@ const AdminBookings = () => {
               >
                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
               </svg>
-              Last 30 days
+              {noOfDays == 0 ? `Today` : `Last ${noOfDays} Days`}
               <svg
                 className="w-2.5 h-2.5 ms-2.5"
                 aria-hidden="true"
@@ -88,48 +105,52 @@ const AdminBookings = () => {
                 />
               </svg>
             </button>
-            <div
+            {dropdown ? (
+              <div
               id="dropdown"
-              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              className="z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
             >
               <ul
                 className="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => {setNoOfDays(0);setDropdown(false)}}
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-                    Dashboard
-                  </a>
+                    Today
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() =>{setNoOfDays(7);setDropdown(false)}}
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-                    Settings
-                  </a>
+                    Last 7 Days
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() =>{setNoOfDays(14);setDropdown(false)}}
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-                    Earnings
-                  </a>
+                    Last 14 Days
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() =>{setNoOfDays(30);setDropdown(false)}}
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-                    Sign out
-                  </a>
+                    Last 30 Days
+                  </button>
                 </li>
               </ul>
             </div>
+            ):``
+            }
+            
           </div>
           <label for="table-search" className="sr-only">
             Search
@@ -214,7 +235,31 @@ const AdminBookings = () => {
             }
            
           </tbody>
+          
+          
+          
         </table>
+        <div className="mt-5 flex justify-center ">
+        <div className="border bg-[#D9D9D9] rounded-full flex justify-center">
+          <button
+            className="focus:outline-none text-black p-2 text-2xl"
+            onClick={prevPage}
+            disabled={currentPage === 1}
+          >
+            <MdKeyboardArrowLeft />
+          </button>
+          <p className="p-2">
+            {currentPage} / {totalPages}
+          </p>
+          <button
+            className="focus:outline-none text-black p-2 text-2xl"
+            onClick={nextPage}
+            disabled={currentPage === totalPages}
+          >
+            <MdKeyboardArrowRight />
+          </button>
+        </div>
+      </div>
       </div>
     </section>
   );

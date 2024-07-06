@@ -14,14 +14,29 @@ const AdminRanger = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const { auth } = useAuth();
+  const [vendorDoc,setVendorDoc] = useState(null);
   const navigate = useNavigate();
+
+  const fetchVendor = async () => {
+    try {
+      const userId = sessionStorage.getItem('auth');
+      const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
+      console.log(res.data);
+      setVendorDoc(res.data.vendorDoc);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=> {
+    fetchVendor();
+  },[])
 
   const fetchRangers = async (query = "") => {
     try {
       const url = query
         ? `${BASE_URL}ranger/getByName/${query}`
-        : `${BASE_URL}rangerService/populateServices?page=${currentPage}&pageSize=10`;
+        : `${BASE_URL}rangerService/populateVendorRanger/${vendorDoc?._id}?page=${currentPage}&pageSize=10`;
       const res = await axios.get(url);
       console.log("API Response:", res.data);
       if (query) {
@@ -37,8 +52,10 @@ const AdminRanger = () => {
   };
 
   useEffect(() => {
-    fetchRangers();
-  }, [currentPage]);
+    if(vendorDoc){
+      fetchRangers();
+    }
+  }, [currentPage,vendorDoc]);
 
   const handleSearchChange = debounce((event) => {
     const query = event.target.value;

@@ -49,7 +49,7 @@ const AddVRO = () => {
       }
     } catch (error) {
       console.error(error);
-      alert("Error adding VRO");
+      alert("Could not add VRO");
     }
   };
 

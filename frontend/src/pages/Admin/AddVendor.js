@@ -70,6 +70,7 @@ const AddVendor = () => {
       navigate(`/admin/vendors`);
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add vendor" });
+      alert('Could not add Vendor');
     }
   };
 
@@ -131,7 +132,7 @@ const AddVendor = () => {
               <div className="px-5 pt-5">
                 <label
                   htmlFor="lastName"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Last name
                 </label>
                 <input

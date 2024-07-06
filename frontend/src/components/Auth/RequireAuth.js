@@ -4,15 +4,13 @@ import useAuth from '../../hooks/useAuth'
 
 const RequireAuth = ({allowedRole}) => {
 
-    const {auth} = useAuth();
+    const role = sessionStorage.getItem('role')
     const location = useLocation();
 
   return (
-    allowedRole?.includes(auth.role)
+    allowedRole?.includes(role)
         ? <Outlet/>
-        : auth?.user 
-            ? <Navigate to="/unauthorized" state={{from: location}} replace />
-            : <Navigate to="/" state={{from: location}} replace />
+        : <Navigate to="/" state={{from: location}} replace />
          
   )
 }
