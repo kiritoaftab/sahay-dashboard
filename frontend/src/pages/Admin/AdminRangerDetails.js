@@ -242,7 +242,7 @@ const AdminRangerDetails = () => {
 
               <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
                 <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
-                  <label htmlFor="aadharImg" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label htmlFor="aadharImg" className="block mb-2 text-sm font-medium text-gray-900 ">
                     Upload Aadhar Image
                   </label>
                   <input
@@ -255,7 +255,7 @@ const AdminRangerDetails = () => {
                   {aadharImgUrl && <img src={aadharImgUrl} alt="Aadhar" className="h-32 w-32 object-fill border rounded-md" />}
                 </div>
                 <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
-                  <label htmlFor="panImg" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <label htmlFor="panImg" className="block mb-2 text-sm font-medium text-gray-900 ">
                     Upload PAN Image
                   </label>
                   <input

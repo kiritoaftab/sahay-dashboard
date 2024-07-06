@@ -131,13 +131,13 @@ const AddVendor = () => {
               <div className="px-5 pt-5">
                 <label
                   htmlFor="lastName"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Last name
                 </label>
                 <input
                   type="text"
                   id="lastName"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="Last Name"
                   required
                   onChange={(e) => setLastName(e.target.value)}
@@ -146,13 +146,13 @@ const AddVendor = () => {
               <div className="px-5">
                 <label
                   htmlFor="phoneNumber"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Phone Number
                 </label>
                 <input
                   type="tel"
                   id="phoneNumber"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="98XXXXXX99"
                   maxLength={10}
                   required
@@ -162,13 +162,13 @@ const AddVendor = () => {
               <div className="px-5">
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Email
                 </label>
                 <input
                   type="email"
                   id="email"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="your@email.com"
                   required
                   onChange={(e) => setEmail(e.target.value)}
@@ -177,13 +177,13 @@ const AddVendor = () => {
               <div className="px-5">
                 <label
                   htmlFor="gstIn"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   GST Number
                 </label>
                 <input
                   type="text"
                   id="gstIn"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="29ABCDE1111LAZ"
                   // pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
                   required
@@ -193,7 +193,7 @@ const AddVendor = () => {
               <div className="px-5">
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Password
                 </label>
                 <div className="relative flex items-center">
@@ -215,13 +215,13 @@ const AddVendor = () => {
               <div className="px-5">
                 <label
                   htmlFor="shopName"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Shop Name
                 </label>
                 <input
                   type="text"
                   id="shopName"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="Shop Name"
                   required
                   onChange={(e) => setShopName(e.target.value)}
@@ -230,12 +230,12 @@ const AddVendor = () => {
               <div className="px-5">
                 <label
                   htmlFor="serviceList"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Select Service
                 </label>
                 <select
                   id="serviceList"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   required
                   multiple
                   value={selectedService && selectedService.map((service)=> service._id)}
@@ -268,13 +268,13 @@ const AddVendor = () => {
             <div className="mb-6 px-5 py-2">
               <label
                 htmlFor="address"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                className="block mb-2 text-sm font-medium text-gray-900 ">
                 Address
               </label>
               <textarea
                 type="text"
                 id="address"
-                className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="Your address"
                 required
                 onChange={(e) => setShopAddress(e.target.value)}
@@ -284,13 +284,13 @@ const AddVendor = () => {
               <div className="px-5 w-1/3">
                 <label
                   htmlFor="pincode"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  className="block mb-2 text-sm font-medium text-gray-900 ">
                   Postal Pincode
                 </label>
                 <input
                   type="number"
                   id="pincode"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="110001"
                   required
                   onChange={(e) => setPinCode(e.target.value)}
@@ -326,7 +326,7 @@ const AddVendor = () => {
             <div className=" bottom-0 left-0 w-full flex justify-center p-4">
               <button
                 type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  ">
                 Add Vendor
               </button>
             </div>

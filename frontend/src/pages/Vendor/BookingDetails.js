@@ -173,23 +173,23 @@ const BookingDetails = () => {
           </div>
 
           <div className="max-w-sm w-full lg:max-w-full lg:flex m-4">
-            <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
               <img
                 className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                 src={bookingDoc?.ranger?.user?.profilePic}
                 alt=""
               />
               <div className="flex flex-col justify-between p-4 leading-normal">
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                <p className="mb-3 font-normal text-gray-700 ">
                   {bookingDoc?.customer?.user?.userName}
                   <span className="text-sm text-gray-50">
                     {bookingDoc?.customer?.user?.role}
                   </span>
                 </p>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                <p className="mb-3 font-normal text-gray-700 ">
                   Location : {bookingDoc?.address?.address}
                 </p>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                <p className="mb-3 font-normal text-gray-700 ">
                   Number : + 91 {bookingDoc?.customer?.user?.phone}
                 </p>
               </div>
