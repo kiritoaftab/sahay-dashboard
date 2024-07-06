@@ -18,6 +18,7 @@ import BookingDetails from "./pages/Vendor/BookingDetails";
 import VendorRangerDetails from "./pages/Vendor/VendorRangerDetails";
 import VROLayout from "./components/VROLayout";
 import VROHome from "./pages/VRO/VROHome"
+import AdminProfile from "./pages/Admin/AdminProfile";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="payments" element={<AdminPayments/>} />
           <Route path="bookings" element={<AdminService/>} />
           <Route path="rangers/:id" element={<AdminRangerDetails/>}/> 
+          <Route path="profile" element={<AdminProfile/>}/>
         </Route>
 
         {/* TODO: DHEERAJ and jag */}
