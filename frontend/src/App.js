@@ -25,6 +25,7 @@ import AllServices from "./pages/Services/AllServices";
 import EditService from "./pages/Services/EditService";
 import ResetPassword from "./pages/ResetPassword";
 import RequireAuth from "./components/Auth/RequireAuth";
+import AdminProfile from "./pages/Admin/AdminProfile";
 
 function App() {
   return (
@@ -57,7 +58,7 @@ function App() {
           <Route path="customers" element={<AdminCustomer/>} />
           <Route path="payments" element={<AdminPayments/>} />
           <Route path="bookings" element={<AdminService/>} />
-
+          <Route path="profile" element={<AdminProfile />}/>
            
         </Route>
       </Route>

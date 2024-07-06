@@ -150,7 +150,7 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
             {!collapsed && (
               <div className="flex flex-col">
                 <span className="text-indigo-50 my-0">{auth?.username}</span>
-                <button onClick={() => navigate("/vendor/profile")} className="text-indigo text-sm">
+                <button onClick={() => navigate("/admin/profile")} className="text-indigo text-sm">
                   View Profile
                 </button>
               </div>
