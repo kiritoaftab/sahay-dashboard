@@ -151,7 +151,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="firstName"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 First Name
               </label>
@@ -167,7 +167,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="lastName"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Last Name
               </label>
@@ -183,7 +183,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="phoneNumber"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Phone Number
               </label>
@@ -201,7 +201,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Email
               </label>
@@ -217,7 +217,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Password
               </label>
@@ -241,7 +241,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="aadharNo"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Aadhar Number
               </label>
@@ -257,7 +257,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="panNo"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Pan Number
               </label>
@@ -273,7 +273,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="address"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Address
               </label>
@@ -289,7 +289,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="pincode"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Pincode
               </label>
@@ -305,7 +305,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="gender"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Gender
               </label>
@@ -324,7 +324,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="vendorId"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Vendor
               </label>
@@ -345,7 +345,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="service"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Select Services
               </label>
@@ -384,7 +384,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="profilePic"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Profile Picture
               </label>
@@ -404,7 +404,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="aadharImg"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 Aadhar Image
               </label>
@@ -424,7 +424,7 @@ const AdminAddRanger = () => {
             <div className="p-3">
               <label
                 htmlFor="panImg"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-sm font-medium text-gray-900 "
               >
                 PAN Image
               </label>

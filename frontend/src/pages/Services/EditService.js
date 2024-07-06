@@ -81,7 +81,7 @@ const EditService = () => {
       <form onSubmit={updateService} className="bg-white rounded-2xl border-slate-300 border">
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div className="px-5 pt-5">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 ">
               Service Name
             </label>
             <input
@@ -95,7 +95,7 @@ const EditService = () => {
             />
           </div>
           <div className="px-5 pt-5">
-            <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 ">
               Price
             </label>
             <input
@@ -109,7 +109,7 @@ const EditService = () => {
             />
           </div>
           <div className="px-5 pt-5">
-            <label htmlFor="desc" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label htmlFor="desc" className="block mb-2 text-sm font-medium text-gray-900 ">
               Description
             </label>
             <textarea
@@ -123,7 +123,7 @@ const EditService = () => {
           </div>
         </div>
         <div className="mb-6 px-5 py-2">
-          <label htmlFor="bannerImage" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label htmlFor="bannerImage" className="block mb-2 text-sm font-medium text-gray-900 ">
             Banner Image
           </label>
           <input
@@ -140,7 +140,7 @@ const EditService = () => {
           )}
         </div>
         <div className="mb-6 px-5 py-2">
-          <label htmlFor="iconImage" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label htmlFor="iconImage" className="block mb-2 text-sm font-medium text-gray-900 ">
             Icon Image
           </label>
           <input

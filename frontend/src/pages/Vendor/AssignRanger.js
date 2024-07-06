@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../constants";
 import { useParams } from "react-router-dom";
 import Modal from "../../components/Modal";
+import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
 
 const AssignRanger = () => {
   const [rangers, setRangers] = useState([]);
@@ -28,7 +29,7 @@ const AssignRanger = () => {
     setShowModal(false);
   };
 
-  const fetchBookingById = async (bookingId) => {
+  const fetchBookingById = async (bookingId,vendorId) => {
     try {
       const res = await axios.get(`${BASE_URL}booking/specificId`,{
         params:{
@@ -38,18 +39,25 @@ const AssignRanger = () => {
       })
       console.log(res.data);
       setBookingDoc(res.data.bookingDocs);
+      fetchRangersByVendorAndService(vendorId,res.data.bookingDocs?.service?._id);
     } catch (error) {
       console.log(error)
     }
   }
 
-  const fetchRangersByVendor =async (vendorId) => {
+  const fetchRangersByVendorAndService =async (vendorId,serviceId) => {
     try {
-      const res = await axios.get(`${BASE_URL}ranger/getRangersByVendorId/${vendorId}`);
+      const res = await axios.get(`${BASE_URL}ranger/getRangersByVendorIdAndServiceId`,{
+        params:{
+          vendorId,
+          serviceId
+        }
+      });
       console.log(res.data);
       setRangers(res.data.rangerDoc);
     } catch (error) {
       console.log(error);
+      alert('No rangers found for the service')
     }
   }
 
@@ -58,13 +66,13 @@ const AssignRanger = () => {
       const userId = sessionStorage.getItem('auth');
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
       setVendorDoc(res.data.vendorDoc);
-      fetchRangersByVendor(res.data.vendorDoc._id);
+      fetchBookingById(id,res.data.vendorDoc._id);
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
-    fetchBookingById(id);
+    
     fetchVendorByUser();
   },[])
 
@@ -72,6 +80,17 @@ const AssignRanger = () => {
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
         <h1 className="text-xl font-medium">Assign Ranger</h1>
+        <div>
+          <p>Customer name: {bookingDoc?.customer?.firstName}</p>
+          <p>Address : {bookingDoc?.address?.address}</p>
+          <p>Address Type: {bookingDoc?.address?.addressType}</p>
+          <a target="_blank" href={`https://www.google.com/maps?q=${
+                              bookingDoc?.address?.latitude
+                            },${
+                              bookingDoc?.address?.longitude
+                            }`}><FaLocationDot/></a>
+          <p>Service : {bookingDoc?.service?.name}</p>
+        </div>
         <div className="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
