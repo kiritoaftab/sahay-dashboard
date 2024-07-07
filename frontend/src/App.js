@@ -36,7 +36,7 @@ function App() {
       <Route exact path="/reset-password" element={<ResetPassword/>} />
       
       {/* admin , vro routes */}
-      <Route element={<RequireAuth allowedRole={["ADMIN","VRO"]} />}>
+      <Route element={<RequireAuth allowedRole={["ADMIN"]} />}>
       <Route path="admin" element={<AdminLayout/>} >
           <Route path="" element={<AdminHome/>} />
           
@@ -80,6 +80,19 @@ function App() {
       <Route element={<RequireAuth allowedRole={["VRO"]} />}>
       <Route path="vro" element={<VROLayout/>}>
           <Route path="" element={<VROHome/>}/>
+
+          <Route path="vendors" element={<AdminVendor/>}/>
+          <Route path="addVendor" element={<AddVendor/>}/>
+          <Route path="editVendor/:id" element={<EditVendor/>}/>
+
+          <Route path="rangers" element={<AdminRanger/>} />
+          <Route path="addRanger" element={<AdminAddRanger/>} />
+          <Route path="rangers/:id" element={<AdminRangerDetails/>}/>
+
+          <Route path="customers" element={<AdminCustomer/>} />
+          <Route path="payments" element={<AdminPayments/>} />
+          <Route path="bookings" element={<AdminService/>} />
+          <Route path="profile" element={<AdminProfile />}/>
         </Route>
       </Route>
 

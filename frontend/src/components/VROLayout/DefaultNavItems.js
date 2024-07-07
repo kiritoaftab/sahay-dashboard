@@ -17,42 +17,37 @@ import {
 export const defaultNavItems = [
   {
     label: "Dashboard",
-    href: "/admin",
+    href: "/vro",
     icon: <HomeIcon className="w-6 h-6" />,
   },
   {
     label:"Vendors",
-    href:"/admin/vendors",
+    href:"/vro/vendors",
     icon:<BuildingStorefrontIcon className="w-6 h-6"/>
   },
   {
     label:"Add Vendor",
-    href:"/admin/addVendor",
+    href:"/vro/addVendor",
     icon:<BuildingStorefrontIcon className="w-6 h-6"/>
   },
   {
     label: "Rangers",
-    href: "/admin/rangers",
+    href: "/vro/rangers",
     icon: <ShoppingBagIcon className="w-6 h-6" />,
   },
   {
     label: "Add Ranger",
-    href: "/admin/addRanger",
+    href: "/vro/addRanger",
     icon: <FolderPlusIcon className="w-6 h-6" />,
   },
   {
     label: "Customers",
-    href: "/admin/customers",
+    href: "/vro/customers",
     icon: <ShoppingCartIcon className="w-6 h-6" />,
   },
   {
-    label: "Payments",
-    href: "/admin/payments",
-    icon: <PresentationChartLineIcon className="w-6 h-6" />,
-  },
-  {
     label: "Bookings",
-    href: "/admin/bookings",
+    href: "/vro/bookings",
     icon: <BanknotesIcon className="w-6 h-6" />,
   },
   

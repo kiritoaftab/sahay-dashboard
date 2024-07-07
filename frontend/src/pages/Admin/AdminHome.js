@@ -24,6 +24,7 @@ const AdminHome = () => {
   const [totals, setTotals] = useState(null);
   const [topVendors, setTopVendors] = useState([]);
   const [topRangers, setTopRangers] = useState([]);
+  const [userDoc,setUserDoc] = useState(null);
 
   const getMetrics = async () => {
     try {
@@ -51,16 +52,28 @@ const AdminHome = () => {
     }
   }
 
+  const fetchUser = async () => {
+    try {
+      const userId = sessionStorage.getItem('auth');
+      const res = await axios.get(`${BASE_URL}user/getUserById/${userId}`);
+      console.log(res.data);
+      setUserDoc(res.data.userDoc);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     getMetrics();
     fetchTopVendorsRangers();
+    fetchUser();
   }, []);
 
   return (
     <section className="p-5 w-screen h-full md:w-full bg-[#EDEDFF] gap-6">
       {/* Welcome card */}
       <div className="bg-white p-5 rounded-2xl">
-        <p className="font-medium tracking-wide text-3xl my-2">Have a great day Saif!</p>
+        <p className="font-medium tracking-wide text-3xl my-2">Have a great day {userDoc?.userName}!</p>
         <p className="font-light text-[#7E7E7E] my-2 text-xl">Your clever approach and capabilities have led to these fantastic results.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 my-5">
           <div className="rounded-3xl shadow-xl p-5 border-2 border-[#6556F529]">

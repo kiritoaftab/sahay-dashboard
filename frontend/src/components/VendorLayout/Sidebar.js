@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { useNavigate, useLocation } from "react-router-dom";
 import { defaultNavItems } from "./DefaultNavItems";
 import useAuth from "../../hooks/useAuth";
-import { logo } from "../../constants";
+import { BASE_URL, logo } from "../../constants";
 
 import {
   ChevronDoubleLeftIcon,
@@ -14,6 +14,7 @@ import {
   BanknotesIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 const Sidebar = ({ collapsed, shown, setCollapsed }) => {
   const navigate = useNavigate();
@@ -27,6 +28,20 @@ const Sidebar = ({ collapsed, shown, setCollapsed }) => {
   };
 
   const Icon = collapsed ? ChevronDoubleRightIcon : ChevronDoubleLeftIcon;
+
+  const [userDoc,setUserDoc] = useState(null);
+  const fetchUser = async () => {
+    try {
+      const userId = sessionStorage.getItem('auth');
+      const res = await axios.get(`${BASE_URL}user/getUserById/${userId}`);
+      setUserDoc(res.data.userDoc);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(()=> {
+    fetchUser();
+  },[])
 
   return (
     <div
@@ -108,7 +123,7 @@ const Sidebar = ({ collapsed, shown, setCollapsed }) => {
         <div className={cn({ "grid place-content-stretch p-4": true })}>
           <div className="flex gap-4 items-center h-11 overflow-hidden">
             <img
-              src="https://via.placeholder.com/150"
+              src={userDoc?.profilePic ? userDoc?.profilePic : "https://via.placeholder.com/150"}
               height={36}
               width={36}
               alt="profile image"
@@ -116,7 +131,7 @@ const Sidebar = ({ collapsed, shown, setCollapsed }) => {
             />
             {!collapsed && (
               <div className="flex flex-col">
-                <span className="text-indigo-50 my-0">{auth?.username}</span>
+                <span className="text-indigo-50 my-0">{userDoc?.userName}</span>
                 <button
                   onClick={() => navigate("/vendor/profile")}
                   className="text-indigo text-sm"

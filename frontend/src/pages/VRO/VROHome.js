@@ -6,6 +6,17 @@ const VROHome = () => {
   const [totals, setTotals] = useState(null);
   const [topVendors, setTopVendors] = useState([]);
   const [topRangers, setTopRangers] = useState([]);
+  const [userDoc,setUserDoc] = useState(null);
+
+  const fetchUser = async () => {
+    try {
+      const userId = sessionStorage.getItem('auth');
+      const res = await axios.get(`${BASE_URL}user/getUserById/${userId}`);
+      setUserDoc(res.data.userDoc);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getMetrics = async () => {
     try {
@@ -34,6 +45,7 @@ const VROHome = () => {
   useEffect(() => {
     getMetrics();
     fetchTopVendorsRangers();
+    fetchUser();
   }, []);
 
   return (
@@ -41,7 +53,7 @@ const VROHome = () => {
       {/* welcome card */}
       <div className="bg-white p-5 rounded-2xl w-screen md:w-full">
         <p className="font-medium tracking-wide text-3xl my-2">
-          Have a great day Saif!
+          Have a great day {userDoc?.userName}!
         </p>
         <p className="font-light text-[#7E7E7E] my-2 text-xl">
           Your clever approach and capabilities have led to these fantastic

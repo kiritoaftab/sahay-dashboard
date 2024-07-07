@@ -99,7 +99,7 @@ const AdminVendor = () => {
               <th scope="col" className="px-6 py-3">Phone</th>
               <th scope="col" className="px-6 py-3">Shop Name</th>
               <th scope="col" className="px-6 py-3">Bookings</th>
-              <th scope="col" className="px-6 py-3">Revenue</th>
+              <th scope="col" className="px-6 py-3">Rangers</th>
               <th scope="col" className="px-6 py-3">Details</th>
               <th scope="col" className="px-6 py-3">Actions</th>
             </tr>
@@ -154,7 +154,7 @@ const AdminVendor = () => {
             className="focus:outline-none text-black p-2 text-2xl"
             onClick={prevPage}
             disabled={currentPage === 1}
-          >
+          > 
             <MdKeyboardArrowLeft />
           </button>
           <p className="p-2">
