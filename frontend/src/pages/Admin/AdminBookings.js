@@ -108,7 +108,7 @@ const AdminBookings = () => {
             {dropdown ? (
               <div
               id="dropdown"
-              className="z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              className="z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
             >
               <ul
                 className="py-2 text-sm text-gray-700 "
@@ -117,7 +117,7 @@ const AdminBookings = () => {
                 <li>
                   <button
                     onClick={() => {setNoOfDays(0);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 hover:bg-gray-100"
                   >
                     Today
                   </button>
@@ -125,7 +125,7 @@ const AdminBookings = () => {
                 <li>
                   <button
                     onClick={() =>{setNoOfDays(7);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 hover:bg-gray-100 "
                   >
                     Last 7 Days
                   </button>
@@ -133,7 +133,7 @@ const AdminBookings = () => {
                 <li>
                   <button
                     onClick={() =>{setNoOfDays(14);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 hover:bg-gray-100 "
                   >
                     Last 14 Days
                   </button>
@@ -141,7 +141,7 @@ const AdminBookings = () => {
                 <li>
                   <button
                     onClick={() =>{setNoOfDays(30);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 hover:bg-gray-100 "
                   >
                     Last 30 Days
                   </button>
