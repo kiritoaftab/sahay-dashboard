@@ -76,7 +76,7 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
             className={cn({
               "grid place-content-center": true, // position
               "hover:bg-white/[.30]": true, // colors
-              "w-10 h-10 rounded-full": true, // shape
+              "w-10 h-10 rounded-full": true,
             })}
             onClick={() => setCollapsed(!collapsed)}
           >
