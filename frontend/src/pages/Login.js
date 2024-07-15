@@ -3,9 +3,10 @@ import './SignUpForm.css';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import logo from '../constants/images/sahay 1.png';
 import useAuth from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../constants';
 import axios from 'axios';
+import PrivacyPolicy from './Admin/PrivacyPolicy';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -88,10 +89,19 @@ const SignUpForm = () => {
               <FiEyeOff onClick={() => setShowPassword(!showPassword)} className="toggle-password-icon" />
             )}
           </div>
-
-          <div className='text-gray-400 text-right mb-4'>
+          
+          <div className='flex justify-between'>
+          <div className='text-gray-400  mb-4'>
+          <Link to="/privacy-policy">
+            <p className="forgot-password">Privacy Policy</p>
+            </Link>
+          </div>
+          <div className='text-gray-400 mb-4'>
             <p className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</p>
           </div>
+          </div>
+
+          
 
           <button type="submit" className="button-confirm rounded-full">Login</button>
         </form>

@@ -42,7 +42,7 @@ function App() {
         {/* public routes */}
         <Route exact path="/" element={<Login />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
-
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         {/* admin , vro routes */}
         <Route element={<RequireAuth allowedRole={["ADMIN"]} />}>
           <Route path="admin" element={<AdminLayout />}>
