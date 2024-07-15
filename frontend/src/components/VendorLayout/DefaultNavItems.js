@@ -5,6 +5,7 @@ import {
   FolderPlusIcon,
   BanknotesIcon
 } from "@heroicons/react/24/outline";
+import { IoDocumentTextOutline } from "react-icons/io5";
 // define a NavItem prop
 
 export const defaultNavItems = [
@@ -27,6 +28,11 @@ export const defaultNavItems = [
     label: "Bookings",
     href: "/vendor/bookings",
     icon: <BanknotesIcon className="w-6 h-6" />,
+  },
+  {
+    label: "Privacy Policy",
+    href: "/vendor/privacy-policy",
+    icon: <IoDocumentTextOutline className="w-6 h-6" />,
   },
   
 ];

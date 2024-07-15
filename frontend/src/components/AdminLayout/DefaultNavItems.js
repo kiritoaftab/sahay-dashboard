@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { TbTools } from "react-icons/tb";
 import { CiUser } from "react-icons/ci";
+import { IoDocumentTextOutline } from "react-icons/io5";
 
 // Define a NavItem prop
 export const defaultNavItems = [
@@ -77,6 +78,11 @@ export const defaultNavItems = [
     label: "Bookings",
     href: "/admin/bookings",
     icon: <BanknotesIcon className="w-6 h-6" />,
+  },
+  {
+    label: "Privacy Policy",
+    href: "/admin/privacy-policy",
+    icon: <IoDocumentTextOutline className="w-6 h-6" />,
   },
 ];
 
