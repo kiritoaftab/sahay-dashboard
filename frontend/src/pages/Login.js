@@ -91,16 +91,20 @@ const SignUpForm = () => {
           </div>
           
           <div className='flex justify-between'>
-          <div className='text-gray-400  mb-4'>
+          <div className='text-gray-400'>
           <Link to="/privacy-policy">
             <p className="forgot-password">Privacy Policy</p>
             </Link>
           </div>
-          <div className='text-gray-400 mb-4'>
+          <div className='text-gray-400 '>
             <p className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</p>
           </div>
           </div>
-
+          <div className='text-gray-400 mb-4'>
+            <Link to="/terms-and-conditions">
+              <p className="forgot-password">Terms and Conditions</p>
+            </Link>
+          </div>
           
 
           <button type="submit" className="button-confirm rounded-full">Login</button>

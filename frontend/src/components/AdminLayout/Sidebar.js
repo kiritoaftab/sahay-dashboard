@@ -54,7 +54,7 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
   return (
     <div
       className={cn({
-        "bg-primary text-zinc-50 z-20 h-screen": true,
+        "bg-primary text-zinc-50 z-20 h-full": true,
         "transition-all duration-300 ease-in-out": true,
         "fixed md:sticky top-0 md:translate-x-0": true,
         "w-[300px]": !collapsed,

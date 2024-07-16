@@ -34,6 +34,7 @@ import ResetPassword from "./pages/ResetPassword";
 import RequireAuth from "./components/Auth/RequireAuth";
 import AdminProfile from "./pages/Admin/AdminProfile";
 import PrivacyPolicy from "./pages/Admin/PrivacyPolicy";
+import Terms from "./pages/Admin/Terms";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<Terms />} />
         {/* admin , vro routes */}
         <Route element={<RequireAuth allowedRole={["ADMIN"]} />}>
           <Route path="admin" element={<AdminLayout />}>
