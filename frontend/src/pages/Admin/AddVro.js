@@ -41,7 +41,7 @@ const AddVRO = () => {
 
     try {
       const response = await axios.post(`${BASE_URL}user/createVRO`, requestBody);
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("VRO Added successfully");
         navigate("/admin/allVro");
       } else {
