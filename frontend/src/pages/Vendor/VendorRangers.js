@@ -9,7 +9,7 @@ import { BASE_URL } from "../../constants";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import debounce from "lodash.debounce";
 
-const AdminRanger = () => {
+const VendorRanger = () => {
   const [rangerList, setRangerList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -36,7 +36,7 @@ const AdminRanger = () => {
     try {
       const url = query
         ? `${BASE_URL}ranger/getByName/${query}`
-        : `${BASE_URL}rangerService/populateVendorRanger/${vendorDoc?._id}?page=${currentPage}&pageSize=10`;
+        : `${BASE_URL}rangerService/populateServices?page=${currentPage}&pageSize=10`;
       const res = await axios.get(url);
       console.log("API Response:", res.data);
       if (query) {
@@ -197,4 +197,4 @@ const AdminRanger = () => {
   );
 };
 
-export default AdminRanger;
+export default VendorRanger;

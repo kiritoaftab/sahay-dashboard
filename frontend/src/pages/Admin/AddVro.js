@@ -30,7 +30,7 @@ const AddVRO = () => {
 
   const addVRO = async (e) => {
     e.preventDefault();
-
+  
     const requestBody = {
       userName: userName,
       email: email,
@@ -38,20 +38,22 @@ const AddVRO = () => {
       password: password,
       profilePic: uploadedUrl,
     };
-
+  
     try {
       const response = await axios.post(`${BASE_URL}user/createVRO`, requestBody);
-      if (response.status === 201) {
+      console.log("Response:", response); // Log the full response
+      if (response.status === 201 || response.status === 200) {
         alert("VRO Added successfully");
         navigate("/admin/allVro");
       } else {
-        alert("VRO could not be added");
+        alert("Could not add VRO");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error adding VRO:", error);
       alert("Could not add VRO");
     }
   };
+  
 
   return (
     <section className="w-screen h-full md:w-full bg-background gap-4 flex flex-col p-5">

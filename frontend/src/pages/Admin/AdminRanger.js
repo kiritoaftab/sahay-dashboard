@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import { FaSearch } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
-import axios from "../../axiosInstance/axiosApi";
-import { formatDuration } from "../../constants";
-import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../constants";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import debounce from "lodash.debounce";
+import { useNavigate } from "react-router-dom";
+import axios from "../../axiosInstance/axiosApi";
+import useAuth from "../../hooks/useAuth";
+import { formatDuration, BASE_URL } from "../../constants";
 
 const AdminRanger = () => {
   const [rangerList, setRangerList] = useState([]);
@@ -71,10 +69,11 @@ const AdminRanger = () => {
         status: newStatus,
       });
       console.log("Status update response:", res.data);
+
       // Update the status in the local state
       setRangerList((prevList) =>
         prevList.map((ranger) =>
-          ranger.user === userId
+          ranger.user._id === userId
             ? { ...ranger, user: { ...ranger.user, status: newStatus } }
             : ranger
         )
@@ -87,14 +86,6 @@ const AdminRanger = () => {
         status: newStatus,
       });
     }
-  };
-
-  const chunkArray = (array, chunkSize) => {
-    const chunks = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      chunks.push(array.slice(i, i + chunkSize));
-    }
-    return chunks;
   };
 
   return (
@@ -138,7 +129,6 @@ const AdminRanger = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {rangerList.map((ranger, index) => {
-              console.log("Ranger:", ranger);
               return (
                 <tr key={index}>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap flex items-center justify-center">
@@ -151,17 +141,7 @@ const AdminRanger = () => {
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
                     {Array.isArray(ranger?.servicesDetails)
-                      ? chunkArray(ranger.servicesDetails, 3).map(
-                          (chunk, index) => (
-                            <span key={index}>
-                              {chunk.map((service) => service.name).join(", ")}
-                              {index <
-                                Math.floor(
-                                  ranger.servicesDetails.length / 3
-                                ) && <br />}
-                            </span>
-                          )
-                        )
+                      ? ranger.servicesDetails.map((service) => service.name).join(", ")
                       : ""}
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
