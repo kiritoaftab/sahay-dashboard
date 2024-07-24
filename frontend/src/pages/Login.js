@@ -20,7 +20,7 @@ const SignUpForm = () => {
     console.log(email, password);
 
     try {
-      const res = await axios.post(`${BASE_URL}/user/login`, {
+      const res = await axios.post(`${BASE_URL}user/login`, {
         email,
         password,
       });
