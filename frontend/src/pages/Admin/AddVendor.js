@@ -39,7 +39,7 @@ const AddVendor = () => {
 
   const addVendor = async (e) => {
     e.preventDefault();
-
+  
     const requestBody = {
       email: email,
       phone: phone,
@@ -51,28 +51,30 @@ const AddVendor = () => {
       pincode: pinCode,
       shopName: shopName,
       shopGstNo: gstIn,
-      serviceList: [selectedService.map((service)=>service._id)],
+      serviceList: selectedService.map((service) => service._id),
     };
-
-    console.log(requestBody);
-
+  
+    console.log("Request Body:", requestBody);
+  
     try {
       const response = await axios.post(
         `${BASE_URL}vendor/addVendor`,
         requestBody
       );
+      console.log("Response:", response);
+  
       if (response.status === 201) {
         alert("Vendor Added successfully");
+        navigate(`/admin/vendors`);
       } else {
-        alert("vendor could not be added");
+        alert(`Vendor could not be added: ${response.status}`);
       }
-      console.log(response.data);
-      navigate(`/admin/vendors`);
     } catch (error) {
-      console.error(error, { success: false, msg: "Could not add vendor" });
-      alert('Could not add Vendor');
+      console.error("Error:", error.response);
+      alert(`Could not add Vendor: ${error.response?.data?.message || error.message}`);
     }
   };
+  
 
   useEffect(() => {
     const getAllServices = async () => {
