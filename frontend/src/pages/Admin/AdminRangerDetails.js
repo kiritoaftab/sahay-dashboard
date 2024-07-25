@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "../../axiosInstance/axiosApi";
 import { BASE_URL } from "../../constants";
 
@@ -15,13 +15,13 @@ const AdminRangerDetails = () => {
   const [profilePicUrl, setProfilePicUrl] = useState("");
   const [aadharImgUrl, setAadharImgUrl] = useState("");
   const [panImgUrl, setPanImgUrl] = useState("");
-  const [selectedServices, setSelectedServices] = useState([]); // Changed to array
+  const [selectedServices, setSelectedServices] = useState([]); 
   const [service, setService] = useState([]);
   const [vendors, setVendors] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const location = useLocation();
   console.log(id);
 
   const getRangerById = async () => {
@@ -37,7 +37,7 @@ const AdminRangerDetails = () => {
       setProfilePicUrl(response?.data?.rangerDoc?.user?.profilePic);
       setAadharImgUrl(response?.data?.rangerDoc?.aadharImgUrl);
       setPanImgUrl(response?.data?.rangerDoc?.panImgUrl);
-      setSelectedServices(response?.data?.rangerDoc?.serviceList || []); // Initialize selected services
+      setSelectedServices(response?.data?.rangerDoc?.serviceList || []); 
     } catch (error) {
       console.error(error, { success: false, msg: "Internal Server" });
     }
@@ -57,19 +57,19 @@ const AdminRangerDetails = () => {
       pincode: pinCode,
       aadharImg: aadharImgUrl,
       panImg: panImgUrl,
-      serviceList: selectedServices, // Use the array of selected services
+      serviceList: selectedServices, 
     };
 
     console.log(requestBody);
     try {
       const response = await axios.post(`${BASE_URL}ranger/updateRanger`, requestBody);
       console.log(response?.data);
-      if (response.status === 200) {
-        alert("Ranger Updated successfully");
+      if (location.pathname.includes("/vro")) {
+        alert('ranger updated successfully');
+        navigate(`/vro/rangers`);
       } else {
-        alert("Ranger update failed");
+        navigate(`/admin/rangers`);
       }
-      navigate(`/admin/rangers`);
     } catch (error) {
       console.error(error, { success: false, msg: "ranger not updated" });
       alert('Could not Update Ranger');

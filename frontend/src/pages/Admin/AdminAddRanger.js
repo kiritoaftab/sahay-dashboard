@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { FaEye, FaEyeSlash, FaSearch, FaTimes } from "react-icons/fa";
 import uploadToAzureStorage from "../../utils/uploadToAzureStorage";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AdminAddRanger = () => {
   const [firstName, setFirstName] = useState("");
@@ -27,6 +27,7 @@ const AdminAddRanger = () => {
   const [aadharImgUrl, setAadharImgUrl] = useState("");
   const [panImgUrl, setPanImgUrl] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -74,12 +75,12 @@ const AdminAddRanger = () => {
         requestBody
       );
       console.log(response.data);
-      if (response.status === 201) {
-        alert("Ranger Added successfully");
+      if (location.pathname.includes("/vro")) {
+        alert("Ranger added successfully");
+        navigate(`/vro/rangers`);
       } else {
-        alert("Ranger could not be added");
-      }
-      navigate(`/admin/rangers`);
+        navigate(`/admin/rangers`);
+      } 
     } catch (error) {
       console.error(error, { success: false, msg: "Could not add ranger" });
       alert('Could not add Ranger');

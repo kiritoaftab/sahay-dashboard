@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import debounce from "lodash.debounce";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../axiosInstance/axiosApi";
 import useAuth from "../../hooks/useAuth";
 import { formatDuration, BASE_URL } from "../../constants";
@@ -14,7 +14,8 @@ const AdminRanger = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { auth } = useAuth();
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const basePath = location.pathname.includes("/vro") ? "/vro" : "/admin";
   const fetchRangers = async (query = "") => {
     try {
       const url = query
@@ -152,7 +153,7 @@ const AdminRanger = () => {
                   </td>
                   <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-center">
                     <button
-                      onClick={() => navigate(`/admin/rangers/${ranger._id}`)}
+                      onClick={() => navigate(`${basePath}/rangers/${ranger._id}`)}
                       className="text-white px-2 py-2 whitespace-nowrap text-sm rounded-xl bg-indigo-500"
                     >
                       View More

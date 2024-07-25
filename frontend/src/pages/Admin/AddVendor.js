@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import uploadToAzureStorage from "../../util/uploadToAzureStorage";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 
 const AddVendor = () => {
@@ -24,6 +24,7 @@ const AddVendor = () => {
   const [uploadedUrl, setUploadedUrl] = useState();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -63,11 +64,11 @@ const AddVendor = () => {
       );
       console.log("Response:", response);
   
-      if (response.status === 201) {
-        alert("Vendor Added successfully");
-        navigate(`/admin/vendors`);
+      if (location.pathname.includes("/vro")) {
+        alert('Vendor added successfully');
+        navigate(`/vro/vendors`);
       } else {
-        alert(`Vendor could not be added: ${response.status}`);
+        navigate(`/admin/vendors`);
       }
     } catch (error) {
       console.error("Error:", error.response);

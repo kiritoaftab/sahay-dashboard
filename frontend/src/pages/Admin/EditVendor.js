@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import uploadToAzureStorage from "../../util/uploadToAzureStorage";
 import { BASE_URL } from "../../constants";
 
@@ -16,10 +16,9 @@ const EditVendor = () => {
   const [file, setFile] = useState(null);
   const [uploadedUrl, setUploadedUrl] = useState();
   const { id } = useParams();
-
+  
   const navigate = useNavigate();
-
-  console.log(id);
+  const location = useLocation();
 
   const getVendorById = async () => {
     try {
@@ -53,14 +52,19 @@ const EditVendor = () => {
       shopGstNo: gstIn,
     };
 
-    console.log(requestBody);
-    navigate(`/admin/vendors`);
     try {
       const response = await axios.post(
         `${BASE_URL}vendor/updateVendor`,
         requestBody
       );
       console.log(response?.data);
+
+      if (location.pathname.includes("/vro")) {
+        alert('Vendor updated successfully');
+        navigate(`/vro/vendors`);
+      } else {
+        navigate(`/admin/vendors`);
+      }
     } catch (error) {
       console.error(error, { success: false, msg: "vendor not updated" });
       alert('Could not edit Vendor')
@@ -226,31 +230,59 @@ const EditVendor = () => {
               <label
                 htmlFor="example1"
                 className="mb-1 block text-sm font-medium text-gray-700">
-                Profile Picture
+                Choose profile photo
               </label>
-              <input
-                id="example1"
-                accept="image/*"
-                type="file"
-                className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"
-                required
-                onChange={handleFileChange}
-              />
-            </div>
-            {uploadedUrl && (
-              <div className="mt-2 flex justify-center">
-                <img src={uploadedUrl} className="h-32 w-32" alt="Uploaded" />
+              <div className="flex w-full items-center justify-center">
+                <label
+                  htmlFor="dropzone-file"
+                  className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    {uploadedUrl ? (
+                      <img
+                        className="h-48 w-full"
+                        src={uploadedUrl}
+                        alt="uploaded image"
+                      />
+                    ) : (
+                      <>
+                        <svg
+                          aria-hidden="true"
+                          className="mb-3 h-10 w-10 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M7 16l-4-4m0 0l4-4m-4 4h18m-10 4v6m0 0l4-4m-4 4l-4-4"></path>
+                        </svg>
+                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                          <span className="font-semibold">Click to upload</span>{" "}
+                          or drag and drop
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          PNG, JPG (MAX. 800x400px)
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                </label>
               </div>
-            )}
+            </div>
           </div>
-
-          <div className=" bottom-0 left-0 w-full flex justify-center p-4">
-            <button
-              type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  ">
-              Update Vendor
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 mb-5 mt-4 ml-5 w-[200px] items-center rounded-2xl p-2 text-white md:w-[150px]">
+            Edit Vendor
+          </button>
         </form>
       </section>
     </>

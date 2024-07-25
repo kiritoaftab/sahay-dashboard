@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { TrashIcon } from "@heroicons/react/24/outline";
@@ -12,8 +12,10 @@ const AdminVendor = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
+  
   const navigate = useNavigate();
+  const location = useLocation();
+  const basePath = location.pathname.includes("/vro") ? "/vro" : "/admin";
 
   const fetchVendors = async (query = "") => {
     try {
@@ -125,7 +127,7 @@ const AdminVendor = () => {
                   <td className="px-6 py-4">
                     <button
                       className="bg-indigo-700 hover:bg-indigo-500 text-white text-xs font-normal p-1.5 rounded-md"
-                      onClick={() => navigate(`/admin/editVendor/${vendor?._id}`)}
+                      onClick={() => navigate(`${basePath}/editVendor/${vendor?._id}`)}
                     >
                       View More
                     </button>
