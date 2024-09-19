@@ -13,15 +13,21 @@ import {
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 
-const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed }) => {
+const Sidebar = ({
+  collapsed,
+  navItems = defaultNavItems,
+  shown,
+  setCollapsed,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { auth } = useAuth();
   const [openItems, setOpenItems] = useState({});
+  const [role, setRole] = useState("");
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   const toggleItem = (label) => {
@@ -31,25 +37,28 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
   const Icon = collapsed ? ChevronDoubleRightIcon : ChevronDoubleLeftIcon;
 
   const isActive = (href) => {
-    if (href === '/admin') {
+    if (href === "/admin") {
       return location.pathname === href;
     }
     return location.pathname.startsWith(href);
   };
 
-  const [userDoc,setUserDoc] = useState(null);
+  const [userDoc, setUserDoc] = useState(null);
   const fetchUser = async () => {
     try {
-      const userId = sessionStorage.getItem('auth');
+      const userId = sessionStorage.getItem("auth");
       const res = await axios.get(`${BASE_URL}user/getUserById/${userId}`);
       setUserDoc(res.data.userDoc);
+      console.log(res.data.userDoc);
     } catch (error) {
       console.log(error);
     }
-  }
-  useEffect(()=> {
+  };
+  useEffect(() => {
     fetchUser();
-  },[])
+    const userRole = sessionStorage.getItem("role");
+    setRole(userRole);
+  }, []);
 
   return (
     <div
@@ -71,7 +80,9 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
             "py-4 justify-center": collapsed,
           })}
         >
-          {!collapsed && <img className="whitespace-nowrap w-24" src={logo} alt="" />}
+          {!collapsed && (
+            <img className="whitespace-nowrap w-24" src={logo} alt="" />
+          )}
           <button
             className={cn({
               "grid place-content-center": true, // position
@@ -85,7 +96,9 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
         </div>
 
         <nav className="flex-grow">
-          <ul className={cn({ "my-2 flex flex-col gap-2 items-stretch": true })}>
+          <ul
+            className={cn({ "my-2 flex flex-col gap-2 items-stretch": true })}
+          >
             {navItems.map((item, index) => {
               const hasSubItems = item.items && item.items.length > 0;
               return (
@@ -101,7 +114,9 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
                         "bg-blue-500": isNavLinkActive && isActive(item.href),
                       })
                     }
-                    onClick={() => (hasSubItems ? toggleItem(item.label) : navigate(item.href))}
+                    onClick={() =>
+                      hasSubItems ? toggleItem(item.label) : navigate(item.href)
+                    }
                   >
                     {item.icon} <span>{!collapsed && item.label}</span>
                   </NavLink>
@@ -125,11 +140,13 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
                                   !collapsed,
                                 "hover:bg-white/[.20] flex transition-colors duration-300 rounded-full p-2 mx-3 w-10 h-10":
                                   collapsed,
-                                "bg-blue-500": isSubNavLinkActive && isActive(subItem.href),
+                                "bg-blue-500":
+                                  isSubNavLinkActive && isActive(subItem.href),
                               })
                             }
                           >
-                            {subItem.icon} <span>{!collapsed && subItem.label}</span>
+                            {subItem.icon}{" "}
+                            <span>{!collapsed && subItem.label}</span>
                           </NavLink>
                         </li>
                       ))}
@@ -147,7 +164,8 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
               })}
             >
               <button className="flex gap-2" onClick={() => handleLogout()}>
-                <UserMinusIcon className="w-6 h-6" /> <span>{!collapsed && `Logout`}</span>
+                <UserMinusIcon className="w-6 h-6" />{" "}
+                <span>{!collapsed && `Logout`}</span>
               </button>
             </li>
           </ul>
@@ -156,7 +174,11 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
         <div className={cn({ "grid place-content-stretch p-4": true })}>
           <div className="flex gap-4 items-center h-11 overflow-hidden">
             <img
-              src={userDoc?.profilePic ? userDoc?.profilePic : "https://via.placeholder.com/150"}
+              src={
+                userDoc?.profilePic
+                  ? userDoc?.profilePic
+                  : "https://via.placeholder.com/150"
+              }
               height={36}
               width={36}
               alt="profile image"
@@ -165,9 +187,15 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
             {!collapsed && (
               <div className="flex flex-col">
                 <span className="text-indigo-50 my-0">{userDoc?.userName}</span>
-                <button onClick={() => navigate("/admin/profile")} className="text-indigo text-sm">
-                  View Profile
-                </button>
+
+                {role === "ADMIN" && (
+                  <button
+                    onClick={() => navigate("/admin/profile")}
+                    className="text-indigo text-sm"
+                  >
+                    View Profile
+                  </button>
+                )}
               </div>
             )}
           </div>
