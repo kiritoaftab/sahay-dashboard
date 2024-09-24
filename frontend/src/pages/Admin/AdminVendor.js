@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import { FaSearch } from "react-icons/fa";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdDeleteOutline } from "react-icons/md";
 import debounce from "lodash.debounce";
 
 const AdminVendor = () => {
@@ -12,7 +11,7 @@ const AdminVendor = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const basePath = location.pathname.includes("/vro") ? "/vro" : "/admin";
@@ -23,7 +22,6 @@ const AdminVendor = () => {
         ? `${BASE_URL}vendor/getByName/${query}`
         : `${BASE_URL}vendor/paginate?page=${currentPage}&pageSize=10&sortField=firstName&sortOrder=asc`;
       const res = await axios.get(url);
-      console.log("API Response:", res.data);
       if (query) {
         setVendorDoc(res.data.vendors);
         setTotalPages(1);
@@ -62,10 +60,24 @@ const AdminVendor = () => {
         userId,
         status: newStatus,
       });
-      console.log("Status update response:", res.data);
       fetchVendors(searchQuery);
     } catch (error) {
       console.error("Error updating status:", error);
+    }
+  };
+
+  const deleteVendor = async (vendorId) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}vendor/delete/${vendorId}`);
+      if (res.data.success) {
+        alert("Vendor deleted successfully");
+        fetchVendors(searchQuery);
+      } else {
+        alert("Failed to delete the vendor.");
+      }
+    } catch (error) {
+      console.error("Error deleting vendor:", error);
+      alert("An error occurred while deleting the vendor.");
     }
   };
 
@@ -92,9 +104,7 @@ const AdminVendor = () => {
             <tr>
               <th scope="col" className="p-4">
                 <div className="flex items-center">
-                  <label htmlFor="checkbox-all-search" className="sr-only">
-                    checkbox
-                  </label>
+                  <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                 </div>
               </th>
               <th scope="col" className="px-6 py-3">Vendor name</th>
@@ -112,9 +122,7 @@ const AdminVendor = () => {
                 <tr className="bg-white border-b hover:bg-gray-50" key={index}>
                   <td className="w-4 p-4">
                     <div className="flex items-center">
-                      <label htmlFor="checkbox-all-search" className="sr-only">
-                        checkbox
-                      </label>
+                      <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                     </div>
                   </td>
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -138,6 +146,12 @@ const AdminVendor = () => {
                         <input type="checkbox" className="sr-only peer" checked={vendor?.user?.status === "ACTIVE"} readOnly />
                         <div className="relative w-11 h-6 bg-red-500 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-green-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                       </label>
+                    </button>
+                    <button
+                      className="bg-red-700 hover:bg-red-500 text-white text-xs font-normal p-1.5 rounded-md ml-2"
+                      onClick={() => deleteVendor(vendor._id)}
+                    >
+                      <MdDeleteOutline />
                     </button>
                   </td>
                 </tr>

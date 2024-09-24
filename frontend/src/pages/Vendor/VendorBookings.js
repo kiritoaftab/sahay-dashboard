@@ -139,7 +139,7 @@ const VendorBooking = () => {
                 <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
                   <tr>
                     <th scope="col" className="px-6 py-3">
-                      Customer name
+                      Ranger name
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Customer Phone

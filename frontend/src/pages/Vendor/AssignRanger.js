@@ -116,7 +116,7 @@ const AssignRanger = () => {
         <h1 className="text-xl font-medium">Assign Ranger</h1>
         <div className="bg-white p-6 rounded-lg shadow-md max-w-md  mt-6">
           <p className="text-lg font-semibold mb-2">
-            Customer name:{" "}
+            Ranger name:{" "}
             <span className="font-normal">
               {bookingDoc?.customer?.firstName}
             </span>

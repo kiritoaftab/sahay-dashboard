@@ -3,6 +3,7 @@ import axios from "axios";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { BASE_URL } from "../../constants";
 import { useNavigate } from "react-router-dom";
+import { MdDeleteOutline } from "react-icons/md";
 
 const AllServices = () => {
   const [services, setServices] = useState([]);
@@ -25,6 +26,21 @@ const AllServices = () => {
       setTotalPages(Math.ceil(response.data.total / pageSize));
     } catch (error) {
       console.error("Error fetching services:", error);
+    }
+  };
+
+  const deleteService = async (serviceId) => {
+    try {
+      const url = `${BASE_URL}/service/deleteService/${serviceId}`;
+      const response = await axios.delete(url);
+      if (response.data.success) {
+        alert("Service deleted successfully");
+        // Refetch the services after deletion
+        fetchServices();
+      }
+    } catch (error) {
+      console.error("Error deleting service:", error);
+      alert("Failed to delete the service.");
     }
   };
 
@@ -54,6 +70,7 @@ const AllServices = () => {
                 Icon Image
               </th>
               <th className="px-2 md:px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-start">Edit</th>
+              <th className="px-2 md:px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-start">Delete</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -69,8 +86,15 @@ const AllServices = () => {
                 </td>
                 <td className="px-2 md:px-6 py-4 whitespace-nowrap text-center">
                   <button onClick={() => navigate(`/admin/updateServices/${service._id}`)} 
-                  className="bg-blue-500 rounded-lg w-16 h-10 text-white flex items-center justify-center focus:outline-none">
+                  className="bg-blue-500 rounded-lg w-16 h-10 text                    -white flex items-center justify-center focus:outline-none">
                     Edit
+                  </button>
+                </td>
+                <td className="px-2 md:px-6 py-4 whitespace-nowrap text-center">
+                  <button 
+                    onClick={() => deleteService(service._id)} 
+                    className="bg-red-500 rounded-lg w-16 h-10 text-white flex items-center justify-center focus:outline-none">
+                    <MdDeleteOutline />
                   </button>
                 </td>
               </tr>
@@ -104,3 +128,4 @@ const AllServices = () => {
 };
 
 export default AllServices;
+
