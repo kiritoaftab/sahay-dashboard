@@ -35,6 +35,7 @@ import RequireAuth from "./components/Auth/RequireAuth";
 import AdminProfile from "./pages/Admin/AdminProfile";
 import PrivacyPolicy from "./pages/Admin/PrivacyPolicy";
 import Terms from "./pages/Admin/Terms";
+import VendorProfile from "./pages/Vendor/VendorProfile";
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
             <Route path="addRanger" element={<VendorAddRanger />} />
             <Route path="editRanger/:id" element={<VendorRangerDetails />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="vendorprofile" element={<VendorProfile />} />
           </Route>
         </Route>
 

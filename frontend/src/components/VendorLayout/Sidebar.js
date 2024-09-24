@@ -132,12 +132,12 @@ const Sidebar = ({ collapsed, shown, setCollapsed }) => {
             {!collapsed && (
               <div className="flex flex-col">
                 <span className="text-indigo-50 my-0">{userDoc?.userName}</span>
-                {/* <button
-                  onClick={() => navigate("/vendor/profile")}
+                <button
+                  onClick={() => navigate("/vendor/vendorprofile")}
                   className="text-indigo text-sm"
                 >
                   View Profile
-                </button> */}
+                </button>
               </div>
             )}
           </div>

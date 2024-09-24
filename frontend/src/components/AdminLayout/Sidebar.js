@@ -196,6 +196,14 @@ const Sidebar = ({
                     View Profile
                   </button>
                 )}
+                 {role === "VENDOR" && (
+                  <button
+                    onClick={() => navigate("/vendor/vendorprofile")}
+                    className="text-indigo text-sm"
+                  >
+                    View Profile
+                  </button>
+                )}
               </div>
             )}
           </div>

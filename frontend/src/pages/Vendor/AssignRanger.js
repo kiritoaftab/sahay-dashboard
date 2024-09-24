@@ -13,10 +13,16 @@ const AssignRanger = () => {
   const [vendorId, setvendorId] = useState();
   const [bookingDoc, setBookingDoc] = useState(null);
   const [vendorDoc, setVendorDoc] = useState(null);
+ 
+
+  const [bookingId, setbookingId]=useState(null)
 
   const { id } = useParams();
 
   console.log(id, rangerId, vendorId);
+
+
+
 
   const handleConfirm = async () => {
     try {
@@ -49,6 +55,9 @@ const AssignRanger = () => {
   };
 
   const fetchRangersByVendorAndService = async (vendorId, serviceId) => {
+
+    console.log(vendorId);
+    console.log(serviceId);
     try {
       const res = await axios.get(
         `${BASE_URL}ranger/getRangersByVendorIdAndServiceId`,
@@ -59,8 +68,8 @@ const AssignRanger = () => {
           },
         }
       );
-      console.log(res.data);
-      setRangers(res.data.rangerDoc);
+      console.log("vendor", res.data);
+      setRangers(res.data.rangers);
     } catch (error) {
       console.log(error);
       alert("No rangers found for the service");
@@ -71,8 +80,15 @@ const AssignRanger = () => {
     try {
       const userId = sessionStorage.getItem("auth");
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
+      console.log(res.data);
       setVendorDoc(res.data.vendorDoc);
+    
       fetchBookingById(id, res.data.vendorDoc._id);
+
+      setbookingId(res.data.vendorDoc._id)
+
+
+
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +96,19 @@ const AssignRanger = () => {
   useEffect(() => {
     fetchVendorByUser();
   }, []);
+
+
+
+  const addbooking=async()=>{
+    try {
+      const res=await axios
+    } catch (error) {
+      
+    }
+  }
+
+
+
 
   return (
     <>
