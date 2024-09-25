@@ -36,6 +36,7 @@ import AdminProfile from "./pages/Admin/AdminProfile";
 import PrivacyPolicy from "./pages/Admin/PrivacyPolicy";
 import Terms from "./pages/Admin/Terms";
 import VendorProfile from "./pages/Vendor/VendorProfile";
+import VROProfile from "./components/VROLayout/VROProfile";
 
 function App() {
   return (
@@ -103,7 +104,7 @@ function App() {
             <Route path="rangers" element={<AdminRanger />} />
             <Route path="addRanger" element={<AdminAddRanger />} />
             <Route path="rangers/:id" element={<AdminRangerDetails />} />
-
+            <Route path="profile" element={<VROProfile />} />
             <Route path="customers" element={<AdminCustomer />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="bookings" element={<AdminService />} />

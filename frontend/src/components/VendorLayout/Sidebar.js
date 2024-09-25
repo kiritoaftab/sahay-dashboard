@@ -95,10 +95,11 @@ const Sidebar = ({ collapsed, shown, setCollapsed }) => {
                   "rounded-full p-2 mx-3 w-10 h-10": collapsed,
                   "bg-indigo-600": pathname === item.href, // Highlight if active
                 })}
+                onClick={() => navigate(item.href)}
               >
                 <button
                   className="flex gap-2"
-                  onClick={() => navigate(item.href)}
+                  
                 >
                   {item.icon} <span>{!collapsed && item.label}</span>
                 </button>
@@ -111,8 +112,10 @@ const Sidebar = ({ collapsed, shown, setCollapsed }) => {
                 "rounded-md p-2 mx-3 gap-4": !collapsed,
                 "rounded-full p-2 mx-3 w-10 h-10": collapsed,
               })}
+
+              onClick={() => handleLogout()}
             >
-              <button className="flex gap-2" onClick={() => handleLogout()}>
+              <button className="flex gap-2" >
                 <UserMinusIcon className="w-6 h-6" />{" "}
                 <span>{!collapsed && `Logout`}</span>
               </button>

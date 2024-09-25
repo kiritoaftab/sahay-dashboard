@@ -1,4 +1,3 @@
-// components/Sidebar.tsx
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
@@ -13,12 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 
-const Sidebar = ({
-  collapsed,
-  navItems = defaultNavItems,
-  shown,
-  setCollapsed,
-}) => {
+const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { auth } = useAuth();
@@ -54,11 +48,20 @@ const Sidebar = ({
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchUser();
     const userRole = sessionStorage.getItem("role");
     setRole(userRole);
   }, []);
+
+ 
+  const handleCollapse = () => {
+    setCollapsed(!collapsed);
+    if (!collapsed) {
+      setOpenItems({});
+    }
+  };
 
   return (
     <div
@@ -89,7 +92,7 @@ const Sidebar = ({
               "hover:bg-white/[.30]": true, // colors
               "w-10 h-10 rounded-full": true,
             })}
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={handleCollapse} // Collapse sidebar and close submenus
           >
             <Icon className="w-5 h-5" />
           </button>
@@ -191,14 +194,6 @@ const Sidebar = ({
                 {role === "ADMIN" && (
                   <button
                     onClick={() => navigate("/admin/profile")}
-                    className="text-indigo text-sm"
-                  >
-                    View Profile
-                  </button>
-                )}
-                 {role === "VENDOR" && (
-                  <button
-                    onClick={() => navigate("/vendor/vendorprofile")}
                     className="text-indigo text-sm"
                   >
                     View Profile

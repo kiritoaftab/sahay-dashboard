@@ -77,7 +77,7 @@ const Sidebar = ({ collapsed,
               "hover:bg-white/[.30] ": true, // colors
               "w-10 h-10 rounded-full": true, // shape
             })}
-            // 👇 set the collapsed state on click
+           
             onClick={() => setCollapsed(!collapsed)}
           >
             <Icon className="w-5 h-5" />
@@ -102,8 +102,9 @@ const Sidebar = ({ collapsed,
                                 "rounded-md p-2 mx-3 gap-4":!collapsed,
                                 "rounded-full p-2 mx-3 w-10 h-10":collapsed
                             })}
+                            onClick={()=> navigate(item.href)}
                         >
-                            <button className="flex gap-2" onClick={()=> navigate(item.href)}>
+                            <button className="flex gap-2" >
                                 {item.icon} <span>{!collapsed && item.label}</span>
                             </button>
                         </li>
@@ -116,9 +117,9 @@ const Sidebar = ({ collapsed,
                     "rounded-md p-2 mx-3 gap-4":!collapsed,
                     "rounded-full p-2 mx-3 w-10 h-10":collapsed
                 })}
-                  
+                onClick={()=> handleLogout()}
                 >
-                    <button className="flex gap-2" onClick={()=> handleLogout()}>
+                    <button className="flex gap-2" >
                         <UserMinusIcon className="w-6 h-6"/> <span>{!collapsed && `Logout`}</span>
                       </button> 
                 </li>
@@ -143,9 +144,9 @@ const Sidebar = ({ collapsed,
                 {!collapsed && (
                     <div className="flex flex-col">
                         <span className="text-indigo-50 my-0">{userDoc?.userName}</span>
-                        {/* <button onClick={()=> navigate("/vendor/profile")} className="text-indigo text-sm">
+                        <button onClick={()=> navigate("/vro/profile")} className="text-indigo text-sm">
                             View Profile
-                        </button> */}
+                        </button>
                     </div>
                 )}
             </div>
