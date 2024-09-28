@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../constants";
+import uploadToAzureStorage from "../../util/uploadToAzureStorage";
 
 const AdminProfile = () => {
   const [userDoc, setUserDoc] = useState({
     userName: "",
     email: "",
     phone: "",
-    status: ""
+    status: "",
+    profilePic: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const id = sessionStorage.getItem("auth");
@@ -26,12 +28,26 @@ const AdminProfile = () => {
     setUserDoc({ ...userDoc, [name]: value });
   };
 
+  const handleProfile = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const blobName = file.name;
+      const imageUrl = await uploadToAzureStorage(file, blobName);
+      setUserDoc({ ...userDoc, profilePic: imageUrl });
+    } catch (error) {
+      console.error("Failed to upload the profile picture:", error);
+    }
+  };
+
   const handleSave = async () => {
     try {
       const res = await axios.post(`${BASE_URL}user/updateAdmin/${id}`, {
         userName: userDoc.userName,
         email: userDoc.email,
-        phone: userDoc.phone
+        phone: userDoc.phone,
+        profilePic: userDoc.profilePic,
       });
       alert("Profile updated successfully");
       setIsEditing(false);
@@ -106,6 +122,36 @@ const AdminProfile = () => {
                 ) : (
                   <p className="text-sm text-gray-900">{userDoc.phone}</p>
                 )}
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:gap-4">
+                <label className="text-sm font-medium text-gray-500 w-32">
+                  Profile Picture:
+                </label>
+                <div className="flex justify-center items-center">
+                  {isEditing ? (
+                    <>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleProfile}
+                      />
+                      {userDoc.profilePic && (
+                        <img
+                          src={userDoc.profilePic}
+                          alt="Profile Preview"
+                          className="h-20 w-20 object-cover rounded-full mt-2"
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <img
+                      src={userDoc.profilePic}
+                      alt="Profile"
+                      className="h-20 w-20 object-cover rounded-full mt-2"
+                    />
+                  )}
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row sm:gap-4">
