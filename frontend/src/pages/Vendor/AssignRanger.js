@@ -55,12 +55,11 @@ const AssignRanger = () => {
   };
 
   const fetchRangersByVendorAndService = async (vendorId, serviceId) => {
-
     console.log(vendorId);
     console.log(serviceId);
     try {
       const res = await axios.get(
-        `${BASE_URL}ranger/getRangersByVendorIdAndServiceId`,
+        `https://admin.sahay24x7.com:4000/api/ranger/getByVendorIdAndServiceIdV2`, // Updated API URL
         {
           params: {
             vendorId,
@@ -75,6 +74,7 @@ const AssignRanger = () => {
       alert("No rangers found for the service");
     }
   };
+  
 
   const fetchVendorByUser = async () => {
     try {
@@ -169,52 +169,49 @@ const AssignRanger = () => {
               </tr>
             </thead>
             <tbody>
-              {rangers &&
-                rangers.map((ranger) => (
-                  <tr key={ranger._id}>
-                    <td className="px-6 py-3 text-lg text-black">{`${ranger?.firstName} ${ranger?.lastName}`}</td>
-                    <td className="px-6 py-3 text-lg text-black">
-                      {ranger?.user?.phone}
-                    </td>
-                    <td className="px-6 py-3">
-                      <button className="bg-purple-200 bg-opacity-14 text-black text-xs font-medium p-1.5 rounded-md">
-                        {ranger?.service?.name}
-                      </button>
-                    </td>
-                    <td className="px-6 py-3 text-lg text-black">
-                      {`${ranger?.vendor?.firstName}${ranger?.vendor?.lastName} `}
-                    </td>
-                    <td className="px-6 py-3 text-lg text-black">
-                      {ranger?.status}
-                    </td>
-                    <td className="px-9 py-3 text-lg text-black">
-                      <button
-                        className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
-                        onClick={() => {
-                          setShowModal(true);
-                          setvendorId(ranger?.vendor?._id);
-                          setrangerId(ranger?._id);
-                        }}
-                      >
-                        Assign Ranger
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="ml-2 w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                          />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+            {rangers &&
+  rangers.map(({ ranger, service }) => (
+    <tr key={ranger._id}>
+      <td className="px-6 py-3 text-lg text-black">{`${ranger?.firstName} ${ranger?.lastName}`}</td>
+      <td className="px-6 py-3 text-lg text-black">{ranger?.user?.phone}</td>
+      <td className="px-6 py-3">
+        <button className="bg-purple-200 bg-opacity-14 text-black text-xs font-medium p-1.5 rounded-md">
+          {service?.service?.name}
+        </button>
+      </td>
+      <td className="px-6 py-3 text-lg text-black">
+        {`${ranger?.vendor?.firstName} ${ranger?.vendor?.lastName}`}
+      </td>
+      <td className="px-6 py-3 text-lg text-black">{ranger?.status}</td>
+      <td className="px-9 py-3 text-lg text-black">
+        <button
+          className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
+          onClick={() => {
+            setShowModal(true);
+            setvendorId(ranger?.vendor?._id);
+            setrangerId(ranger?._id);
+          }}
+        >
+          Assign Ranger
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="ml-2 w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+            />
+          </svg>
+        </button>
+      </td>
+    </tr>
+  ))}
+
             </tbody>
           </table>
           {showModal && (
