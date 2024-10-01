@@ -25,7 +25,7 @@ const VendorProfile = () => {
     try {
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${id}`);
       const data = res.data.vendorDoc;
-      console.log(res.data)
+      console.log(res.data);
 
       setFirstName(data.firstName);
       setLastName(data.lastName);

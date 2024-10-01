@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 const VendorBooking = () => {
   const [status, setStatus] = useState("INITIATED");
   const [bookingDoc, setBookingDoc] = useState([]);
-  const [initiatedBookings,setInitiatedBookings] = useState([]);
-  const [completedBookings,setCompletedBookings] = useState([]);
-  const [vendorDoc,setVendorDoc] = useState(null);
+  const [initiatedBookings, setInitiatedBookings] = useState([]);
+  const [completedBookings, setCompletedBookings] = useState([]);
+  const [vendorDoc, setVendorDoc] = useState(null);
 
   const navigate = useNavigate();
 
@@ -31,12 +31,11 @@ const VendorBooking = () => {
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-    if(newStatus == "INITIATED" || newStatus == "COMPLETED"){
-      fetchBookingsByVendor(vendorDoc?._id,newStatus);
-    }else{
+    if (newStatus == "INITIATED" || newStatus == "COMPLETED") {
+      fetchBookingsByVendor(vendorDoc?._id, newStatus);
+    } else {
       fetchOngoingBookingsByVendor(vendorDoc?._id);
     }
-    
   };
 
   const getTimeDifference = (start, end) => {
@@ -53,57 +52,63 @@ const VendorBooking = () => {
     return formattedDiff;
   };
 
-  const fetchOngoingBookingsByVendor = async(vendorId) => {
+  const fetchOngoingBookingsByVendor = async (vendorId) => {
     try {
-      const res = await axios.get(`${BASE_URL}booking/getBookingByOnGoingStatusAndVendor`,{
-        params:{
-          vendorId:vendorId
+      const res = await axios.get(
+        `${BASE_URL}booking/getBookingByOnGoingStatusAndVendor`,
+        {
+          params: {
+            vendorId: vendorId,
+          },
         }
-      })
+      );
       console.log(res.data);
       setBookingDoc(res.data.bookingDocs);
     } catch (error) {
       console.log(error);
-      alert('No Ongoing Bookings');
+      alert("No Ongoing Bookings");
     }
-  }
-  const fetchBookingsByVendor= async(vendorId,status) => {
+  };
+  const fetchBookingsByVendor = async (vendorId, status) => {
     try {
       console.log(vendorId);
-      const res = await axios.get(`${BASE_URL}booking/getBookingByVendorAndStatus`,{
-        params: {
-          status: status,
-          vendorId: vendorId
+      const res = await axios.get(
+        `${BASE_URL}booking/getBookingByVendorAndStatus`,
+        {
+          params: {
+            status: status,
+            vendorId: vendorId,
+          },
         }
-      })
+      );
       console.log(res.data);
-      if(status == "INITIATED"){
+      if (status == "INITIATED") {
         setInitiatedBookings(res.data.bookingDocs);
       }
-      if(status == "COMPLETED"){
+      if (status == "COMPLETED") {
         setCompletedBookings(res.data.bookingDocs);
       }
     } catch (error) {
       console.log(error);
       alert(`No ${status} Bookings found`);
     }
-  }
+  };
 
-  const fetchVendorByUser = async() => {
+  const fetchVendorByUser = async () => {
     try {
-      const userId = sessionStorage.getItem('auth');
+      const userId = sessionStorage.getItem("auth");
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
       console.log(res.data);
       setVendorDoc(res.data.vendorDoc);
-      fetchBookingsByVendor(res.data.vendorDoc._id,"INITIATED");
+      fetchBookingsByVendor(res.data.vendorDoc._id, "INITIATED");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchVendorByUser();
-  },[])
+  }, []);
 
   return (
     <>
@@ -113,12 +118,14 @@ const VendorBooking = () => {
           <div className="flex space-x-4 mb-4 p-4">
             <button
               onClick={() => handleStatusChange("INITIATED")}
-              className="btn">
+              className="btn"
+            >
               Initiated({initiatedBookings.length})
             </button>
             <button
               onClick={() => handleStatusChange("COMPLETED")}
-              className="btn">
+              className="btn"
+            >
               Completed ({completedBookings.length})
             </button>
             <button
@@ -127,7 +134,8 @@ const VendorBooking = () => {
                   "BOOKING_STARTED" || "PRICE_CALCULATED" || "PAYMENT_COMPLETED"
                 )
               }
-              className="btn">
+              className="btn"
+            >
               On-going({bookingDoc.length})
             </button>
           </div>
@@ -173,8 +181,9 @@ const VendorBooking = () => {
                         </td>
                         <td className="px-6 py-3 text-lg text-black">
                           {new Date(
-                            booking?.bookingDateTime
-                          ).toLocaleDateString("en-US", {
+                            new Date(booking?.bookingDateTime).getTime() -
+                              5.5 * 60 * 60 * 1000
+                          ).toLocaleDateString("en-IN", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
@@ -184,13 +193,18 @@ const VendorBooking = () => {
                             hour12: true,
                           })}
                         </td>
+
                         <td className="px-6 py-3 text-lg text-black">
                           {booking?.address?.address}
                         </td>
                         <td className="px-9 py-3 text-lg text-black">
                           <button
                             className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
-                            onClick={()=>{navigate(`/vendor/bookings/assignRanger/${booking._id}`)}}
+                            onClick={() => {
+                              navigate(
+                                `/vendor/bookings/assignRanger/${booking._id}`
+                              );
+                            }}
                           >
                             Assign Ranger
                             <svg
@@ -199,7 +213,8 @@ const VendorBooking = () => {
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
-                              className="ml-2 w-4 h-4">
+                              className="ml-2 w-4 h-4"
+                            >
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -257,14 +272,16 @@ const VendorBooking = () => {
                             className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md"
                             onClick={() => {
                               navigate(`/vendor/bookingDetails/${booking._id}`);
-                            }}>
+                            }}
+                          >
                             {booking?.service?.name}
                           </button>
                         </td>
-                        <td className="px-6 py-3 text-black text-lg">
+                        <td className="px-6 py-3 text-lg text-black">
                           {new Date(
-                            booking?.bookingDateTime
-                          ).toLocaleDateString("en-US", {
+                            new Date(booking?.bookingDateTime).getTime() -
+                              5.5 * 60 * 60 * 1000
+                          ).toLocaleDateString("en-IN", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
@@ -274,10 +291,12 @@ const VendorBooking = () => {
                             hour12: true,
                           })}
                         </td>
+
                         <td className="px-6 py-3 text-black text-lg">
                           {new Date(booking?.startTime).toLocaleTimeString(
-                            "en-US",
+                            "en-IN",
                             {
+                              timeZone: "Asia/Kolkata",
                               hour: "numeric",
                               minute: "numeric",
                               second: "numeric",
@@ -286,8 +305,9 @@ const VendorBooking = () => {
                           )}
                           -
                           {new Date(booking?.endTime).toLocaleTimeString(
-                            "en-US",
+                            "en-IN",
                             {
+                              timeZone: "Asia/Kolkata",
                               hour: "numeric",
                               minute: "numeric",
                               second: "numeric",
@@ -308,14 +328,20 @@ const VendorBooking = () => {
                         </td>
                         <td className="px-6 py-3 text-black text-lg flex items-center">
                           ₹{booking?.totalPrice}
-                          <button  className="text-indigo-700" onClick={()=>{navigate(`/vendor/bookingDetails/${booking._id}`)}}>
+                          <button
+                            className="text-indigo-700"
+                            onClick={() => {
+                              navigate(`/vendor/bookingDetails/${booking._id}`);
+                            }}
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
-                              className="ml-2 w-4 h-4">
+                              className="ml-2 w-4 h-4"
+                            >
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -367,10 +393,11 @@ const VendorBooking = () => {
                             {booking?.service?.name}
                           </button>
                         </td>
-                        <td className="px-6 py-3 text-black text-lg">
+                        <td className="px-6 py-3 text-lg text-black">
                           {new Date(
-                            booking?.bookingDateTime
-                          ).toLocaleDateString("en-US", {
+                            new Date(booking?.bookingDateTime).getTime() -
+                              5.5 * 60 * 60 * 1000
+                          ).toLocaleDateString("en-IN", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
@@ -381,7 +408,7 @@ const VendorBooking = () => {
                           })}
                         </td>
                         <td className="px-6 py-3 text-black text-lg">
-                          {booking?.customer?.phone}
+                          {booking?.customer?.user?.phone}
                         </td>
                         <td className="px-6 py-3 text-black text-lg">{`${booking?.ranger?.firstName} ${booking?.ranger?.lastName}`}</td>
                         <td className="px-6 py-3 text-black text-lg">

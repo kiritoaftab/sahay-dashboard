@@ -116,7 +116,7 @@ const AssignRanger = () => {
         <h1 className="text-xl font-medium">Assign Ranger</h1>
         <div className="bg-white p-6 rounded-lg shadow-md max-w-md  mt-6">
           <p className="text-lg font-semibold mb-2">
-            Ranger name:{" "}
+            Customer name:{" "}
             <span className="font-normal">
               {bookingDoc?.customer?.firstName}
             </span>
@@ -149,16 +149,16 @@ const AssignRanger = () => {
             <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Customer name
+                  Ranger name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Customer Phone
+                  Ranger Phone
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Service
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Vendor Name -ID
+                  Vendor Name 
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Status
@@ -182,7 +182,7 @@ const AssignRanger = () => {
                       </button>
                     </td>
                     <td className="px-6 py-3 text-lg text-black">
-                      {`${ranger?.vendor?.firstName}${ranger?.vendor?.lastName} ${ranger?.vendor?._id}`}
+                      {`${ranger?.vendor?.firstName}${ranger?.vendor?.lastName} `}
                     </td>
                     <td className="px-6 py-3 text-lg text-black">
                       {ranger?.status}
