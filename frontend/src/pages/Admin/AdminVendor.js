@@ -148,7 +148,7 @@ const AdminVendor = () => {
                       </label>
                     </button>
                     <button
-                      className="bg-red-700 hover:bg-red-500 text-white text-xs font-normal p-1.5 rounded-md ml-2"
+                      className="hover:text-red-500 text-black text-2xl font-normal p-1.5 rounded-md"
                       onClick={() => deleteVendor(vendor._id)}
                     >
                       <MdDeleteOutline />
