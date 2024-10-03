@@ -110,8 +110,7 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
                     to={item.href}
                     className={({ isActive: isNavLinkActive }) =>
                       cn({
-                        "hover:bg-white/[.20] flex transition-colors duration-300 rounded-md p-2 mx-3 gap-4":
-                          !collapsed,
+                        "hover:bg-white/[.20] flex transition-colors duration-300 rounded-md p-2 mx-3 gap-4":!collapsed,
                         "hover:bg-white/[.20] flex transition-colors duration-300 rounded-full p-2 mx-3 w-10 h-10":
                           collapsed,
                         "bg-blue-500": isNavLinkActive && isActive(item.href),
@@ -124,15 +123,13 @@ const Sidebar = ({ collapsed, navItems = defaultNavItems, shown, setCollapsed })
                     {item.icon} <span>{!collapsed && item.label}</span>
                   </NavLink>
                   {hasSubItems && openItems[item.label] && (
-                    <ul className="ml-4">
+                    <ul className="">
                       {item.items.map((subItem, subIndex) => (
                         <li
                           key={subIndex}
                           className={cn({
                             "text-white font-semibold hover:bg-white/[.20] flex transition-colors duration-300 rounded-md p-2 mx-3 gap-4":
                               !collapsed,
-                            "text-white font-semibold hover:bg-white/[.20] flex transition-colors duration-300 rounded-full p-2 mx-3 w-10 h-10":
-                              collapsed,
                           })}
                         >
                           <NavLink

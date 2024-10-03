@@ -167,7 +167,7 @@ const EditVendor = () => {
                 id="gstIn"
                 className="bg-gray-50 border-gray-500 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="29ABCDE1111LAZ"
-                pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
+                // pattern="[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[0-9]{1}[Zz]{1}[0-9]{1}"
                 required
                 value={gstIn}
                 onChange={(e) => setGstIn(e.target.value)}
