@@ -87,6 +87,7 @@ const VendorBooking = () => {
       }
       if (status == "COMPLETED") {
         setCompletedBookings(res.data.bookingDocs);
+        console.log("completed bookings", res.data.bookingDocs);
       }
     } catch (error) {
       console.log(error);
@@ -293,28 +294,33 @@ const VendorBooking = () => {
                         </td>
 
                         <td className="px-6 py-3 text-black text-lg">
-                          {new Date(booking?.startTime).toLocaleTimeString(
-                            "en-IN",
-                            {
-                              timeZone: "Asia/Kolkata",
-                              hour: "numeric",
-                              minute: "numeric",
-                              second: "numeric",
-                              hour12: true,
-                            }
-                          )}
+                        {new Date(
+                            new Date(booking?.startTime).getTime() -
+                              5.5 * 60 * 60 * 1000
+                          ).toLocaleDateString("en-IN", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                            hour12: true,
+                          })}
                           -
-                          {new Date(booking?.endTime).toLocaleTimeString(
-                            "en-IN",
-                            {
-                              timeZone: "Asia/Kolkata",
-                              hour: "numeric",
-                              minute: "numeric",
-                              second: "numeric",
-                              hour12: true,
-                            }
-                          )}
+                          {new Date(
+                            new Date(booking?.endTime).getTime() -
+                              5.5 * 60 * 60 * 1000
+                          ).toLocaleDateString("en-IN", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                            hour12: true,
+                          })}
                         </td>
+
                         <td className="px-6 py-3 text-black text-lg">{`${booking?.startOtp} - ${booking?.endOtp}`}</td>
                         <td className="px-6 py-3 text-black text-lg">
                           {getTimeDifference(

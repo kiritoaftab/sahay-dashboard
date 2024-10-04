@@ -35,9 +35,10 @@ const AdminRangerDetails = () => {
       setAddress(response?.data?.rangerDoc?.address);
       setVendorId(response?.data?.rangerDoc?.vendor?._id);
       setProfilePicUrl(response?.data?.rangerDoc?.user?.profilePic);
-      setAadharImgUrl(response?.data?.rangerDoc?.aadharImgUrl);
-      setPanImgUrl(response?.data?.rangerDoc?.panImgUrl);
+      setAadharImgUrl(response?.data?.rangerDoc?.aadharImg);
+      setPanImgUrl(response?.data?.rangerDoc?.panImg);     
       setSelectedServices(response?.data?.rangerDoc?.serviceList || []); 
+      console.log("response", response?.data);
     } catch (error) {
       console.error(error, { success: false, msg: "Internal Server" });
     }
@@ -143,167 +144,169 @@ const AdminRangerDetails = () => {
   };
 
   return (
-    <section className="w-fit md:w-full lg:w-full sm:w-full bg-background ">
-      <div className="bg-white p-5 rounded-lg m-5">
-        <p className="font-bold text-3xl mb-4">Ranger Details</p>
-        <form onSubmit={updateRanger}>
-          <div className="flex flex-col md:flex-col lg:flex-row xl:flex-row">
-            <div className="basis-1/4 flex flex-col justify-start">
-              <img className="h-64 w-64 mix-blend-multiply object-scale-down" src={profilePicUrl} alt="Profile" />
-              <input className="my-3" accept="image/*"  type="file" onChange={(e) => handleFileUpload(e, "profile")} />
+    <section className="w-full bg-background p-4">
+  <div className="bg-white p-4 sm:p-5 rounded-lg">
+    <h2 className="font-bold text-2xl sm:text-3xl mb-4">Ranger Details</h2>
+    <form onSubmit={updateRanger} className="space-y-6">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="w-full lg:w-1/4 flex flex-col items-center lg:items-start">
+          <img className="h-48 w-48 sm:h-64 sm:w-64 object-cover rounded-lg" src={profilePicUrl} alt="Profile" />
+          <input className="mt-3 w-full" accept="image/*" type="file" onChange={(e) => handleFileUpload(e, "profile")} />
+        </div>
+
+        <div className="w-full lg:w-3/4 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">First Name</label>
+              <input
+                type="text"
+                placeholder="First Name"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
             </div>
-
-            <div className="basis-3/4 flex flex-col justify-center gap-2">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-lg font-medium mb-2">First Name</label>
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className="text-lg font-medium mb-2">Last Name</label>
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="text-lg font-medium mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className="text-lg font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className="text-lg font-medium mb-2">Pincode</label>
-                  <input
-                    type="number"
-                    placeholder="Pincode"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    value={pinCode}
-                    onChange={(e) => setPinCode(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="serviceList" className="text-lg font-medium mb-2">Select Services</label>
-                  <select
-                    id="serviceList"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    multiple
-                    required
-                    value={selectedServices}
-                    onChange={handleServiceChange}
-                  >
-                    {service?.map((service) => (
-                      <option key={service?._id} value={service?._id}>
-                        {service?.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="mb-6">
-                  <label htmlFor="address" className="text-lg font-medium mb-2">Address</label>
-                  <textarea
-                    id="address"
-                    className="bg-slate-100 rounded-lg p-3 w-full border border-black-500"
-                    placeholder="Your address"
-                    value={address}
-                    required
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col md:flex-row md:flex-wrap mb-6 px-10 py-2">
-                <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
-                  <label htmlFor="aadharImg" className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Upload Aadhar Image
-                  </label>
-                  <input
-                    id="aadharImg"
-                    accept="image/*"
-                    type="file"
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
-                    onChange={(e) => handleFileUpload(e, "aadhar")}
-                  />
-                  {aadharImgUrl && <img src={aadharImgUrl} alt="Aadhar" className="h-32 w-32 object-fill border rounded-md" />}
-                </div>
-                <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
-                  <label htmlFor="panImg" className="block mb-2 text-sm font-medium text-gray-900 ">
-                    Upload PAN Image
-                  </label>
-                  <input
-                    id="panImg"
-                    accept="image/*"
-                    type="file"
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
-                    onChange={(e) => handleFileUpload(e, "pan")}
-                  />
-                  {panImgUrl && <img src={panImgUrl} alt="PAN" className="h-32 w-32 object-fill border rounded-md" />}
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Last Name</label>
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </div>
           </div>
 
-          <div className="mb-6">
-            <label className="text-lg font-medium mb-2">Vendor</label>
-            <p>{getVendorName(vendorId)}</p>
-          </div>
-
-          <div className="mb-6">
-            <label className="text-lg font-medium mb-2">Selected Services</label>
-            <div className="flex flex-wrap gap-2">
-              {selectedServices.map((serviceId) => {
-                const serviceObj = service.find((srv) => srv._id === serviceId);
-                return (
-                  <div key={serviceId} className="flex items-center gap-2 bg-slate-100 p-2 rounded-lg border border-black-500">
-                    <span>{serviceObj?.name}</span>
-                    <button
-                      type="button"
-                      onClick={() => removeService(serviceId)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      &times;
-                    </button>
-                  </div>
-                );
-              })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Phone Number</label>
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Pincode</label>
+              <input
+                type="number"
+                placeholder="Pincode"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                value={pinCode}
+                onChange={(e) => setPinCode(e.target.value)}
+              />
             </div>
           </div>
 
-          <button type="submit" className="mt-5 w-36 bg-primary p-3 text-white rounded-lg">
-            Update
-          </button>
-        </form>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="serviceList" className="block text-sm font-medium mb-1">Select Services</label>
+              <select
+                id="serviceList"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                multiple
+                required
+                value={selectedServices}
+                onChange={handleServiceChange}
+              >
+                {service?.map((service) => (
+                  <option key={service?._id} value={service?._id}>
+                    {service?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium mb-1">Address</label>
+              <textarea
+                id="address"
+                className="w-full p-2 bg-slate-100 rounded border border-gray-300"
+                placeholder="Your address"
+                value={address}
+                required
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="aadharImg" className="block text-sm font-medium mb-1">
+              Upload Aadhar Image
+            </label>
+            <input
+              id="aadharImg"
+              accept="image/*"
+              type="file"
+              className="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+              onChange={(e) => handleFileUpload(e, "aadhar")}
+            />
+            {aadharImgUrl && <img src={aadharImgUrl} alt="Aadhar" className="mt-2 h-32 w-32 object-cover border rounded-md" />}
+          </div>
+          <div>
+            <label htmlFor="panImg" className="block text-sm font-medium mb-1">
+              Upload PAN Image
+            </label>
+            <input
+              id="panImg"
+              accept="image/*"
+              type="file"
+              className="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+              onChange={(e) => handleFileUpload(e, "pan")}
+            />
+            {panImgUrl && <img src={panImgUrl} alt="PAN" className="mt-2 h-32 w-32 object-cover border rounded-md" />}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Vendor</label>
+          <p>{getVendorName(vendorId)}</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Selected Services</label>
+          <div className="flex flex-wrap gap-2">
+            {selectedServices.map((serviceId) => {
+              const serviceObj = service.find((srv) => srv._id === serviceId);
+              return (
+                <div key={serviceId} className="flex items-center gap-2 bg-slate-100 p-2 rounded-lg border border-gray-300">
+                  <span>{serviceObj?.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeService(serviceId)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    &times;
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" className="w-full sm:w-auto bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors">
+        Update
+      </button>
+    </form>
+  </div>
+</section>
   );
 };
 
