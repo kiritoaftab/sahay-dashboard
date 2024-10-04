@@ -13,9 +13,9 @@ const EditService = () => {
   const [uploadedBannerUrl, setUploadedBannerUrl] = useState("");
   const [uploadedIconUrl, setUploadedIconUrl] = useState("");
   const { id } = useParams();
-
   const navigate = useNavigate();
 
+  // Fetch service data by ID and pre-fill the form
   const getServiceById = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/service/getServicesById/${id}`);
@@ -25,26 +25,25 @@ const EditService = () => {
       setDesc(serviceData.desc);
       setBannerImage(serviceData.bannerImage);
       setIconImage(serviceData.iconImage);
+      console.log("Service data:", serviceData);
     } catch (error) {
       console.error("Error fetching service:", error);
     }
   };
 
+  // Update service request
   const updateService = async (e) => {
     e.preventDefault();
     const requestBody = {
       name,
       price,
-      bannerImage: uploadedBannerUrl || bannerImage,
+      bannerImage: uploadedBannerUrl || bannerImage,  // Use new URL or existing image
       iconImage: uploadedIconUrl || iconImage,
       desc,
     };
 
     try {
-      const response = await axios.post(
-        `${BASE_URL}/service/updateService/${id}`,
-        requestBody
-      );
+      const response = await axios.post(`${BASE_URL}/service/updateService/${id}`, requestBody);
       console.log("Service updated:", response.data);
       if (response.status === 200) {
         alert("Service Updated successfully");
@@ -57,20 +56,35 @@ const EditService = () => {
     }
   };
 
+  // Handle banner image upload
   const handleBannerChange = async (e) => {
     const file = e.target.files[0];
-    const blobName = file?.name;
-    const url = await uploadToAzureStorage(file, blobName);
-    setUploadedBannerUrl(url);
+    if (file) {
+      const blobName = file.name;
+      try {
+        const url = await uploadToAzureStorage(file, blobName);
+        setUploadedBannerUrl(url);
+      } catch (error) {
+        console.error("Error uploading banner image:", error);
+      }
+    }
   };
 
+  // Handle icon image upload
   const handleIconChange = async (e) => {
     const file = e.target.files[0];
-    const blobName = file?.name;
-    const url = await uploadToAzureStorage(file, blobName);
-    setUploadedIconUrl(url);
+    if (file) {
+      const blobName = file.name;
+      try {
+        const url = await uploadToAzureStorage(file, blobName);
+        setUploadedIconUrl(url);
+      } catch (error) {
+        console.error("Error uploading icon image:", error);
+      }
+    }
   };
 
+  // Fetch service data when component mounts
   useEffect(() => {
     getServiceById();
   }, [id]);
@@ -81,7 +95,7 @@ const EditService = () => {
       <form onSubmit={updateService} className="bg-white rounded-2xl border-slate-300 border">
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div className="px-5 pt-5">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
               Service Name
             </label>
             <input
@@ -95,7 +109,7 @@ const EditService = () => {
             />
           </div>
           <div className="px-5 pt-5">
-            <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900">
               Price
             </label>
             <input
@@ -109,7 +123,7 @@ const EditService = () => {
             />
           </div>
           <div className="px-5 pt-5">
-            <label htmlFor="desc" className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label htmlFor="desc" className="block mb-2 text-sm font-medium text-gray-900">
               Description
             </label>
             <textarea
@@ -122,40 +136,64 @@ const EditService = () => {
             />
           </div>
         </div>
+
+        {/* Banner Image Section */}
         <div className="mb-6 px-5 py-2">
-          <label htmlFor="bannerImage" className="block mb-2 text-sm font-medium text-gray-900 ">
+          <label htmlFor="bannerImageInput" className="block mb-2 text-sm font-medium text-gray-900">
             Banner Image
           </label>
-          <input
-            type="file"
-            id="bannerImage"
-            accept="image/*"
-            className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none"
-            onChange={handleBannerChange}
-          />
-          {uploadedBannerUrl && (
-            <div className="mt-2 flex justify-center">
-              <img src={uploadedBannerUrl} className="h-32 w-32" alt="Uploaded Banner" />
-            </div>
-          )}
+          <div
+            className="flex flex-col items-center justify-center w-full h-48 lg:h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+            onClick={() => document.getElementById("bannerImageInput").click()}
+          >
+            {uploadedBannerUrl || bannerImage ? (
+              <img
+                className="h-full w-full object-contain rounded-lg"
+                src={uploadedBannerUrl || bannerImage}
+                alt="Banner"
+              />
+            ) : (
+              <p className="text-gray-500 text-sm">Click to upload</p>
+            )}
+            <input
+              id="bannerImageInput"
+              accept="image/*"
+              type="file"
+              className="hidden"
+              onChange={handleBannerChange}
+            />
+          </div>
         </div>
+
+        {/* Icon Image Section */}
         <div className="mb-6 px-5 py-2">
-          <label htmlFor="iconImage" className="block mb-2 text-sm font-medium text-gray-900 ">
+          <label htmlFor="iconImage" className="block mb-2 text-sm font-medium text-gray-900">
             Icon Image
           </label>
-          <input
-            type="file"
-            id="iconImage"
-            accept="image/*"
-            className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none"
-            onChange={handleIconChange}
-          />
-          {uploadedIconUrl && (
-            <div className="mt-2 flex justify-center">
-              <img src={uploadedIconUrl} className="h-32 w-32" alt="Uploaded Icon" />
-            </div>
-          )}
+          <div
+            className="flex flex-col items-center justify-center w-full h-48 lg:h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+            onClick={() => document.getElementById("iconImageInput").click()}
+          >
+            {uploadedIconUrl || iconImage ? (
+              <img
+                className="h-full w-full object-contain rounded-lg"
+                src={uploadedIconUrl || iconImage}
+                alt="Icon"
+              />
+            ) : (
+              <p className="text-gray-500 text-sm">Click to upload</p>
+            )}
+            <input
+              id="iconImageInput"
+              accept="image/*"
+              type="file"
+              className="hidden"
+              onChange={handleIconChange}
+            />
+          </div>
         </div>
+
+        {/* Submit Button */}
         <div className="flex justify-center p-4">
           <button
             type="submit"
