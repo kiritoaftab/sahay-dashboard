@@ -170,7 +170,17 @@ const VendorBooking = () => {
                   {initiatedBookings &&
                     initiatedBookings.map((booking) => (
                       <tr key={booking._id}>
-                        <td className="px-6 py-3 text-lg text-black">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td>
+                        {/* <td className="px-6 py-3 text-lg text-black">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td> */}
+                        <td className="px-6 py-3 text-lg text-black">
+                          <div className="flex items-center">
+                            <img
+                              src={booking?.customer?.profileImage}
+                              className="w-10 h-10 rounded-full mr-4"
+                            />
+                            <span>{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</span>
+                          </div>
+                        </td>
+
                         <td className="px-6 py-3 text-lg text-black">
                           {booking?.customer?.user?.phone}
                         </td>
@@ -266,7 +276,16 @@ const VendorBooking = () => {
                   {completedBookings &&
                     completedBookings.map((booking) => (
                       <tr key={booking._id}>
-                        <td className="px-6 py-3 text-black text-lg">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td>
+                        <td className="px-6 py-3 text-lg text-black">
+                          <div className="flex items-center">
+                            <img
+                              src={booking?.customer?.profileImage}
+                              className="w-10 h-10 rounded-full mr-4"
+                            />
+                            <span>{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</span>
+                          </div>
+                        </td>
+                        {/* <td className="px-6 py-3 text-black text-lg">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td> */}
                         <td className="px-6 py-3 text-black text-lg">
                           <button
                             className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md"
@@ -387,7 +406,16 @@ const VendorBooking = () => {
                   {bookingDoc &&
                     bookingDoc.map((booking) => (
                       <tr key={booking._id}>
-                        <td className="px-6 py-3 text-black text-lg">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td>
+                        <td className="px-6 py-3 text-lg text-black">
+                          <div className="flex items-center">
+                            <img
+                              src={booking?.customer?.profileImage}
+                              className="w-10 h-10 rounded-full mr-4"
+                            />
+                            <span>{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</span>
+                          </div>
+                        </td>
+                        {/* <td className="px-6 py-3 text-black text-lg">{`${booking?.customer?.firstName} ${booking?.customer?.lastName}`}</td> */}
                         <td className="px-6 py-3 text-black text-lg">
                           <button className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md">
                             {booking?.service?.name}
@@ -410,7 +438,16 @@ const VendorBooking = () => {
                         <td className="px-6 py-3 text-black text-lg">
                           {booking?.customer?.user?.phone}
                         </td>
-                        <td className="px-6 py-3 text-black text-lg">{`${booking?.ranger?.firstName} ${booking?.ranger?.lastName}`}</td>
+                        <td className="px-6 py-3 text-lg text-black">
+  <div className="flex items-center">
+    <img 
+      src={booking?.customer?.profileImage} 
+      className="w-10 h-10 rounded-full mr-4"
+    />
+    <span>{`${booking?.ranger?.firstName} ${booking?.ranger?.lastName}`}</span>
+  </div>
+</td>
+                        {/* <td className="px-6 py-3 text-black text-lg">{`${booking?.ranger?.firstName} ${booking?.ranger?.lastName}`}</td> */}
                         <td className="px-6 py-3 text-black text-lg">
                           {booking?.address?.address}
                         </td>
