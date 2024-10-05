@@ -294,13 +294,10 @@ const VendorBooking = () => {
                         </td>
 
                         <td className="px-6 py-3 text-black text-lg">
-                        {new Date(
+                          {new Date(
                             new Date(booking?.startTime).getTime() -
                               5.5 * 60 * 60 * 1000
-                          ).toLocaleDateString("en-IN", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
+                          ).toLocaleTimeString("en-IN", {
                             hour: "numeric",
                             minute: "numeric",
                             second: "numeric",
@@ -310,10 +307,7 @@ const VendorBooking = () => {
                           {new Date(
                             new Date(booking?.endTime).getTime() -
                               5.5 * 60 * 60 * 1000
-                          ).toLocaleDateString("en-IN", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
+                          ).toLocaleTimeString("en-IN", {
                             hour: "numeric",
                             minute: "numeric",
                             second: "numeric",

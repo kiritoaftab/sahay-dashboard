@@ -128,7 +128,9 @@ const BookingDetails = () => {
                         day: "numeric",
                         hour: "numeric",
                         minute: "numeric",
-                        hour12: true, // To display in AM/PM format
+                        second: "numeric", // Adds seconds if needed
+                        hour12: true, // For AM/PM format
+                        timeZone: "UTC", // Keeps it in UTC
                       })}
                     </span>
                   </p>
@@ -141,7 +143,9 @@ const BookingDetails = () => {
                         day: "numeric",
                         hour: "numeric",
                         minute: "numeric",
-                        hour12: true, // To display in AM/PM format
+                        second: "numeric", // Adds seconds if needed
+                        hour12: true, // For AM/PM format
+                        timeZone: "UTC", // Keeps it in UTC
                       })}
                     </span>
                   </p>
