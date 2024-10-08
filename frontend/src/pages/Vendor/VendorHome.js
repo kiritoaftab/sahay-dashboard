@@ -80,7 +80,8 @@ const VendorHome = () => {
     </div>
   
     <div className="overflow-x-auto my-5 min-w-full">
-  <div className="bg-white min-w-full rounded-3xl p-5 shadow-md">
+  <div className="bg-white w-fit rounded-3xl p-5 shadow-md border
+  ">
     <p className="font-semibold mb-5 text-lg">Most Booked Rangers</p>
     <table className="min-w-full table-auto border-collapse">
       <thead>
