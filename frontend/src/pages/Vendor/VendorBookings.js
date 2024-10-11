@@ -137,7 +137,7 @@ const VendorBooking = () => {
       <section className="w-screen md:w-full bg-background flex flex-col p-5">
         <h1 className="text-2xl font-medium">All Bookings</h1>
 
-        <div className="flex flex-wrap space-x-4 p-4">
+        <div className="flex flex-wrap space-x-2 p-0 mt-5">
           <StyledTab
             isActive={activeTab === "INITIATED"} 
             onClick={() => handleStatusChange("INITIATED")}
