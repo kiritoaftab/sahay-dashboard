@@ -79,11 +79,11 @@ const VendorHome = () => {
       </div>
     </div>
   
-    <div className="overflow-x-auto my-5 min-w-full">
-  <div className="bg-white w-fit rounded-3xl p-5 shadow-md border
-  ">
-    <p className="font-semibold mb-5 text-lg">Most Booked Rangers</p>
-    <table className="min-w-full table-auto border-collapse">
+    <div className="my-5 w-full"> 
+    {/* <p className="font-semibold mb-5 text-lg">Most Booked Rangers</p> */}
+  <div className="bg-white overflow-x-auto rounded-3xl p-5 shadow-md border">
+    <p className="font-semibold  mb-5 text-lg">Most Booked Rangers</p>
+    <table className="min-w-full  table-auto border-collapse">
       <thead>
         <tr className="bg-gray-100">
           <th className="px-4 py-2 text-left text-[#5A5A5A] font-semibold">Name</th>
@@ -92,7 +92,7 @@ const VendorHome = () => {
           <th className="px-4 py-2 text-left text-[#5A5A5A] font-semibold">Duration</th>
         </tr>
       </thead>
-      <tbody className="bg-white"> {/* Set background color for the entire tbody */}
+      <tbody className="bg-white">
         {topRangers?.map((data, index) => (
           <tr key={index} className="border-b hover:bg-gray-50 transition duration-200">
             <td className="px-4 py-2">{data?.firstName} {data?.lastName}</td>
@@ -105,6 +105,11 @@ const VendorHome = () => {
     </table>
   </div>
 </div>
+
+  
+  
+  
+  
   </section>
   
   
