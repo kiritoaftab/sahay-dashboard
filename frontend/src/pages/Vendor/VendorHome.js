@@ -56,55 +56,64 @@ const VendorHome = () => {
 
   return (
     <section className="p-5 w-screen h-full md:w-full bg-[#EDEDFF] gap-6">
-      {/* Welcome card */}
-      <div className="bg-white p-5 rounded-2xl">
-        <p className="font-medium tracking-wide text-3xl my-2">
-          Have a great day {vendorDoc?.firstName}!
-        </p>
-        <p className="font-light text-[#7E7E7E] my-2 text-xl">
-          Your clever approach and capabilities have led to these fantastic
-          results.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 my-5">
-          <div className="rounded-3xl shadow-xl p-5 border-2 border-[#6556F529]">
-            <p className="font-medium text-[#5A5A5A] text-lg">Total Rangers</p>
-            <p className="font-medium text-[#6556F5] text-4xl my-2">
-              {vendorDoc?.noOfRanger}
-            </p>
-          </div>
-          <div className="rounded-3xl shadow-xl p-5 border-2 border-[#6556F529]">
-            <p className="font-medium text-[#5A5A5A] text-lg">Total Bookings</p>
-            <p className="font-medium text-[#6556F5] text-4xl my-2">
-              {vendorDoc?.noOfBooking}
-            </p>
-          </div>
+    <div className="bg-white p-5 rounded-2xl shadow-md">
+      <p className="font-medium tracking-wide text-3xl my-2">
+        Have a great day {vendorDoc?.firstName}!
+      </p>
+      <p className="font-light text-[#7E7E7E] my-2 text-xl">
+        Your clever approach and capabilities have led to these fantastic results.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 my-5">
+        <div className="rounded-3xl shadow-xl p-5 border-2 border-[#6556F529]">
+          <p className="font-medium text-[#5A5A5A] text-lg">Total Rangers</p>
+          <p className="font-medium text-[#6556F5] text-4xl my-2">
+            {vendorDoc?.noOfRanger}
+          </p>
+        </div>
+        <div className="rounded-3xl shadow-xl p-5 border-2 border-[#6556F529]">
+          <p className="font-medium text-[#5A5A5A] text-lg">Total Bookings</p>
+          <p className="font-medium text-[#6556F5] text-4xl my-2">
+            {vendorDoc?.noOfBooking}
+          </p>
         </div>
       </div>
+    </div>
+    <div className="my-5 w-full">
+  <div className="bg-white overflow-x-auto rounded-3xl p-5 shadow-md border">
+    <p className="font-semibold mb-5 text-lg text-left">Most Booked Rangers</p>
+    <div className="overflow-x-auto">
+      <table className="min-w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="px-4 py-2 text-left text-[#5A5A5A] font-semibold">Name</th>
+            <th className="px-4 py-2 text-left text-[#5A5A5A] font-semibold">Phone No</th>
+            <th className="px-4 py-2 text-left text-[#5A5A5A] font-semibold">Bookings</th>
+            <th className="px-4 py-2 text-left text-[#5A5A5A] font-semibold">Duration</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white">
+          {topRangers?.map((data, index) => (
+            <tr key={index} className="border-b hover:bg-gray-50 transition duration-200">
+              <td className="px-4 py-2">{data?.firstName} {data?.lastName}</td>
+              <td className="px-4 py-2">{data?.user?.phone}</td>
+              <td className="px-4 py-2 font-semibold">{data?.noOfBooking}</td>
+              <td className="px-4 py-2 font-semibold">{formatDuration(data?.workedDuration)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 my-5">
-        <div className="bg-white rounded-3xl p-5">
-          <p className="font-semibold mb-5">Most Booked Rangers</p>
-          <div className="grid grid-cols-1 md:grid-cols-4 place-items-start">
-            <p className="text-[#5A5A5A]">Name</p>
-            <p className="text-[#5A5A5A]">Phone No</p>
-            <p className="text-[#5A5A5A]">Bookings</p>
-            <p className="text-[#5A5A5A]">Duration</p>
-            {topRangers?.map((data, index) => (
-              <React.Fragment key={index}>
-                <p className="my-2">
-                  {data?.firstName} {data?.lastName}
-                </p>
-                <p className="my-2">{data?.user?.phone}</p>
-                <p className="font-semibold my-2">{data?.noOfBooking}</p>
-                <p className="font-semibold my-2">
-                  {formatDuration(data?.workedDuration)}
-                </p>
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+
+  
+  
+  
+  
+  </section>
+  
+  
   );
 };
 

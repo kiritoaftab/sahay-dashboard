@@ -12,7 +12,8 @@ module.exports = {
       },
       fontFamily: {
         Montserrat: ['Montserrat'],
-        Inter: ['Inter']
+        Inter: ['Inter'],
+        Poppins:['Poppins']
       },
       gridTemplateColumns: {
         sidebar: "300px auto", //for sidebar layout

@@ -14,23 +14,23 @@ const VendorRanger = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [vendorDoc,setVendorDoc] = useState(null);
+  const [vendorDoc, setVendorDoc] = useState(null);
   const navigate = useNavigate();
 
   const fetchVendor = async () => {
     try {
-      const userId = sessionStorage.getItem('auth');
+      const userId = sessionStorage.getItem("auth");
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
       console.log(res.data);
       setVendorDoc(res.data.vendorDoc);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     fetchVendor();
-  },[])
+  }, []);
 
   const fetchRangers = async (query = "") => {
     try {
@@ -52,10 +52,10 @@ const VendorRanger = () => {
   };
 
   useEffect(() => {
-    if(vendorDoc){
+    if (vendorDoc) {
       fetchRangers();
     }
-  }, [currentPage,vendorDoc]);
+  }, [currentPage, vendorDoc]);
 
   const handleSearchChange = debounce((event) => {
     const query = event.target.value;
@@ -74,7 +74,7 @@ const VendorRanger = () => {
 
   const toggleStatus = async (userId, currentStatus) => {
     console.log("User ID:", userId);
-    
+
     const newStatus = currentStatus === "ACTIVE" ? "INACTIVE" : "ACTIVE";
     console.log("Toggling status for user ID:", userId, "to", newStatus);
 
@@ -107,14 +107,23 @@ const VendorRanger = () => {
           />
         </div>
       </div>
+
       <section className="w-full bg-background p-4 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              {["Name", "Phone", "Services", "Booking", "Duration", "Details", "Action"].map((heading) => (
+              {[
+                "Name",
+                "Phone",
+                "Services",
+                "Booking",
+                "Duration",
+                "Details",
+                "Action",
+              ].map((heading) => (
                 <th
                   key={heading}
-                  className="px-2 md:px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center"
+                  className="px-2 md:px-4 lg:px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center"
                 >
                   {heading}
                 </th>
@@ -123,39 +132,58 @@ const VendorRanger = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {rangerList.map((ranger, index) => {
-              // console.log("Ranger:", ranger);
               return (
-                <tr key={index}>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap flex items-center justify-center">
+                <tr
+                  key={index}
+                  className="hover:bg-gray-50 transition duration-200"
+                >
+                  <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap flex items-center justify-center">
                     <span className="text-sm font-medium text-gray-900">
                       {ranger.firstName}
                     </span>
                   </td>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                  <td className="px-2 md:px-4 lg:px-6  whitespace-nowrap text-sm text-gray-500 text-center">
                     {ranger?.user?.phone}
                   </td>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
-                    {Array.isArray(ranger?.servicesDetails) ? 
-                      ranger.servicesDetails.map((service) => service.name).join(", ") : 
-                      ""
-                    }
+                  {/* <td className="px-2 md:px-4 lg:px-6 py-4 w-2 m-10 whitespace-nowrap text-sm text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
+                    {Array.isArray(ranger?.servicesDetails)
+                      ? ranger.servicesDetails
+                          .map((service) => service.name)
+                          .join(", ")
+                      : ""}
+                  </td> */}
+
+                  <td className="px-6 py-3 text-black text-lg justify-center items-center text-center">
+                    <button className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md">
+                      {Array.isArray(ranger?.servicesDetails)
+                        ? ranger.servicesDetails
+                            .map((service) => service.name)
+                            .join(", ")
+                        : ""}
+                    </button>
                   </td>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                  <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                     {ranger.noOfBooking}
                   </td>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                  <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                     {formatDuration(ranger?.workedDuration)}
                   </td>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-center">
+                  <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-center">
                     <button
-                      onClick={() => navigate(`/vendor/editRanger/${ranger._id}`)}
+                      onClick={() =>
+                        navigate(`/vendor/editRanger/${ranger._id}`)
+                      }
                       className="text-white px-2 py-2 whitespace-nowrap text-sm rounded-xl bg-indigo-500"
                     >
                       View More
                     </button>
                   </td>
-                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-sm text-center">
-                    <button onClick={() => toggleStatus(ranger?.user, ranger?.user?.status)}>
+                  <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-center">
+                    <button
+                      onClick={() =>
+                        toggleStatus(ranger?.user, ranger?.user?.status)
+                      }
+                    >
                       <label className="inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
@@ -171,10 +199,11 @@ const VendorRanger = () => {
             })}
           </tbody>
         </table>
+
         <div className="mt-10 flex justify-center">
-          <div className="border bg-[#D9D9D9] rounded-full flex justify-center">
+          <div className="border bg-[#D9D9D9] rounded-full flex items-center">
             <button
-              className={`focus:outline-none text-black p-2 text-2xl`}
+              className="focus:outline-none text-black p-2 text-2xl"
               onClick={prevPage}
               disabled={currentPage === 1}
             >
@@ -184,7 +213,7 @@ const VendorRanger = () => {
               {currentPage} / {totalPages}
             </p>
             <button
-              className={`focus:outline-none text-black p-2 text-2xl`}
+              className="focus:outline-none text-black p-2 text-2xl"
               onClick={nextPage}
               disabled={currentPage === totalPages}
             >

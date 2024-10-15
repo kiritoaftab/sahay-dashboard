@@ -54,15 +54,17 @@ const BookingDetails = () => {
           onClick={() => navigate(`/vendor/bookings`)}
         />
 
-        <h1 className="text-2xl font-medium px-10">Booking Details</h1>
-        <div className="flex flex-wrap justify-between m-8">
-          <div className="max-w-sm w-full lg:max-w-full lg:flex m-4">
-            <div className="lg:border-l-0 lg:border-t lg:border-gray-400 bg-white lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <h1 className="text-2xl font-medium px-5 md:px-10">Booking Details</h1>
+
+        <div className="flex flex-wrap justify-between m-4 md:m-8 gap-4">
+          {/* Booking Details Card */}
+          <div className="w-full md:max-w-sm lg:max-w-full flex m-4">
+            <div className="border border-gray-400 bg-white rounded-lg p-4 flex flex-col justify-between leading-normal w-full">
               <div className="mb-8 flex items-center">
                 <img
                   className="w-10 h-10 rounded-full mr-4"
                   src={bookingDoc?.ranger?.user?.profilePic}
-                  alt="Avatar of Jonathan Reinink"
+                  alt="Avatar"
                 />
                 <div>
                   <div className="text-lg font-medium">
@@ -74,6 +76,7 @@ const BookingDetails = () => {
                 </div>
               </div>
 
+              {/* Booking Info */}
               <div className="flex flex-wrap items-center gap-8 p-4">
                 <div className="flex flex-col px-5">
                   <h5 className="text-sm font-semibold text-gray-700">
@@ -84,7 +87,7 @@ const BookingDetails = () => {
                   </p>
                 </div>
 
-                <div className="flex flex-col px-20">
+                <div className="flex flex-col px-10 md:px-20">
                   <h5 className="text-sm font-semibold text-gray-700">
                     Booking Date
                   </h5>
@@ -100,7 +103,7 @@ const BookingDetails = () => {
                   </p>
                 </div>
 
-                <div className="flex flex-col px-20">
+                <div className="flex flex-col px-10 md:px-20">
                   <h5 className="text-sm font-semibold text-gray-700">
                     Booking Time
                   </h5>
@@ -118,10 +121,11 @@ const BookingDetails = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-8 p-4 ">
+
+              <div className="flex flex-wrap items-center gap-8 p-4">
                 <div className="flex flex-col px-5">
                   <p className="text-base text-gray-900">
-                    Start time :
+                    Start time:
                     <span className="text-sm">
                       {new Date(bookingDoc?.startTime).toLocaleString("en-US", {
                         year: "numeric",
@@ -136,7 +140,7 @@ const BookingDetails = () => {
                     </span>
                   </p>
                   <p className="text-base text-gray-900">
-                    End time :
+                    End time:
                     <span className="text-sm">
                       {new Date(bookingDoc?.endTime).toLocaleString("en-US", {
                         year: "numeric",
@@ -154,22 +158,22 @@ const BookingDetails = () => {
 
                 <div className="flex flex-col">
                   <p className="text-base text-gray-900">
-                    Start OTP:
+                    Start OTP:{" "}
                     <span className="text-sm">{bookingDoc?.startOtp}</span>
                   </p>
                   <p className="text-base text-gray-900">
-                    End OTP:
+                    End OTP:{" "}
                     <span className="text-sm">{bookingDoc?.endOtp}</span>
                   </p>
                 </div>
 
-                <div className="flex flex-col px-32">
+                <div className="flex flex-col px-10 md:px-32">
                   <p className="text-base text-gray-900">Duration</p>
                   <p className="text-base text-gray-900">
                     {getTimeDifference(
                       bookingDoc?.startTime,
                       bookingDoc?.endTime
-                    )}
+                    )}{" "}
                     Hrs
                   </p>
                 </div>
@@ -177,34 +181,36 @@ const BookingDetails = () => {
             </div>
           </div>
 
-          <div className="max-w-sm w-full lg:max-w-full lg:flex m-4">
-            <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 ">
+          {/* Customer Details */}
+          <div className="w-full md:max-w-sm lg:max-w-full flex m-4">
+            <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 w-full">
               <img
                 className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
                 src={bookingDoc?.customer?.profilePic}
                 alt=""
               />
               <div className="flex flex-col justify-between p-4 leading-normal">
-                <p className="mb-3 font-normal text-gray-700 ">
+                <p className="mb-3 font-normal text-gray-700">
                   {bookingDoc?.customer?.user?.userName}
-                  <span className="text-sm text-gray-50">
+                  <span className="text-sm text-gray-500 block">
                     {bookingDoc?.customer?.user?.role}
                   </span>
                 </p>
-                <p className="mb-3 font-normal text-gray-700 ">
-                  Location : {bookingDoc?.address?.address}
+                <p className="mb-3 font-normal text-gray-700">
+                  Location: {bookingDoc?.address?.address}
                 </p>
-                <p className="mb-3 font-normal text-gray-700 ">
-                  Number : + 91 {bookingDoc?.customer?.user?.phone}
+                <p className="mb-3 font-normal text-gray-700">
+                  Number: +91 {bookingDoc?.customer?.user?.phone}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <h2 className="text-2xl font-medium px-10">Payment Details</h2>
-        <div className="max-w-sm w-full lg:max-w-full lg:flex m-8">
-          <div className="lg:border-l-0 lg:border-t lg:border-gray-400 bg-white lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        {/* Payment Details */}
+        <h2 className="text-2xl font-medium px-5 md:px-10">Payment Details</h2>
+        <div className=" md:max-w-sm lg:max-w-full flex m-4 md:m-8">
+          <div className="border border-gray-400 bg-white rounded-lg p-4 flex flex-col justify-between leading-normal w-full">
             <div className="flex flex-wrap items-center gap-8 p-4">
               <div className="flex flex-col px-5">
                 <h3 className="text-xl font-semibold text-gray-700">
@@ -234,3 +240,8 @@ const BookingDetails = () => {
 };
 
 export default BookingDetails;
+
+
+
+
+
