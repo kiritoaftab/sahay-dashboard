@@ -91,6 +91,7 @@ const VendorBooking = () => {
       }
       if (status == "COMPLETED") {
         setCompletedBookings(res.data.bookingDocs);
+        console.log("completed bookings", res.data.bookingDocs);
       }
     } catch (error) {
       console.log(error);

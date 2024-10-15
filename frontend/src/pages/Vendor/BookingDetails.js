@@ -15,7 +15,7 @@ const BookingDetails = () => {
       const response = await axios.get(
         `${BASE_URL}booking/specificId?type=BOOKING&id=${id}`
       );
-      console.log(response?.data);
+      console.log("booking details", response?.data);
       setbookingDoc(response?.data?.bookingDocs);
 
       if (bookingDoc === null) {
@@ -115,6 +115,7 @@ const BookingDetails = () => {
                         minute: "numeric",
                         second: "numeric",
                         hour12: true,
+                        timeZone: "UTC"
                       }
                     )}
                   </p>
@@ -126,27 +127,31 @@ const BookingDetails = () => {
                   <p className="text-base text-gray-900">
                     Start time:
                     <span className="text-sm">
-                      {new Date(bookingDoc?.startTime).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        }
-                      )}
+                      {new Date(bookingDoc?.startTime).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric", // Adds seconds if needed
+                        hour12: true, // For AM/PM format
+                        timeZone: "UTC", // Keeps it in UTC
+                      })}
                     </span>
                   </p>
                   <p className="text-base text-gray-900">
                     End time:
                     <span className="text-sm">
-                      {new Date(bookingDoc?.endTime).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        }
-                      )}
+                      {new Date(bookingDoc?.endTime).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric", // Adds seconds if needed
+                        hour12: true, // For AM/PM format
+                        timeZone: "UTC", // Keeps it in UTC
+                      })}
                     </span>
                   </p>
                 </div>
@@ -181,7 +186,7 @@ const BookingDetails = () => {
             <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 w-full">
               <img
                 className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                src={bookingDoc?.ranger?.user?.profilePic}
+                src={bookingDoc?.customer?.profilePic}
                 alt=""
               />
               <div className="flex flex-col justify-between p-4 leading-normal">

@@ -13,12 +13,11 @@ import {
 import cn from "classnames";
 
 const AdminBookings = () => {
-
-  const [bookings,setBookings] = useState([]);
-  const [startDate,setStartDate] = useState(new Date());
-  const [endDate,setEndDate] = useState(new Date());
-  const [dropdown,setDropdown] = useState(false);
-  const [noOfDays,setNoOfDays] = useState(7);
+  const [bookings, setBookings] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [dropdown, setDropdown] = useState(false);
+  const [noOfDays, setNoOfDays] = useState(7);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -35,27 +34,30 @@ const AdminBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      console.log(startDate,endDate);
-      const res = await axios.get(`${BASE_URL}booking/getAllBookingBetweenDatesPagination`, {
-        params: {
-          startDate: startDate, 
-          endDate: endDate,
-          page:currentPage,
+      console.log(startDate, endDate);
+      const res = await axios.get(
+        `${BASE_URL}booking/getAllBookingBetweenDatesPagination`,
+        {
+          params: {
+            startDate: startDate,
+            endDate: endDate,
+            page: currentPage,
+          },
         }
-      });
-      console.log(res.data);
+      );
+      console.log("API Response all bookings:", res.data);
       setBookings(res.data.bookings);
       setTotalPages(res.data.pagination.totalPages);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     if (startDate && endDate) {
       fetchBookings();
     }
-  }, [startDate, endDate,currentPage]);
+  }, [startDate, endDate, currentPage]);
 
   const nextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -77,7 +79,7 @@ const AdminBookings = () => {
               data-dropdown-toggle="dropdownRadio"
               className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 "
               type="button"
-              onClick={()=> setDropdown(!dropdown)}
+              onClick={() => setDropdown(!dropdown)}
             >
               <svg
                 className="w-3 h-3 text-gray-500  me-3"
@@ -107,50 +109,62 @@ const AdminBookings = () => {
             </button>
             {dropdown ? (
               <div
-              id="dropdown"
-              className="z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
-            >
-              <ul
-                className="py-2 text-sm text-gray-700 "
-                aria-labelledby="dropdownDefaultButton"
+                id="dropdown"
+                className="z-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
               >
-                <li>
-                  <button
-                    onClick={() => {setNoOfDays(0);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Today
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>{setNoOfDays(7);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 "
-                  >
-                    Last 7 Days
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>{setNoOfDays(14);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 "
-                  >
-                    Last 14 Days
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() =>{setNoOfDays(30);setDropdown(false)}}
-                    className="block px-4 py-2 hover:bg-gray-100 "
-                  >
-                    Last 30 Days
-                  </button>
-                </li>
-              </ul>
-            </div>
-            ):``
-            }
-            
+                <ul
+                  className="py-2 text-sm text-gray-700 "
+                  aria-labelledby="dropdownDefaultButton"
+                >
+                  <li>
+                    <button
+                      onClick={() => {
+                        setNoOfDays(0);
+                        setDropdown(false);
+                      }}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      Today
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setNoOfDays(7);
+                        setDropdown(false);
+                      }}
+                      className="block px-4 py-2 hover:bg-gray-100 "
+                    >
+                      Last 7 Days
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setNoOfDays(14);
+                        setDropdown(false);
+                      }}
+                      className="block px-4 py-2 hover:bg-gray-100 "
+                    >
+                      Last 14 Days
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setNoOfDays(30);
+                        setDropdown(false);
+                      }}
+                      className="block px-4 py-2 hover:bg-gray-100 "
+                    >
+                      Last 30 Days
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              ``
+            )}
           </div>
           <label for="table-search" className="sr-only">
             Search
@@ -194,7 +208,7 @@ const AdminBookings = () => {
               <th scope="col" className="px-6 py-3">
                 Ranger
               </th>
-              
+
               <th scope="col" className="px-6 py-3">
                 Start End OTP
               </th>
@@ -210,56 +224,81 @@ const AdminBookings = () => {
             </tr>
           </thead>
           <tbody>
-            
-            {bookings?.map((booking,index) => {
-             return(
-              <tr key={index} className="bg-white border-b  hover:bg-gray-50 ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                {booking?.customer?.firstName}
-              </th>
-              <td className="px-6 py-4"><span className="px-2 py-1 rounded-full font-semibold bg-[#FFB0153D] text-[#1E1E1E]">{booking?.service?.name}</span></td>
-              <td className="px-6 py-4 text-black">{formatDate(booking?.bookingDateTime)}</td>
-              <td className="px-6 py-4 text-black">{booking?.ranger?.firstName ? booking?.ranger?.firstName : `Yet to be Assigned` }</td>
-              
-              <td className="px-6 py-4 text-black">{booking?.startOtp} - {booking?.endOtp}</td>
-              <td className="px-6 py-4 text-green-500 font-semibold">{booking?.duration ? booking?.duration : `0 mins`}</td>
-              <td className="text-black text-lg">{booking?.totalPrice ? booking?.totalPrice : 0}</td>
-              <td className="text-black">{booking?.status}</td>
-            </tr>
-             )
-            })
+            {bookings?.map((booking, index) => {
+              return (
+                <tr
+                  key={index}
+                  className="bg-white border-b  hover:bg-gray-50 "
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                  >
+                    {booking?.customer?.firstName}
+                  </th>
+                  <td className="px-6 py-4">
+                    <span className="px-2 py-1 rounded-full font-semibold bg-[#FFB0153D] text-[#1E1E1E]">
+                      {booking?.service?.name}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-black">
+                    {new Date(booking?.bookingDateTime).toLocaleString(
+                      "en-IN",
+                      {
+                        timeZone: "Asia/Kolkata", // Adjusting for IST
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: true, // 12-hour format with AM/PM
+                      }
+                    )}
+                  </td>
 
-            }
-           
+                  <td className="px-6 py-4 text-black">
+                    {booking?.ranger?.firstName
+                      ? booking?.ranger?.firstName
+                      : `Yet to be Assigned`}
+                  </td>
+
+                  <td className="px-6 py-4 text-black">
+                    {booking?.startOtp} - {booking?.endOtp}
+                  </td>
+                  <td className="px-6 py-4 text-green-500 font-semibold">
+                    {booking?.duration ? booking?.duration : `0 mins`}
+                  </td>
+                  <td className="text-black text-lg">
+                    {booking?.totalPrice ? booking?.totalPrice : 0}
+                  </td>
+                  <td className="text-black">{booking?.status}</td>
+                </tr>
+              );
+            })}
           </tbody>
-          
-          
-          
         </table>
         <div className="mt-5 flex justify-center ">
-        <div className="border bg-[#D9D9D9] rounded-full flex justify-center">
-          <button
-            className="focus:outline-none text-black p-2 text-2xl"
-            onClick={prevPage}
-            disabled={currentPage === 1}
-          >
-            <MdKeyboardArrowLeft />
-          </button>
-          <p className="p-2">
-            {currentPage} / {totalPages}
-          </p>
-          <button
-            className="focus:outline-none text-black p-2 text-2xl"
-            onClick={nextPage}
-            disabled={currentPage === totalPages}
-          >
-            <MdKeyboardArrowRight />
-          </button>
+          <div className="border bg-[#D9D9D9] rounded-full flex justify-center">
+            <button
+              className="focus:outline-none text-black p-2 text-2xl"
+              onClick={prevPage}
+              disabled={currentPage === 1}
+            >
+              <MdKeyboardArrowLeft />
+            </button>
+            <p className="p-2">
+              {currentPage} / {totalPages}
+            </p>
+            <button
+              className="focus:outline-none text-black p-2 text-2xl"
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+            >
+              <MdKeyboardArrowRight />
+            </button>
+          </div>
         </div>
-      </div>
       </div>
     </section>
   );

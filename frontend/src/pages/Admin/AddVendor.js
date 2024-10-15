@@ -269,32 +269,32 @@ const AddVendor = () => {
               </div>
             </div>
             </div>
-            <div className="mb-6 px-5 py-2">
+            <div className="grid gap-6 md:gap-14 mb-6 md:grid-cols-2 px-5">
+            <div>
               <label
                 htmlFor="address"
-                className="block mb-2 text-sm font-medium text-gray-900 ">
+                className="block mb-2 text-sm font-medium text-gray-900">
                 Address
               </label>
               <textarea
                 type="text"
                 id="address"
-                className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                className="bg-gray-50 border-gray-500 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="Your address"
                 required
                 onChange={(e) => setShopAddress(e.target.value)}
               />
             </div>
-            
-              <div className="px-5 w-1/3">
+            <div className="w-full">
                 <label
                   htmlFor="pincode"
-                  className="block mb-2 text-sm font-medium text-gray-900 ">
+                  className="block mb-2 text-sm font-medium text-gray-900">
                   Postal Pincode
                 </label>
                 <input
                   type="number"
                   id="pincode"
-                  className="bg-gray-50 border-gray-500  border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                  className="bg-gray-50 border-gray-500 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="110001"
                   required
                   onChange={(e) => setPinCode(e.target.value)}
@@ -302,30 +302,64 @@ const AddVendor = () => {
                   maxLength={6}
                 />
               </div>
-            
+            </div>
 
             <div className="flex flex-col items-center mb-6">
-              <div className="mx-auto max-w-xs">
+            <div className="mx-auto max-w-xs">
+              <label
+                htmlFor="example1"
+                className="mb-1 block text-sm font-medium text-gray-700"
+              >
+                Choose profile photo
+              </label>
+              <div className="flex w-full items-center justify-center">
                 <label
-                  htmlFor="example1"
-                  className="mb-1 block text-sm font-medium text-gray-700">
-                  Profile Picture
+                  htmlFor="dropzone-file"
+                  className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    {uploadedUrl ? (
+                      <img
+                        className="h-48 w-full"
+                        src={uploadedUrl}
+                        alt="uploaded image"
+                      />
+                    ) : (
+                      <>
+                        <svg
+                          aria-hidden="true"
+                          className="mb-3 h-10 w-10 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M7 16l-4-4m0 0l4-4m-4 4h18m-10 4v6m0 0l4-4m-4 4l-4-4"
+                          ></path>
+                        </svg>
+                        <p className="mb-2 text-sm text-gray-500">
+                          <span className="font-semibold">Click to upload</span>
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          PNG, JPG (MAX. 800x400px)
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileUpload}
+                  />
                 </label>
-                <input
-                  id="example1"
-                  accept="image/*"
-                  type="file"
-                  className="block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:py-2.5 file:px-4 file:text-sm file:font-semibold file:text-black hover:file:bg-primary-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"
-                  required
-                  onChange={handleFileUpload}
-                />
               </div>
-              {uploadedUrl && (
-                <div className="mt-2 flex justify-center">
-                  <img src={uploadedUrl} className="h-32 w-32" alt="Uploaded" />
-                </div>
-              )}
             </div>
+          </div>
 
             <div className=" bottom-0 left-0 w-full flex justify-center p-4">
               <button

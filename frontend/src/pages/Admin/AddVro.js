@@ -30,7 +30,7 @@ const AddVRO = () => {
 
   const addVRO = async (e) => {
     e.preventDefault();
-  
+
     const requestBody = {
       userName: userName,
       email: email,
@@ -38,9 +38,12 @@ const AddVRO = () => {
       password: password,
       profilePic: uploadedUrl,
     };
-  
+
     try {
-      const response = await axios.post(`${BASE_URL}user/createVRO`, requestBody);
+      const response = await axios.post(
+        `${BASE_URL}user/createVRO`,
+        requestBody
+      );
       console.log("Response:", response); // Log the full response
       if (response.status === 201 || response.status === 200) {
         alert("VRO Added successfully");
@@ -53,85 +56,102 @@ const AddVRO = () => {
       alert("Could not add VRO");
     }
   };
-  
 
   return (
-    <section className="w-screen h-full md:w-full bg-background gap-4 flex flex-col p-5">
-      <h1 className="text-2xl font-medium">Add VRO</h1>
-      <form onSubmit={addVRO} className="bg-white rounded-2xl border-slate-300 border">
+    <section className="w-screen md:w-full h-full bg-background flex flex-col p-5">
+      <h1 className="text-2xl font-medium mb-5">Add VRO</h1>
+      <form
+        onSubmit={addVRO}
+        className="bg-white rounded-2xl border border-slate-300 p-6 md:p-8"
+      >
         <div className="grid gap-6 mb-6 md:grid-cols-2">
-          <div className="px-5 pt-5">
+          {/* Username Input */}
+          <div className="flex flex-col">
             <label
               htmlFor="userName"
-              className="block mb-2 text-sm font-medium text-gray-900">
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Username
             </label>
             <input
               type="text"
               id="userName"
-              className="bg-gray-50 border-gray-500 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Username"
               required
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div className="px-5 pt-5">
+
+          {/* Email Input */}
+          <div className="flex flex-col">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900">
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Email
             </label>
             <input
               type="email"
               id="email"
-              className="bg-gray-50 border-gray-500 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Email"
               required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="px-5">
+
+          {/* Phone Input */}
+          <div className="flex flex-col">
             <label
               htmlFor="phone"
-              className="block mb-2 text-sm font-medium text-gray-900">
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Phone
             </label>
             <input
               type="tel"
               id="phone"
-              className="bg-gray-50 border-gray-500 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Phone"
               maxLength={10}
               required
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-          <div className="px-5">
+
+          {/* Password Input */}
+          <div className="flex flex-col">
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900">
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Password
             </label>
-            <div className="relative flex items-center">
+            <div className="relative">
               <input
-                type={showPassword ? "password" : "text"}
+                type={showPassword ? "text" : "password"}
                 id="password"
-                className="bg-gray-50 border-gray-500 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10"
                 placeholder="*********"
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div
                 onClick={togglePasswordVisibility}
-                className="absolute right-3 text-gray-600 cursor-pointer">
+                className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-600"
+              >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </div>
             </div>
           </div>
-          <div className="px-5">
+
+          {/* Profile Picture Input */}
+          <div className="flex flex-col">
             <label
               htmlFor="profilePic"
-              className="block mb-2 text-sm font-medium text-gray-900">
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Profile Picture
             </label>
             <input
@@ -143,16 +163,25 @@ const AddVRO = () => {
               onChange={handleFileUpload}
             />
           </div>
+
+          {/* Uploaded Image Preview */}
           {uploadedUrl && (
-            <div className="px-5 mt-2 flex justify-center">
-              <img src={uploadedUrl} className="h-32 w-32" alt="Uploaded" />
+            <div className="mt-2 flex justify-center">
+              <img
+                src={uploadedUrl}
+                className="h-32 w-32 rounded-md"
+                alt="Uploaded"
+              />
             </div>
           )}
         </div>
-        <div className="bottom-0 left-0 w-full flex justify-center p-4">
+
+        {/* Submit Button */}
+        <div className="flex justify-center">
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+          >
             Add VRO
           </button>
         </div>

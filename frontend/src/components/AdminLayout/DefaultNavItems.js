@@ -96,7 +96,7 @@ const Sidebar = () => {
           key={index}
           to={item.href}
           className={({ isActive }) =>
-            `flex items-center p-2 my-1 rounded-lg ${
+            `flex items-start  my-1 rounded-lg ${
               isActive
                 ? "bg-blue-500 text-white"
                 : "text-gray-700 hover:bg-blue-200"
@@ -104,7 +104,7 @@ const Sidebar = () => {
           }
         >
           {item.icon}
-          <span className="ml-3">{item.label}</span>
+          <span className="">{item.label}</span>
         </NavLink>
       ))}
     </nav>
