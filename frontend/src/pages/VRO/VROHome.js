@@ -75,6 +75,7 @@ const VROHome = () => {
             <p className="font-medium text-[#6556F5] text-4xl my-2">
               {totals?.rangers}
             </p>
+            
           </div>
           <div
             style={{ border: "2px solid #6556F529" }}

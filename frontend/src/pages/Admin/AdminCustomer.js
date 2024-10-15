@@ -60,10 +60,13 @@ const AdminCustomer = () => {
                   Email
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Address
+                  Gender
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Gender
+                  Type
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Address
                 </th>
               </tr>
             </thead>
@@ -92,27 +95,23 @@ const AdminCustomer = () => {
                     </th>
                     <td className="px-6 py-4">{customer?.user?.phone}</td>
                     <td className="px-6 py-4">{customer?.user?.email}</td>
+                    <td className="px-6 py-4">{customer?.gender}</td>
+                    <td className="px-6 py-4">
+                      {
+                        customer?.addresses[customer?.addresses.length - 1]
+                          ?.addressType
+                      }
+                    </td>
                     <td className="px-6 py-4">
                       {Array.isArray(customer?.addresses) &&
                       customer?.addresses?.length > 0 ? (
                         <div key={index}>
                           <div className="font-bold">
-                            Location:
                             <p className="font-light">
                               {
                                 customer?.addresses[
                                   customer?.addresses.length - 1
                                 ]?.address
-                              }
-                            </p>
-                          </div>
-                          <div className="font-bold">
-                            Type:
-                            <p className="font-light">
-                              {
-                                customer?.addresses[
-                                  customer?.addresses.length - 1
-                                ]?.addressType
                               }
                             </p>
                           </div>
@@ -128,14 +127,13 @@ const AdminCustomer = () => {
                               ]?.longitude
                             }`}
                           >
-                            <FaLocationDot />{" "}
+                            {/* <FaLocationDot />{" "} */}
                           </a>
                         </div>
                       ) : (
                         "No address available"
                       )}
                     </td>
-                    <td className="px-6 py-4">{customer?.gender}</td>
                   </tr>
                 ))
               ) : (
