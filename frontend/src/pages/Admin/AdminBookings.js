@@ -272,7 +272,7 @@ const AdminBookings = () => {
                   <td className="text-black text-lg">
                     {booking?.totalPrice ? booking?.totalPrice : 0}
                   </td>
-                  <td className="text-black">{booking?.status}</td>
+                  <td className="text-black">{booking?.status.replace(/_/g, ' ')}</td>
                 </tr>
               );
             })}

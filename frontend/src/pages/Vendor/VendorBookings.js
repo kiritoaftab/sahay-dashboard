@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../constants";
 import { useNavigate } from "react-router-dom";
 
-
 const VendorBooking = () => {
   const [status, setStatus] = useState("INITIATED");
   const [activeTab, setActiveTab] = useState("INITIATED");
@@ -30,7 +29,6 @@ const VendorBooking = () => {
   //   getBookingsByStatus(status);
   //   console.log(bookingDoc);
   // }, [status]);
-
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
@@ -115,23 +113,17 @@ const VendorBooking = () => {
     fetchVendorByUser();
   }, []);
 
-
-
   const StyledTab = ({ isActive, children, onClick }) => (
     <button
       onClick={onClick}
       className={`${
-        isActive
-          ? "bg-white text-[#5032A0]"
-          : "bg-transparent text-[#A6A6A6]"
+        isActive ? "bg-white text-[#5032A0]" : "bg-transparent text-[#A6A6A6]"
       } hover:bg-white hover:text-[#5032A0]
       rounded-t-lg text-center normal-case m-0 p-2 font-poppins transition-colors duration-300`}
     >
       {children}
     </button>
   );
-  
-
 
   return (
     <>
@@ -140,7 +132,7 @@ const VendorBooking = () => {
 
         <div className="flex flex-wrap space-x-2 p-0 mt-5">
           <StyledTab
-            isActive={activeTab === "INITIATED"} 
+            isActive={activeTab === "INITIATED"}
             onClick={() => handleStatusChange("INITIATED")}
           >
             Initiated ({initiatedBookings.length})
@@ -156,15 +148,13 @@ const VendorBooking = () => {
           <StyledTab
             isActive={
               activeTab === "BOOKING_STARTED" || activeTab === "ONGOING"
-            } 
+            }
             onClick={() => handleStatusChange("BOOKING_STARTED")}
           >
             On-going ({bookingDoc.length})
           </StyledTab>
         </div>
 
-   
-   
         <div className="w-full bg-white p-4 overflow-x-auto">
           <div className="relative border border-gray-300 overflow-x-auto shadow-md sm:rounded-lg">
             {status === "INITIATED" && (
@@ -394,7 +384,10 @@ const VendorBooking = () => {
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 mt-3">
                   <thead className="text-xs text-gray-700 uppercase bg-slate-100 ">
                     <tr>
-                      <th scope="col" className="px-3 py-0 md:px-6 md:py-3 sm:px-3 sm:py-3">
+                      <th
+                        scope="col"
+                        className="px-3 py-0 md:px-6 md:py-3 sm:px-3 sm:py-3"
+                      >
                         Customer Name
                       </th>
                       <th scope="col" className="px-6 py-3 md:px-6 md:py-3">
@@ -453,13 +446,9 @@ const VendorBooking = () => {
             )}
           </div>
         </div>
-
-
-
       </section>
     </>
-      );
-    };
-
+  );
+};
 
 export default VendorBooking;

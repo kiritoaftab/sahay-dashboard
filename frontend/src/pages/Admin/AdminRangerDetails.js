@@ -16,7 +16,7 @@ const AdminRangerDetails = () => {
   const [aadharImgUrl, setAadharImgUrl] = useState("");
   const [panImgUrl, setPanImgUrl] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
-  
+
   const [service, setService] = useState([]);
   const [vendors, setVendors] = useState([]);
 

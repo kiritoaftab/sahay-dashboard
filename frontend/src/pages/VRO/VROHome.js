@@ -49,48 +49,52 @@ const VROHome = () => {
   }, []);
 
   return (
-    <section className="p-6  md:p-5 w-full h-full bg-[#EDEDFF] gap-6">
+    <section className="p-4 sm:p-6 md:p-8 w-full h-full bg-[#EDEDFF] gap-4 sm:gap-6 md:gap-8">
       {/* Welcome Card */}
-      <div className="bg-white p-4 md:p-5 rounded-2xl w-full">
-        <p className="font-medium tracking-wide text-2xl md:text-3xl my-2">
+      <div className="bg-white p-4 sm:p-5 md:p-6 rounded-2xl w-full">
+        <p className="font-medium tracking-wide text-xl sm:text-2xl md:text-3xl my-2">
           Have a great day {userDoc?.userName}!
         </p>
-        <p className="font-light text-[#7E7E7E] my-2 text-lg md:text-xl">
+        <p className="font-light text-[#7E7E7E] my-2 text-base sm:text-lg md:text-xl">
           Your clever approach and capabilities have led to these fantastic
           results.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 my-4 md:my-5">
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 my-4 sm:my-6 md:my-8">
+          {/* Total Vendors */}
           <div
             style={{ border: "2px solid #6556F529" }}
-            className="rounded-2xl shadow-lg p-4 md:p-5"
+            className="rounded-2xl shadow-lg p-4 sm:p-5 md:p-6"
           >
-            <p className="font-medium text-[#5A5A5A] text-base md:text-lg">
+            <p className="font-medium text-[#5A5A5A] text-base sm:text-lg md:text-xl">
               Total Vendors
             </p>
-            <p className="font-medium text-[#6556F5] text-3xl md:text-4xl my-2">
+            <p className="font-medium text-[#6556F5] text-2xl sm:text-3xl md:text-4xl my-2">
               {totals?.vendors}
             </p>
           </div>
+          {/* Total Rangers */}
           <div
             style={{ border: "2px solid #6556F529" }}
-            className="rounded-2xl shadow-lg p-4 md:p-5"
+            className="rounded-2xl shadow-lg p-4 sm:p-5 md:p-6"
           >
-            <p className="font-medium text-[#5A5A5A] text-base md:text-lg">
+            <p className="font-medium text-[#5A5A5A] text-base sm:text-lg md:text-xl">
               Total Rangers
             </p>
-            <p className="font-medium text-[#6556F5] text-3xl md:text-4xl my-2">
+            <p className="font-medium text-[#6556F5] text-2xl sm:text-3xl md:text-4xl my-2">
               {totals?.rangers}
             </p>
-            
           </div>
+          {/* Total Bookings */}
           <div
             style={{ border: "2px solid #6556F529" }}
-            className="rounded-2xl shadow-lg p-4 md:p-5"
+            className="rounded-2xl shadow-lg p-4 sm:p-5 md:p-6"
           >
-            <p className="font-medium text-[#5A5A5A] text-base md:text-lg">
+            <p className="font-medium text-[#5A5A5A] text-base sm:text-lg md:text-xl">
               Total Bookings
             </p>
-            <p className="font-medium text-[#6556F5] text-3xl md:text-4xl my-2">
+            <p className="font-medium text-[#6556F5] text-2xl sm:text-3xl md:text-4xl my-2">
               {totals?.bookings}
             </p>
           </div>
@@ -98,11 +102,13 @@ const VROHome = () => {
       </div>
 
       {/* Table Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 my-4 md:my-5 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 my-4 sm:my-6 md:my-8 w-full">
         {/* Top Vendors */}
-        <div className="bg-white rounded-2xl p-4 md:p-5 w-full overflow-x-auto">
-          <p className="font-semibold text-lg mb-4 md:mb-5">Top Vendors</p>
-          <table className="min-w-full bg-white text-sm md:text-base">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 w-full overflow-x-auto">
+          <p className="font-semibold text-base sm:text-lg md:text-xl mb-3 sm:mb-4 md:mb-5">
+            Top Vendors
+          </p>
+          <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
             <thead>
               <tr>
                 <th className="text-left py-2">Name</th>
@@ -130,11 +136,11 @@ const VROHome = () => {
         </div>
 
         {/* Most Booked Rangers */}
-        <div className="bg-white rounded-2xl p-4 md:p-5 w-full overflow-x-auto">
-          <p className="font-semibold text-lg mb-4 md:mb-5">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 w-full overflow-x-auto">
+          <p className="font-semibold text-base sm:text-lg md:text-xl mb-3 sm:mb-4 md:mb-5">
             Most Booked Rangers
           </p>
-          <table className="min-w-full bg-white text-sm md:text-base">
+          <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
             <thead>
               <tr>
                 <th className="text-left py-2">Name</th>
