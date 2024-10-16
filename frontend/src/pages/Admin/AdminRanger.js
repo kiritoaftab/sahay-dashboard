@@ -141,13 +141,7 @@ const AdminRanger = () => {
                   <td className="px-2 md:px-4 py-4 whitespace-nowrap text-gray-500 text-center">
                     {ranger?.user?.phone}
                   </td>
-                  {/* <td className="px-2 md:px-4 py-4 whitespace-nowrap text-black text-center bg-[#FFB0153D] rounded-xl font-semibold">
-                    {Array.isArray(ranger?.servicesDetails)
-                      ? ranger.servicesDetails
-                          .map((service) => service.name)
-                          .join(", ")
-                      : ""}
-                  </td> */}
+               
 
                   <td className="px-6 py-3 text-black text-lg justify-center items-center text-center">
                     <button className="bg-[rgba(255,176,21,0.24)] text-black text-xs font-medium p-1.5 rounded-md">

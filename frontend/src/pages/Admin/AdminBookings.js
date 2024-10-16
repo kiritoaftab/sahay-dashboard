@@ -193,7 +193,7 @@ const AdminBookings = () => {
             />
           </div>
         </div>
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <table className="w-full text-sm text-center rtl:text-right text-gray-500 ">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -208,7 +208,6 @@ const AdminBookings = () => {
               <th scope="col" className="px-6 py-3">
                 Ranger
               </th>
-
               <th scope="col" className="px-6 py-3">
                 Start End OTP
               </th>
@@ -226,10 +225,7 @@ const AdminBookings = () => {
           <tbody>
             {bookings?.map((booking, index) => {
               return (
-                <tr
-                  key={index}
-                  className="bg-white border-b  hover:bg-gray-50 "
-                >
+                <tr key={index} className="bg-white border-b hover:bg-gray-50 ">
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -256,28 +252,29 @@ const AdminBookings = () => {
                       }
                     )}
                   </td>
-
                   <td className="px-6 py-4 text-black">
                     {booking?.ranger?.firstName
                       ? booking?.ranger?.firstName
                       : `Yet to be Assigned`}
                   </td>
-
                   <td className="px-6 py-4 text-black">
                     {booking?.startOtp} - {booking?.endOtp}
                   </td>
                   <td className="px-6 py-4 text-green-500 font-semibold">
                     {booking?.duration ? booking?.duration : `0 mins`}
                   </td>
-                  <td className="text-black text-lg">
+                  <td className="px-6 py-4 text-black text-lg">
                     {booking?.totalPrice ? booking?.totalPrice : 0}
                   </td>
-                  <td className="text-black">{booking?.status.replace(/_/g, ' ')}</td>
+                  <td className="px-6 py-4 text-black">
+                    {booking?.status.replace(/_/g, " ")}
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+
         <div className="mt-5 flex justify-center ">
           <div className="border bg-[#D9D9D9] rounded-full flex justify-center">
             <button
