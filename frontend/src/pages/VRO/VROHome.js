@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BASE_URL, formatDuration } from "../../constants";
+import { BASE_URL, formatDuration, formatDurationToHours } from "../../constants";
 import axios from "../../axiosInstance/axiosApi";
 
 const VROHome = () => {
@@ -124,7 +124,7 @@ const VROHome = () => {
                     {data?.firstName} {data?.lastName}
                   </td>
                   <td className="py-2">{data?.user?.phone}</td>
-                  <td className="py-2 font-semibold">{data?.noOfBooking}</td>
+                  <td className="py-2 font-semibold text-center">{data?.noOfBooking}</td>
                   <td className="py-2 font-semibold">
                     <span className="font-Inter">₹ </span>
                     {data?.amountEarned}
@@ -156,9 +156,9 @@ const VROHome = () => {
                     {data?.firstName} {data?.lastName}
                   </td>
                   <td className="py-2">{data?.user?.phone}</td>
-                  <td className="py-2 font-semibold">{data?.noOfBooking}</td>
+                  <td className="py-2 font-semibold text-center">{data?.noOfBooking}</td>
                   <td className="py-2 font-semibold">
-                    {formatDuration(data?.workedDuration)}
+                    {formatDurationToHours(data?.workedDuration)}
                   </td>
                 </tr>
               ))}

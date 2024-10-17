@@ -14,6 +14,7 @@ import {
   formatIndianRupee,
   BASE_URL,
   formatDuration,
+  formatDurationToHours,
 } from "../../constants";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../axiosInstance/axiosApi";
@@ -97,7 +98,7 @@ const VendorHome = () => {
               <td className="px-4 py-2">{data?.firstName} {data?.lastName}</td>
               <td className="px-4 py-2">{data?.user?.phone}</td>
               <td className="px-4 py-2 font-semibold">{data?.noOfBooking}</td>
-              <td className="px-4 py-2 font-semibold">{formatDuration(data?.workedDuration)}</td>
+              <td className="px-4 py-2 font-semibold">{formatDurationToHours(data?.workedDuration)}</td>
             </tr>
           ))}
         </tbody>

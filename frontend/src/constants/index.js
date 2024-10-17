@@ -111,6 +111,25 @@ function formatDuration(minutes) {
   return duration.trim();
 }
 
+function formatDurationToHours(minutes) {
+  if (minutes === 0) {
+    return '0 min';
+  }
+  
+  const hours = Math.floor(minutes / 60);
+  minutes %= 60;
+  
+  let duration = '';
+  if (hours > 0) {
+    duration += `${hours}hrs `;
+  }
+  if (minutes > 0) {
+    duration += `${minutes}min`;
+  }
+  
+  return duration.trim();
+}
+
 export {
   BASE_URL,
   logo,
@@ -129,5 +148,6 @@ export {
   admin,
   accessorriesImg,
   formatDuration,
+  formatDurationToHours,
   formatDateV2
 };
