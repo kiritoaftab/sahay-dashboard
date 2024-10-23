@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../axiosInstance/axiosApi";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import { Star } from 'lucide-react';
 import {
   accessorriesImg,
   formatDate,
@@ -70,7 +72,6 @@ const AdminBookings = () => {
   return (
     <section className="p-10  w-screen md:w-full bg-background">
       <p className="font-medium text-xl mb-5">All Bookings</p>
-
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
           <div>
@@ -193,14 +194,17 @@ const AdminBookings = () => {
             />
           </div>
         </div>
-        <table className="w-full text-sm text-center rtl:text-right text-gray-500 ">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+        <table className="w-full text-sm text-center rtl:text-right text-gray-500">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Customer Name
               </th>
               <th scope="col" className="px-6 py-3">
                 Service
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Items
               </th>
               <th scope="col" className="px-6 py-3">
                 Booking Date Time
@@ -218,17 +222,32 @@ const AdminBookings = () => {
                 Total
               </th>
               <th scope="col" className="px-6 py-3">
+                ratings
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Status
               </th>
             </tr>
           </thead>
           <tbody>
             {bookings?.map((booking, index) => {
+              const maxStars = 5;
+              const rating = booking?.ranger?.rating
+                ? Math.round(booking.ranger.rating)
+                : 0;
+              const filledStars = rating;
+              const emptyStars = maxStars - filledStars;
+
+              // Get items titles as comma-separated string
+              const itemsList = booking?.items
+                ?.map((item) => item.title)
+                .join(", ");
+
               return (
-                <tr key={index} className="bg-white border-b hover:bg-gray-50 ">
+                <tr key={index} className="bg-white border-b hover:bg-gray-50">
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
                     {booking?.customer?.firstName}
                   </th>
@@ -238,24 +257,27 @@ const AdminBookings = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-black">
+                    {itemsList || "No items"}
+                  </td>
+                  <td className="px-6 py-4 text-black">
                     {new Date(booking?.bookingDateTime).toLocaleString(
                       "en-IN",
                       {
-                        timeZone: "Asia/Kolkata", // Adjusting for IST
+                        timeZone: "Asia/Kolkata",
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                         hour: "numeric",
                         minute: "numeric",
                         second: "numeric",
-                        hour12: true, // 12-hour format with AM/PM
+                        hour12: true,
                       }
                     )}
                   </td>
                   <td className="px-6 py-4 text-black">
                     {booking?.ranger?.firstName
                       ? booking?.ranger?.firstName
-                      : `Yet to be Assigned`}
+                      : "Yet to be Assigned"}
                   </td>
                   <td className="px-6 py-4 text-black">
                     {booking?.startOtp} - {booking?.endOtp}
@@ -265,6 +287,32 @@ const AdminBookings = () => {
                   </td>
                   <td className="px-6 py-4 text-black text-lg">
                     {booking?.totalPrice ? booking?.totalPrice : 0}
+                  </td>
+                  <td className="px-6 py-4 text-black text-lg">
+                    {filledStars > 0 ? (
+                      <div className="flex flex-row items-center justify-center gap-1">
+                        {Array(filledStars)
+                          .fill()
+                          .map((_, index) => (
+                            <Star
+                              key={index}
+                              className="text-yellow-500 fill-yellow-500"
+                              size={16}
+                            />
+                          ))}
+                        {Array(emptyStars)
+                          .fill()
+                          .map((_, index) => (
+                            <Star
+                              key={index}
+                              className="text-yellow-500"
+                              size={16}
+                            />
+                          ))}
+                      </div>
+                    ) : (
+                      "No Rating"
+                    )}
                   </td>
                   <td className="px-6 py-4 text-black">
                     {booking?.status.replace(/_/g, " ")}
