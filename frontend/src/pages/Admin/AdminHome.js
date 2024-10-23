@@ -101,55 +101,66 @@ const AdminHome = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-5">
-        {/* Top Vendors Table */}
-        <div className="bg-white rounded-3xl p-5 overflow-x-auto">
-          <p className="font-semibold mb-5">Top Vendors</p>
-          <table className="min-w-full table-auto">
-            <thead className="">
-              <tr className="whitespace-nowrap">
-                <th className="p-2 text-left text-[#5A5A5A]">Name</th>
-                <th className="p-2 text-left text-[#5A5A5A]">Phone No</th>
-                <th className="p-2 text-left text-[#5A5A5A]">Bookings</th>
-                <th className="p-2 text-left text-[#5A5A5A]">Revenue</th>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 my-4 sm:my-6 md:my-8 w-full">
+        {/* Top Vendors */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 w-full overflow-x-auto">
+          <p className="font-semibold text-base sm:text-lg md:text-xl mb-3 sm:mb-4 md:mb-5">
+            Top Vendors
+          </p>
+          <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
+            <thead>
+              <tr>
+                <th className="text-left py-2">Name</th>
+                <th className="text-left py-2">Phone No</th>
+                <th className="text-left py-2">Bookings</th>
+                <th className="text-left py-2">Revenue</th>
               </tr>
             </thead>
             <tbody>
               {topVendors?.map((data, index) => (
-                <tr key={index} className="whitespace-nowrap">
-                  <td className="p-2">
+                <tr key={index} className="border-t">
+                  <td className="py-2">
                     {data?.firstName} {data?.lastName}
                   </td>
-                  <td className="p-2">{data?.user?.phone}</td>
-                  <td className="p-2 font-semibold text-center">{data?.noOfBooking}</td>
-                  <td className="p-2 font-semibold">₹ {data?.amountEarned}</td>
+                  <td className="py-2">{data?.user?.phone}</td>
+                  <td className="py-2 font-semibold text-center">
+                    {data?.noOfBooking}
+                  </td>
+                  <td className="py-2 font-semibold">
+                    <span className="font-Inter">₹ </span>
+                    {data?.amountEarned}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        {/* Most Booked Rangers Table */}
-        <div className="bg-white rounded-3xl p-5 overflow-x-auto">
-          <p className="font-semibold mb-5">Most Booked Rangers</p>
-          <table className="min-w-full table-auto">
+        {/* Most Booked Rangers */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 w-full overflow-x-auto">
+          <p className="font-semibold text-base sm:text-lg md:text-xl mb-3 sm:mb-4 md:mb-5">
+            Most Booked Rangers
+          </p>
+          <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
             <thead>
-              <tr className="whitespace-nowrap">
-                <th className="p-2 text-left text-[#5A5A5A]">Name</th>
-                <th className="p-2 text-left text-[#5A5A5A]">Phone No</th>
-                <th className="p-2 text-left text-[#5A5A5A]">Bookings</th>
-                <th className="p-2 text-left text-[#5A5A5A]">Duration</th>
+              <tr>
+                <th className="text-left py-2">Name</th>
+                <th className="text-left py-2">Phone No</th>
+                <th className="text-left py-2">Bookings</th>
+                <th className="text-left py-2">Duration</th>
               </tr>
             </thead>
             <tbody>
               {topRangers?.map((data, index) => (
-                <tr key={index} className="whitespace-nowrap">
-                  <td className="p-2">
+                <tr key={index} className="border-t">
+                  <td className="py-2">
                     {data?.firstName} {data?.lastName}
                   </td>
-                  <td className="p-2">{data?.user?.phone}</td>
-                  <td className="p-2 font-semibold text-center">{data?.noOfBooking}</td>
-                  <td className="p-2 font-semibold">
+                  <td className="py-2">{data?.user?.phone}</td>
+                  <td className="py-2 font-semibold text-center">
+                    {data?.noOfBooking}
+                  </td>
+                  <td className="py-2 font-semibold">
                     {formatDurationToHours(data?.workedDuration)}
                   </td>
                 </tr>

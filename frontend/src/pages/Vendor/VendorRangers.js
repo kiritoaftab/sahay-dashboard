@@ -3,7 +3,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { FaSearch } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../axiosInstance/axiosApi";
-import { formatDuration } from "../../constants";
+import { formatDuration, formatDurationToHours } from "../../constants";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../constants";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
@@ -166,7 +166,7 @@ const VendorRanger = () => {
                     {ranger.noOfBooking}
                   </td>
                   <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                    {formatDuration(ranger?.workedDuration)}
+                    {formatDurationToHours(ranger?.workedDuration)}
                   </td>
                   <td className="px-2 md:px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-center">
                     <button

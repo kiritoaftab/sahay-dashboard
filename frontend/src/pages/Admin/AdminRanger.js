@@ -5,7 +5,7 @@ import debounce from "lodash.debounce";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../axiosInstance/axiosApi";
 import useAuth from "../../hooks/useAuth";
-import { formatDuration, BASE_URL } from "../../constants";
+import { formatDuration, BASE_URL, formatDurationToHours } from "../../constants";
 
 const AdminRanger = () => {
   const [rangerList, setRangerList] = useState([]);
@@ -156,7 +156,7 @@ const AdminRanger = () => {
                     {ranger.noOfBooking}
                   </td>
                   <td className="px-2 md:px-4 py-4 whitespace-nowrap text-gray-500 text-center">
-                    {formatDuration(ranger?.workedDuration)}
+                    {formatDurationToHours(ranger?.workedDuration)}
                   </td>
                   <td className="px-2 md:px-4 py-4 whitespace-nowrap text-center">
                     <button
