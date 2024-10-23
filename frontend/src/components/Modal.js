@@ -11,6 +11,7 @@ const Modal = ({
   bookingId,
   rangerId,
   vendorId,
+  serviceName, 
 }) => {
   const navigate = useNavigate();
   if (!isOpen) return null;
@@ -40,9 +41,9 @@ const Modal = ({
         </div>
 
         <h2 className="font-semibold">
-          {" "}
-          You are assigning the ranger for plumbering, are you sure?
-        </h2>
+          You are assigning the ranger for {serviceName} ?
+        </h2> 
+        
         <div className="mt-4 flex flex-col items-center justify-center space-y-2">
           <div>
             <button
@@ -64,5 +65,6 @@ const Modal = ({
     </div>
   );
 };
+
 
 export default Modal;

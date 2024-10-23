@@ -13,16 +13,12 @@ const AssignRanger = () => {
   const [vendorId, setvendorId] = useState();
   const [bookingDoc, setBookingDoc] = useState(null);
   const [vendorDoc, setVendorDoc] = useState(null);
- 
-
-  const [bookingId, setbookingId]=useState(null)
+  const [serviceName, setServiceName] = useState(null);
+  const [bookingId, setbookingId] = useState(null);
 
   const { id } = useParams();
 
   console.log(id, rangerId, vendorId);
-
-
-
 
   const handleConfirm = async () => {
     try {
@@ -74,7 +70,6 @@ const AssignRanger = () => {
       alert("No rangers found for the service");
     }
   };
-  
 
   const fetchVendorByUser = async () => {
     try {
@@ -82,13 +77,10 @@ const AssignRanger = () => {
       const res = await axios.get(`${BASE_URL}vendor/getByUserId/${userId}`);
       console.log(res.data);
       setVendorDoc(res.data.vendorDoc);
-    
+
       fetchBookingById(id, res.data.vendorDoc._id);
 
-      setbookingId(res.data.vendorDoc._id)
-
-
-
+      setbookingId(res.data.vendorDoc._id);
     } catch (error) {
       console.log(error);
     }
@@ -96,18 +88,6 @@ const AssignRanger = () => {
   useEffect(() => {
     fetchVendorByUser();
   }, []);
-
-
-
-  const addbooking=async()=>{
-    try {
-      const res=await axios
-    } catch (error) {
-      
-    }
-  }
-
-
 
 
   return (
@@ -140,7 +120,7 @@ const AssignRanger = () => {
             <FaLocationDot className="mr-1" /> View on Map
           </a>
           <p className="text-lg font-semibold mb-2">
-            Service:{" "}
+            Service:
             <span className="font-normal">{bookingDoc?.service?.name}</span>
           </p>
         </div>
@@ -158,7 +138,7 @@ const AssignRanger = () => {
                   Service
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Vendor Name 
+                  Vendor Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Status
@@ -169,49 +149,53 @@ const AssignRanger = () => {
               </tr>
             </thead>
             <tbody>
-            {rangers &&
-  rangers.map(({ ranger, service }) => (
-    <tr key={ranger._id}>
-      <td className="px-6 py-3 text-lg text-black">{`${ranger?.firstName} ${ranger?.lastName}`}</td>
-      <td className="px-6 py-3 text-lg text-black">{ranger?.user?.phone}</td>
-      <td className="px-6 py-3">
-        <button className="bg-purple-200 bg-opacity-14 text-black text-xs font-medium p-1.5 rounded-md">
-          {service?.service?.name}
-        </button>
-      </td>
-      <td className="px-6 py-3 text-lg text-black">
-        {`${ranger?.vendor?.firstName} ${ranger?.vendor?.lastName}`}
-      </td>
-      <td className="px-6 py-3 text-lg text-black">{ranger?.status}</td>
-      <td className="px-9 py-3 text-lg text-black">
-        <button
-          className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
-          onClick={() => {
-            setShowModal(true);
-            setvendorId(ranger?.vendor?._id);
-            setrangerId(ranger?._id);
-          }}
-        >
-          Assign Ranger
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="ml-2 w-4 h-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </button>
-      </td>
-    </tr>
-  ))}
-
+              {rangers &&
+                rangers.map(({ ranger, service }) => (
+                  <tr key={ranger._id}>
+                    <td className="px-6 py-3 text-lg text-black">{`${ranger?.firstName} ${ranger?.lastName}`}</td>
+                    <td className="px-6 py-3 text-lg text-black">
+                      {ranger?.user?.phone}
+                    </td>
+                    <td className="px-6 py-3">
+                      <button className="bg-purple-200 bg-opacity-14 text-black text-xs font-medium p-1.5 rounded-md">
+                        {service?.service?.name}
+                      </button>
+                    </td>
+                    <td className="px-6 py-3 text-lg text-black">
+                      {`${ranger?.vendor?.firstName} ${ranger?.vendor?.lastName}`}
+                    </td>
+                    <td className="px-6 py-3 text-lg text-black">
+                      {ranger?.status}
+                    </td>
+                    <td className="px-9 py-3 text-lg text-black">
+                      <button
+                        className="text-indigo-700 text-sm font-normal p-1.5 rounded-md flex items-center"
+                        onClick={() => {
+                          setShowModal(true);
+                          setvendorId(ranger?.vendor?._id);
+                          setrangerId(ranger?._id);
+                          setServiceName(service?.service?.name);
+                        }}
+                      >
+                        Assign Ranger
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="ml-2 w-4 h-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           {showModal && (
@@ -222,6 +206,7 @@ const AssignRanger = () => {
               bookingId={id}
               rangerId={rangerId}
               vendorId={vendorId}
+              serviceName={serviceName}
             />
           )}
         </div>
