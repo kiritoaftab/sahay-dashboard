@@ -32,7 +32,7 @@ const VendorBooking = () => {
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
-    setActiveTab(newStatus); // Update active tab when clicked
+    setActiveTab(newStatus);
     if (newStatus === "INITIATED" || newStatus === "COMPLETED") {
       fetchBookingsByVendor(vendorDoc?._id, newStatus);
     } else {
@@ -312,27 +312,25 @@ const VendorBooking = () => {
                           </td>
 
                           <td className="px-6 py-3 text-black text-lg">
-                            {new Date(booking?.startTime).toLocaleTimeString(
-                              "en-IN",
-                              {
-                                timeZone: "Asia/Kolkata",
-                                hour: "numeric",
-                                minute: "numeric",
-                                second: "numeric",
-                                hour12: true,
-                              }
-                            )}
+                            {new Date(
+                              new Date(booking?.startTime).getTime() -
+                                5.5 * 60 * 60 * 1000
+                            ).toLocaleTimeString("en-IN", {
+                              hour: "numeric",
+                              minute: "numeric",
+                              second: "numeric",
+                              hour12: true,
+                            })}
                             -
-                            {new Date(booking?.endTime).toLocaleTimeString(
-                              "en-IN",
-                              {
-                                timeZone: "Asia/Kolkata",
-                                hour: "numeric",
-                                minute: "numeric",
-                                second: "numeric",
-                                hour12: true,
-                              }
-                            )}
+                            {new Date(
+                              new Date(booking?.endTime).getTime() -
+                                5.5 * 60 * 60 * 1000
+                            ).toLocaleTimeString("en-IN", {
+                              hour: "numeric",
+                              minute: "numeric",
+                              second: "numeric",
+                              hour12: true,
+                            })}
                           </td>
                           <td className="px-6 py-3 text-black text-lg">{`${booking?.startOtp} - ${booking?.endOtp}`}</td>
                           <td className="px-6 py-3 text-black text-lg">
