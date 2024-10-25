@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { BASE_URL } from "../../constants";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 
 const BookingDetails = () => {
@@ -46,6 +47,21 @@ const BookingDetails = () => {
     return formattedDiff;
   };
 
+  const renderStars = (rating) => {
+    const roundedRating = Math.round(rating);
+    return (
+      <div className="flex items-center">
+        {[...Array(5)].map((_, index) =>
+          index < roundedRating ? (
+            <AiFillStar key={index} className="text-yellow-500" />
+          ) : (
+            <AiOutlineStar key={index} className="text-yellow-500" />
+          )
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
       <section className="w-screen md:w-full bg-background gap-4 flex flex-col p-5">
@@ -54,182 +70,177 @@ const BookingDetails = () => {
           onClick={() => navigate(`/vendor/bookings`)}
         />
 
-        <h1 className="text-2xl font-medium px-5 md:px-10">Booking Details</h1>
+        <h1 className="text-2xl font-medium px-5 md:px-10 text-center">
+          Booking Details
+        </h1>
 
-        <div className="flex flex-wrap justify-between m-4 md:m-8 gap-4">
+        <div className="flex flex-wrap justify-center m-4 md:m-8 gap-6">
           {/* Booking Details Card */}
-          <div className="w-full md:max-w-sm lg:max-w-full flex m-4">
-            <div className="border border-gray-400 bg-white rounded-lg p-4 flex flex-col justify-between leading-normal w-full">
-              <div className="mb-8 flex items-center">
-                <img
-                  className="w-10 h-10 rounded-full mr-4"
-                  src={bookingDoc?.ranger?.user?.profilePic}
-                  alt="Avatar"
-                />
-                <div>
-                  <div className="text-lg font-medium">
-                    {bookingDoc?.ranger?.user?.userName}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {bookingDoc?.ranger?.user?.role}
-                  </div>
+          <div className="w-full md:max-w-lg bg-white border border-gray-200 rounded-lg shadow-lg p-6">
+            {/* User Info */}
+            <div className="flex items-center mb-6">
+              <img
+                className="w-12 h-12 rounded-full mr-4"
+                src={bookingDoc?.ranger?.user?.profilePic}
+                alt="Avatar"
+              />
+              <div>
+                <div className="text-lg font-semibold text-gray-800">
+                  {bookingDoc?.ranger?.user?.userName}
                 </div>
-              </div>
-
-              {/* Booking Info */}
-              <div className="flex flex-wrap items-center gap-8 p-4">
-                <div className="flex flex-col px-5">
-                  <h5 className="text-sm font-semibold text-gray-700">
-                    Service
-                  </h5>
-                  <p className="text-base text-gray-900">
-                    {bookingDoc?.service?.name}
-                  </p>
+                <div className="text-sm text-gray-500">
+                  {bookingDoc?.ranger?.user?.role}
                 </div>
-
-                <div className="flex flex-col px-10 md:px-20">
-                  <h5 className="text-sm font-semibold text-gray-700">
-                    Booking Date
-                  </h5>
-                  <p className="text-base text-gray-900">
-                    {new Date(bookingDoc?.bookingDateTime).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      }
-                    )}
-                  </p>
-                </div>
-
-                <div className="flex flex-col px-10 md:px-20">
-                  <h5 className="text-sm font-semibold text-gray-700">
-                    Booking Time
-                  </h5>
-                  <p className="text-base text-gray-900">
-                    {new Date(bookingDoc?.bookingDateTime).toLocaleTimeString(
-                      "en-US",
-                      {
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric",
-                        hour12: true,
-                        timeZone: "UTC"
-                      }
-                    )}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-8 p-4">
-                <div className="flex flex-col px-5">
-                  <p className="text-base text-gray-900">
-                    Start time:
-                    <span className="text-sm">
-                      {new Date(bookingDoc?.startTime).toLocaleString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric", // Adds seconds if needed
-                        hour12: true, // For AM/PM format
-                        timeZone: "UTC", // Keeps it in UTC
-                      })}
-                    </span>
-                  </p>
-                  <p className="text-base text-gray-900">
-                    End time:
-                    <span className="text-sm">
-                      {new Date(bookingDoc?.endTime).toLocaleString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric", // Adds seconds if needed
-                        hour12: true, // For AM/PM format
-                        timeZone: "UTC", // Keeps it in UTC
-                      })}
-                    </span>
-                  </p>
-                </div>
-
-                <div className="flex flex-col">
-                  <p className="text-base text-gray-900">
-                    Start OTP:{" "}
-                    <span className="text-sm">{bookingDoc?.startOtp}</span>
-                  </p>
-                  <p className="text-base text-gray-900">
-                    End OTP:{" "}
-                    <span className="text-sm">{bookingDoc?.endOtp}</span>
-                  </p>
-                </div>
-
-                <div className="flex flex-col px-10 md:px-32">
-                  <p className="text-base text-gray-900">Duration</p>
-                  <p className="text-base text-gray-900">
-                    {getTimeDifference(
-                      bookingDoc?.startTime,
-                      bookingDoc?.endTime
-                    )}{" "}
-                    Hrs
-                  </p>
+                <div className="flex items-left mt-1">
+                  {renderStars(bookingDoc?.ranger?.rating)}
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Customer Details */}
-          <div className="w-full md:max-w-sm lg:max-w-full flex m-4">
-            <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 w-full">
-              <img
-                className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                src={bookingDoc?.customer?.profilePic}
-                alt=""
-              />
-              <div className="flex flex-col justify-between p-4 leading-normal">
-                <p className="mb-3 font-normal text-gray-700">
-                  {bookingDoc?.customer?.user?.userName}
-                  <span className="text-sm text-gray-500 block">
-                    {bookingDoc?.customer?.user?.role}
-                  </span>
-                </p>
-                <p className="mb-3 font-normal text-gray-700">
-                  Location: {bookingDoc?.address?.address}
-                </p>
-                <p className="mb-3 font-normal text-gray-700">
-                  Number: +91 {bookingDoc?.customer?.user?.phone}
+            {/* Booking Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="flex flex-col">
+                <h5 className="text-xs font-medium text-gray-500">Service</h5>
+                <p className="text-sm text-gray-800">
+                  {bookingDoc?.service?.name}
                 </p>
               </div>
+
+              <div className="flex flex-col">
+                <h5 className="text-xs font-medium text-gray-500">
+                  Booking Date
+                </h5>
+                <p className="text-sm text-gray-800">
+                  {new Date(bookingDoc?.bookingDateTime).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    }
+                  )}
+                </p>
+              </div>
+
+              <div className="flex flex-col">
+                <h5 className="text-xs font-medium text-gray-500">
+                  Booking Time
+                </h5>
+                <p className="text-sm text-gray-800">
+                  {new Date(bookingDoc?.bookingDateTime).toLocaleTimeString(
+                    "en-US",
+                    {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                      timeZone: "UTC",
+                    }
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {/* Timing & OTP Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="flex flex-col">
+                <h5 className="text-xs font-medium text-gray-500">
+                  Start Time
+                </h5>
+                <p className="text-sm text-gray-800">
+                  {new Date(bookingDoc?.startTime).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                    timeZone: "UTC",
+                  })}
+                </p>
+                <h5 className="text-xs font-medium text-gray-500">End Time</h5>
+                <p className="text-sm text-gray-800">
+                  {new Date(bookingDoc?.endTime).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                    timeZone: "UTC",
+                  })}
+                </p>
+              </div>
+
+              <div className="flex flex-col">
+                <h5 className="text-xs font-medium text-gray-500">Start OTP</h5>
+                <p className="text-sm text-gray-800">{bookingDoc?.startOtp}</p>
+                <h5 className="text-xs font-medium text-gray-500">End OTP</h5>
+                <p className="text-sm text-gray-800">{bookingDoc?.endOtp}</p>
+              </div>
+
+              <div className="flex flex-col">
+                <h5 className="text-xs font-medium text-gray-500">Duration</h5>
+                <p className="text-sm text-gray-800">
+                  {getTimeDifference(
+                    bookingDoc?.startTime,
+                    bookingDoc?.endTime
+                  )}{" "}
+                  Hrs
+                </p>
+              </div>
+            </div>
+
+            {/* Item Details */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                Item Details
+              </h3>
+              {bookingDoc?.items?.length > 0 ? (
+                <div className="space-y-2">
+                  {bookingDoc.items.map((item) => (
+                    <div
+                      key={item._id}
+                      className="flex justify-between border-t border-gray-200 py-2 text-gray-700"
+                    >
+                      <span>{item.title}</span>
+                      <span>₹{item.price}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500">No items available</p>
+              )}
             </div>
           </div>
         </div>
 
         {/* Payment Details */}
-        <h2 className="text-2xl font-medium px-5 md:px-10">Payment Details</h2>
-        <div className=" md:max-w-sm lg:max-w-full flex m-4 md:m-8">
-          <div className="border border-gray-400 bg-white rounded-lg p-4 flex flex-col justify-between leading-normal w-full">
-            <div className="flex flex-wrap items-center gap-8 p-4">
-              <div className="flex flex-col px-5">
-                <h3 className="text-xl font-semibold text-gray-700">
-                  Service Name
-                </h3>
-                <p className="text-base text-gray-900">
-                  <span className="text-xl block">
-                    {bookingDoc?.service?.name}
-                    <span className="text-md pl-4 sm:pl-80">
-                      ₹{bookingDoc?.service?.price}
+        <h2 className="text-2xl text-center font-medium px-5 md:px-10">
+          Payment Details
+        </h2>
+        <div className="container flex justify-center">
+          <div className="md:max-w-sm lg:max-w-lg flex  md:m-8 w-full">
+            <div className="border border-gray-400 bg-white rounded-lg p-4 flex flex-col justify-between leading-normal w-full">
+              <div className="flex flex-wrap items-center gap-8 p-4">
+                <div className="flex flex-col">
+                  <h3 className="text-xl font-semibold text-gray-700">
+                    Service Name
+                  </h3>
+                  <p className="text-base text-gray-900">
+                    <span className="text-xl block">
+                      {bookingDoc?.service?.name}
+                      <span className="text-md pl-4 sm:pl-10 lg:pl-20">
+                        ₹{bookingDoc?.service?.price}
+                      </span>
                     </span>
-                  </span>
-                  <span className="text-xl block mt-4 border border-gray-600 p-2 rounded-md">
-                    Total Price
-                    <span className="text-md pl-4 sm:pl-80">
-                      ₹{bookingDoc?.totalPrice}
+                    <span className="text-xl block mt-4 border border-gray-600 p-1 rounded-md bg-gray-100">
+                      Total Price
+                      <span className="text-md pl-4 sm:pl-10 lg:pl-16">
+                        ₹{bookingDoc?.totalPrice}
+                      </span>
                     </span>
-                  </span>
-                </p>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -240,8 +251,3 @@ const BookingDetails = () => {
 };
 
 export default BookingDetails;
-
-
-
-
-

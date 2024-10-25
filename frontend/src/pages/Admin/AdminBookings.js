@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../axiosInstance/axiosApi";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
-import { Star } from 'lucide-react';
+import { Star } from "lucide-react";
 import {
   accessorriesImg,
   formatDate,
@@ -260,19 +260,18 @@ const AdminBookings = () => {
                     {itemsList || "No items"}
                   </td>
                   <td className="px-6 py-4 text-black">
-                    {new Date(booking?.bookingDateTime).toLocaleString(
-                      "en-IN",
-                      {
-                        timeZone: "Asia/Kolkata",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric",
-                        hour12: true,
-                      }
-                    )}
+                    {new Date(
+                      new Date(booking?.bookingDateTime).getTime() -
+                        5.5 * 60 * 60 * 1000
+                    ).toLocaleDateString("en-IN", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                      hour12: true,
+                    })}
                   </td>
                   <td className="px-6 py-4 text-black">
                     {booking?.ranger?.firstName
