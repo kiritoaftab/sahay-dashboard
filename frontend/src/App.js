@@ -37,6 +37,8 @@ import PrivacyPolicy from "./pages/Admin/PrivacyPolicy";
 import Terms from "./pages/Admin/Terms";
 import VendorProfile from "./pages/Vendor/VendorProfile";
 import VROProfile from "./components/VROLayout/VROProfile";
+import CustomerReview from "./pages/Admin/CustomerReview";
+import RangerCustomerReview from "./pages/Admin/RangerCustomerReview";
 
 function App() {
   return (
@@ -68,6 +70,8 @@ function App() {
             <Route path="addVro" element={<AddVRO />} />
 
             <Route path="customers" element={<AdminCustomer />} />
+            <Route path="customersReview" element={<CustomerReview />} />
+            <Route path="rangerReview/:id" element={<RangerCustomerReview />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="bookings" element={<AdminService />} />
             <Route path="profile" element={<AdminProfile />} />

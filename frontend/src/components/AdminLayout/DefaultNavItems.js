@@ -75,6 +75,11 @@ export const defaultNavItems = [
     icon: <ShoppingCartIcon className="w-6 h-6" />,
   },
   {
+    label: "Customers reviews",
+    href: "/admin/customersReview",
+    icon: <ShoppingCartIcon className="w-6 h-6" />,
+  },
+  {
     label: "Bookings",
     href: "/admin/bookings",
     icon: <BanknotesIcon className="w-6 h-6" />,
