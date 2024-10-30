@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BASE_URL } from "../../constants";
 
 const RangerCustomerReview = () => {
   const { id } = useParams();
@@ -17,12 +18,13 @@ const RangerCustomerReview = () => {
     if (id) {
       setLoading(true);
       axios
-        .get(`https://admin.sahay24x7.com:4000/api/feedback/getByRanger/${id}`)
+        .get(`${BASE_URL}/feedback/getByRanger/${id}`)
         .then((response) => {
           const { feedbackDocs } = response.data;
           if (feedbackDocs && feedbackDocs.length > 0) {
             setRangerData(feedbackDocs[0].ranger);
             setReviews(feedbackDocs.filter(feedback => feedback.review));
+          console.log("ranger Details",feedbackDocs[0].ranger);
           }
         })
         .catch((error) => console.error("Error fetching data:", error))
@@ -77,9 +79,9 @@ const RangerCustomerReview = () => {
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Header with Ranger Profile */}
         <div className="p-4 border-b flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-full overflow-hidden">
+          <div className="w-16 h-16 rounded-full border border-gray-300 overflow-hidden">
             <img
-              src={rangerData.aadharImg}
+              src={rangerData?.user?.profilePic || '/placeholder-avatar.png'}
               alt="Profile"
               className="w-full h-full object-cover"
             />
@@ -87,6 +89,12 @@ const RangerCustomerReview = () => {
           <div className="flex-1">
             <h2 className="text-lg font-semibold">
               {rangerData.firstName} {rangerData.lastName}
+            </h2>
+            <h2 className="text-lg font-semibold">
+              {rangerData?.user?.phone}
+            </h2>
+            <h2 className="text-lg font-semibold mb-2">
+              {rangerData?.user?.email}
             </h2>
             <div className="flex items-center space-x-2">
               <span className="text-yellow-400">
@@ -108,7 +116,7 @@ const RangerCustomerReview = () => {
             {getCurrentPageReviews().map((review, index) => (
               <div key={index} className="bg-gray-100 rounded-lg p-4 shadow-md">
                 <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                  <div className="w-16 h-16 rounded-full border boorder-gray-200 overflow-hidden">
                     <img
                       src={review.customer?.profilePic || '/placeholder-avatar.png'}
                       alt="Customer"

@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { TbTools } from "react-icons/tb";
 import { CiUser } from "react-icons/ci";
+import { LiaStarSolid } from "react-icons/lia";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
 // Define a NavItem prop
@@ -77,7 +78,7 @@ export const defaultNavItems = [
   {
     label: "Customers reviews",
     href: "/admin/customersReview",
-    icon: <ShoppingCartIcon className="w-6 h-6" />,
+    icon: <LiaStarSolid className="w-6 h-6" />,
   },
   {
     label: "Bookings",
