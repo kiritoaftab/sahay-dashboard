@@ -1,5 +1,6 @@
 // components/defaultNavItems.tsx
 import React from "react";
+import { LiaStarSolid } from "react-icons/lia";
 import {
   CalendarIcon,
   FolderIcon,
@@ -44,6 +45,11 @@ export const defaultNavItems = [
     label: "Customers",
     href: "/vro/customers",
     icon: <ShoppingCartIcon className="w-6 h-6" />,
+  },
+  {
+    label: "Customers reviews",
+    href: "/vro/customersReview",
+    icon: <LiaStarSolid className="w-6 h-6" />,
   },
   {
     label: "Bookings",

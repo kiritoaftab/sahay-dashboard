@@ -102,6 +102,8 @@ function App() {
             <Route path="" element={<VROHome />} />
 
             <Route path="vendors" element={<AdminVendor />} />
+            <Route path="customersReview" element={<CustomerReview />} />
+            <Route path="rangerReview/:id" element={<RangerCustomerReview />} />
             <Route path="addVendor" element={<AddVendor />} />
             <Route path="editVendor/:id" element={<EditVendor />} />
 
