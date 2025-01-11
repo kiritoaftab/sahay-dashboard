@@ -1,5 +1,5 @@
-import accessorriesImg from './images/accessorries.png';
-import admin from './images/admin.png'
+import accessorriesImg from "./images/accessorries.png";
+import admin from "./images/admin.png";
 import sales from "./images/sales.png";
 import orders from "./images/cargo.png";
 import box from "./images/box.png";
@@ -9,7 +9,7 @@ import inventory from "./images/inventory-management.png";
 import taxes from "./images/taxes.png";
 import bannerMan from "./images/banner-man.png";
 import vroVector from "./images/vroVector.jpeg";
-import logo from "./images/logo.png"
+import logo from "./images/logo.png";
 // import productImg from "./images/productImg";
 // import vendorImg from "./images/vendorImg";
 // import vroImg from "./images/vroImg.avif";
@@ -39,29 +39,27 @@ import logo from "./images/logo.png"
 function formatDate(dateString) {
   const date = new Date(dateString);
   const day = date.getDate();
-  const month = date.toLocaleString('default', { month: 'long' });
+  const month = date.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
 
-  return `${day}-${month}-${year} ${hours}:${minutes}`
- 
-
+  return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
-
 
 function formatDateV2(dateString) {
   const date = new Date(dateString);
   const day = date.getDate();
-  const month = date.getMonth()+1;
+  const month = date.getMonth() + 1;
   const year = date.getFullYear();
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
 
-  return `${year}-${month.toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`
- 
+  return `${year}-${month.toString().padStart(2, "0")}-${day
+    .toString()
+    .padStart(2, "0")}`;
 }
 
 const categoryMap = {
@@ -72,7 +70,7 @@ const categoryMap = {
   Furniture: ["All", "Home", "Office"],
   Sports: ["All", "Volleyball", "Football", "Cricket", "Gym", "Basketball"],
 };
-const BASE_URL = "https://admin.sahay24x7.com:4000/api/";
+const BASE_URL = "https://admin.sahay24x7.com:8100/api/";
 function formatIndianRupee(number) {
   // Check if the input is a valid number
   if (isNaN(number)) {
@@ -89,15 +87,15 @@ function formatIndianRupee(number) {
 }
 
 function formatDuration(minutes) {
-  if(minutes == 0){
-    return '0 mins';
+  if (minutes == 0) {
+    return "0 mins";
   }
   const days = Math.floor(minutes / (24 * 60));
-  minutes %= (24 * 60);
+  minutes %= 24 * 60;
   const hours = Math.floor(minutes / 60);
   minutes %= 60;
 
-  let duration = '';
+  let duration = "";
   if (days > 0) {
     duration += `${days}d `;
   }
@@ -113,20 +111,20 @@ function formatDuration(minutes) {
 
 function formatDurationToHours(minutes) {
   if (minutes === 0) {
-    return '0 min';
+    return "0 min";
   }
-  
+
   const hours = Math.floor(minutes / 60);
   minutes %= 60;
-  
-  let duration = '';
+
+  let duration = "";
   if (hours > 0) {
     duration += `${hours}hrs `;
   }
   if (minutes > 0) {
     duration += `${minutes}min`;
   }
-  
+
   return duration.trim();
 }
 
@@ -149,5 +147,5 @@ export {
   accessorriesImg,
   formatDuration,
   formatDurationToHours,
-  formatDateV2
+  formatDateV2,
 };

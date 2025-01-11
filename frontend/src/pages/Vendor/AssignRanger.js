@@ -55,7 +55,7 @@ const AssignRanger = () => {
     console.log(serviceId);
     try {
       const res = await axios.get(
-        `https://admin.sahay24x7.com:4000/api/ranger/getByVendorIdAndServiceIdV2`, // Updated API URL
+        `https://admin.sahay24x7.com:8100/api/ranger/getByVendorIdAndServiceIdV2`, // Updated API URL
         {
           params: {
             vendorId,
@@ -88,7 +88,6 @@ const AssignRanger = () => {
   useEffect(() => {
     fetchVendorByUser();
   }, []);
-
 
   return (
     <>
